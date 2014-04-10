@@ -7,6 +7,7 @@
 //
 
 #import "ASMAppDelegate.h"
+#import "ASMHomeViewController.h"
 
 @implementation ASMAppDelegate
 
@@ -14,6 +15,9 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    
+    UINavigationController *nav "=````"
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
@@ -47,3 +51,4 @@
 }
 
 @end
+

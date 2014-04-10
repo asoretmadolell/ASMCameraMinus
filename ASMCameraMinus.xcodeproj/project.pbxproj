@@ -19,6 +19,8 @@
 		A4AADA6818F6A1B500136C43 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4AADA5018F6A1B400136C43 /* UIKit.framework */; };
 		A4AADA7018F6A1B500136C43 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A4AADA6E18F6A1B500136C43 /* InfoPlist.strings */; };
 		A4AADA7218F6A1B500136C43 /* ASMCameraMinusTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A4AADA7118F6A1B500136C43 /* ASMCameraMinusTests.m */; };
+		A4AADA7E18F6A4FA00136C43 /* ASMHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4AADA7C18F6A4FA00136C43 /* ASMHomeViewController.m */; };
+		A4AADA7F18F6A4FA00136C43 /* ASMHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4AADA7D18F6A4FA00136C43 /* ASMHomeViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,9 @@
 		A4AADA6D18F6A1B500136C43 /* ASMCameraMinusTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ASMCameraMinusTests-Info.plist"; sourceTree = "<group>"; };
 		A4AADA6F18F6A1B500136C43 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A4AADA7118F6A1B500136C43 /* ASMCameraMinusTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASMCameraMinusTests.m; sourceTree = "<group>"; };
+		A4AADA7B18F6A4FA00136C43 /* ASMHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMHomeViewController.h; sourceTree = "<group>"; };
+		A4AADA7C18F6A4FA00136C43 /* ASMHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMHomeViewController.m; sourceTree = "<group>"; };
+		A4AADA7D18F6A4FA00136C43 /* ASMHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMHomeViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +116,7 @@
 				A4AADA5C18F6A1B400136C43 /* ASMAppDelegate.m */,
 				A4AADA5E18F6A1B400136C43 /* Images.xcassets */,
 				A4AADA5318F6A1B400136C43 /* Supporting Files */,
+				A4AADA8018F6A51000136C43 /* Controllers */,
 			);
 			path = ASMCameraMinus;
 			sourceTree = "<group>";
@@ -142,6 +148,16 @@
 				A4AADA6E18F6A1B500136C43 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A4AADA8018F6A51000136C43 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A4AADA7B18F6A4FA00136C43 /* ASMHomeViewController.h */,
+				A4AADA7C18F6A4FA00136C43 /* ASMHomeViewController.m */,
+				A4AADA7D18F6A4FA00136C43 /* ASMHomeViewController.xib */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,6 +236,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4AADA7F18F6A4FA00136C43 /* ASMHomeViewController.xib in Resources */,
 				A4AADA5718F6A1B400136C43 /* InfoPlist.strings in Resources */,
 				A4AADA5F18F6A1B400136C43 /* Images.xcassets in Resources */,
 			);
@@ -240,6 +257,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4AADA7E18F6A4FA00136C43 /* ASMHomeViewController.m in Sources */,
 				A4AADA5D18F6A1B400136C43 /* ASMAppDelegate.m in Sources */,
 				A4AADA5918F6A1B400136C43 /* main.m in Sources */,
 			);
