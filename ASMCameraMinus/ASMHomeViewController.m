@@ -49,6 +49,7 @@
     pc_shoot.sourceType = UIImagePickerControllerSourceTypeCamera;
     [self presentViewController:pc_shoot animated:YES completion:nil];
     
+    // okay, we really don't need any of this code right here...
 //    // this checks if the device has a camera
 //    BOOL hasCamera = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
 //    // this checks if the device has front and rear camera
@@ -63,12 +64,17 @@
 
 - (IBAction)delete:(id)sender
 {
-    UIAlertView *av_delete = [[UIAlertView alloc] initWithTitle:@"Delete"
-                                                        message:@"You have pressed the delete button"
-                                                       delegate:self
-                                              cancelButtonTitle:@"Oh yeah"
-                                              otherButtonTitles:nil, nil];
-    [av_delete show];
+    if (self.imageView.image != nil) {
+        self.imageView.image = nil;
+    }
+    else {
+        UIAlertView *av_delete = [[UIAlertView alloc] initWithTitle:@"Delete"
+                                                            message:@"Dude, there is no image to delete!"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Oh, yeah!"
+                                                  otherButtonTitles:nil, nil];
+        [av_delete show];
+    }
 }
 
 #pragma mark - delegate methods

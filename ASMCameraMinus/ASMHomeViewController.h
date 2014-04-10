@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ASMHomeViewController : UIViewController<UIImagePickerControllerDelegate>
+@interface ASMHomeViewController : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
