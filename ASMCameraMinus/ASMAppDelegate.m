@@ -16,7 +16,9 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    UINavigationController *nav "=````"
+    ASMHomeViewController *hvc = [[ASMHomeViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:hvc];
+    self.window.rootViewController = nav;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

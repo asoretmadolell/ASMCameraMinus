@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>23D9C1C4-790E-4206-B7DE-E4F7A8E153DD</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ASMCameraMinus</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>D4409618-B43E-4ED9-8EF0-A12CAF4F6E1F</key>
+		<string>https://bitbucket.org/SoReT/asmcameraminus</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ASMCameraMinus.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>D4409618-B43E-4ED9-8EF0-A12CAF4F6E1F</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://bitbucket.org/SoReT/asmcameraminus</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>D4409618-B43E-4ED9-8EF0-A12CAF4F6E1F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D4409618-B43E-4ED9-8EF0-A12CAF4F6E1F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ASMCameraMinus</string>
+		</dict>
+	</array>
+</dict>
+</plist>

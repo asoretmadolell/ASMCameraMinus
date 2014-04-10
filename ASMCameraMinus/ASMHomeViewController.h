@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ASMHomeViewController : UIViewController
+@interface ASMHomeViewController : UIViewController<UIImagePickerControllerDelegate>
+
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+
+- (IBAction)list:(id)sender;
+- (IBAction)edit:(id)sender;
+- (IBAction)shoot:(id)sender;
+- (IBAction)social:(id)sender;
+- (IBAction)delete:(id)sender;
 
 @end
