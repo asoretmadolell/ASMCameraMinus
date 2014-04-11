@@ -7,8 +7,13 @@
 //
 
 #import "ASMHomeViewController.h"
+#import "ASMPhotoCell.h"
 
-@interface ASMHomeViewController ()
+@interface ASMHomeViewController () {
+    UICollectionView *myPhotosCV;
+}
+
+@property (strong, nonatomic) NSArray *myPhotosArray;
 
 @end
 
@@ -28,6 +33,13 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    myPhotosCV.delegate = self;
+    myPhotosCV.dataSource = self;
+    
+    self.myPhotosArray = @[];
+    
+    [myPhotosCV registerNib:[UINib nibWithNibName:@"ASMPhotoCell" bundle:nil] forCellWithReuseIdentifier:@"PhotoCell"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,6 +96,26 @@
     UIImage *image = (UIImage*) [info valueForKey:UIImagePickerControllerOriginalImage];
     [picker dismissViewControllerAnimated:YES completion:nil];
     self.imageView.image = image;
+}
+
+#pragma mark - collection view methods
+
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    // return self.myPhotosArray.count;
+    return 10;
+}
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCell" forIndexPath:indexPath];
+    
+    return cell;
 }
 
 @end

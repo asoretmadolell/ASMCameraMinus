@@ -21,6 +21,8 @@
 		A4AADA7218F6A1B500136C43 /* ASMCameraMinusTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A4AADA7118F6A1B500136C43 /* ASMCameraMinusTests.m */; };
 		A4AADA7E18F6A4FA00136C43 /* ASMHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4AADA7C18F6A4FA00136C43 /* ASMHomeViewController.m */; };
 		A4AADA7F18F6A4FA00136C43 /* ASMHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4AADA7D18F6A4FA00136C43 /* ASMHomeViewController.xib */; };
+		D8DA237F18F841F800348E88 /* ASMPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8DA237E18F841F800348E88 /* ASMPhotoCell.m */; };
+		D8DA238118F8420D00348E88 /* ASMPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8DA238018F8420D00348E88 /* ASMPhotoCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,9 @@
 		A4AADA7B18F6A4FA00136C43 /* ASMHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMHomeViewController.h; sourceTree = "<group>"; };
 		A4AADA7C18F6A4FA00136C43 /* ASMHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMHomeViewController.m; sourceTree = "<group>"; };
 		A4AADA7D18F6A4FA00136C43 /* ASMHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMHomeViewController.xib; sourceTree = "<group>"; };
+		D8DA237D18F841F800348E88 /* ASMPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMPhotoCell.h; sourceTree = "<group>"; };
+		D8DA237E18F841F800348E88 /* ASMPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMPhotoCell.m; sourceTree = "<group>"; };
+		D8DA238018F8420D00348E88 /* ASMPhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMPhotoCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +161,9 @@
 				A4AADA7B18F6A4FA00136C43 /* ASMHomeViewController.h */,
 				A4AADA7C18F6A4FA00136C43 /* ASMHomeViewController.m */,
 				A4AADA7D18F6A4FA00136C43 /* ASMHomeViewController.xib */,
+				D8DA237D18F841F800348E88 /* ASMPhotoCell.h */,
+				D8DA237E18F841F800348E88 /* ASMPhotoCell.m */,
+				D8DA238018F8420D00348E88 /* ASMPhotoCell.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -236,6 +244,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8DA238118F8420D00348E88 /* ASMPhotoCell.xib in Resources */,
 				A4AADA7F18F6A4FA00136C43 /* ASMHomeViewController.xib in Resources */,
 				A4AADA5718F6A1B400136C43 /* InfoPlist.strings in Resources */,
 				A4AADA5F18F6A1B400136C43 /* Images.xcassets in Resources */,
@@ -257,6 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8DA237F18F841F800348E88 /* ASMPhotoCell.m in Sources */,
 				A4AADA7E18F6A4FA00136C43 /* ASMHomeViewController.m in Sources */,
 				A4AADA5D18F6A1B400136C43 /* ASMAppDelegate.m in Sources */,
 				A4AADA5918F6A1B400136C43 /* main.m in Sources */,
@@ -460,6 +470,7 @@
 				A4AADA7718F6A1B500136C43 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A4AADA7818F6A1B500136C43 /* Build configuration list for PBXNativeTarget "ASMCameraMinusTests" */ = {
 			isa = XCConfigurationList;
@@ -468,6 +479,7 @@
 				A4AADA7A18F6A1B500136C43 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
