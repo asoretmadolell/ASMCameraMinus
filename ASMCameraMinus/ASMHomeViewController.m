@@ -10,10 +10,10 @@
 #import "ASMPhotoCell.h"
 
 @interface ASMHomeViewController () {
-    UICollectionView *myPhotosCV;
+//    UICollectionView *myPhotosCV;
 }
 
-@property (strong, nonatomic) NSArray *myPhotosArray;
+@property (strong, nonatomic) NSMutableArray *myPhotosArray;
 
 @end
 
@@ -34,12 +34,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    myPhotosCV.delegate = self;
-    myPhotosCV.dataSource = self;
+    self.photosCV.delegate = self;
+    self.photosCV.dataSource = self;
     
-    self.myPhotosArray = @[];
+    self.myPhotosArray = [[NSMutableArray alloc]init];
     
-    [myPhotosCV registerNib:[UINib nibWithNibName:@"ASMPhotoCell" bundle:nil] forCellWithReuseIdentifier:@"PhotoCell"];
+    [self.photosCV registerNib:[UINib nibWithNibName:@"ASMPhotoCell" bundle:nil] forCellWithReuseIdentifier:@"PhotoCell"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -96,6 +96,8 @@
     UIImage *image = (UIImage*) [info valueForKey:UIImagePickerControllerOriginalImage];
     [picker dismissViewControllerAnimated:YES completion:nil];
     self.imageView.image = image;
+    [self.myPhotosArray addObject:image];
+    [self.photosCV reloadData];
 }
 
 #pragma mark - collection view methods
@@ -107,13 +109,14 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    // return self.myPhotosArray.count;
-    return 10;
+    return self.myPhotosArray.count;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCell" forIndexPath:indexPath];
+    ASMPhotoCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCell" forIndexPath:indexPath];
+    
+    cell.image.image = [self.myPhotosArray objectAtIndex:indexPath.item];
     
     return cell;
 }
