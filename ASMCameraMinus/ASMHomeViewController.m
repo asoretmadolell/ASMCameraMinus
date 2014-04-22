@@ -36,6 +36,8 @@
     self.photosCV.dataSource = self;
     
     self.myPhotosArray = [[NSMutableArray alloc]init];
+    
+    // Thanks to our friends at U-Tad, we're unable to use their iPad devices at home... So we'll just init the array with some images.
     [self.myPhotosArray addObject:[UIImage imageNamed:@"c3po.jpg"]];
     [self.myPhotosArray addObject:[UIImage imageNamed:@"candemor.jpg"]];
     [self.myPhotosArray addObject:[UIImage imageNamed:@"chewbacca.jpg"]];
@@ -58,7 +60,7 @@
 
 - (IBAction)shoot:(id)sender
 {
-    if ( [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] )
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
         UIImagePickerController *pc_shoot = [[UIImagePickerController alloc] init];
         pc_shoot.delegate = self;
@@ -81,17 +83,22 @@
 
 - (IBAction)delete:(id)sender
 {
-    if (self.imageView.image != nil) {
-        self.imageView.image = nil;
+//    UIAlertView *av_delete = [[UIAlertView alloc] initWithTitle:@"Delete"
+//                                                        message:@"Dude, there is no image to delete!"
+//                                                       delegate:self
+//                                              cancelButtonTitle:@"Oh, yeah!"
+//                                              otherButtonTitles:nil, nil];
+//    [av_delete show];
+    
+    NSArray *selectedItems = [self.photosCV indexPathsForSelectedItems];
+    
+    for (NSIndexPath *indexPath in selectedItems)
+    {
+        [self.myPhotosArray removeObjectAtIndex:indexPath.item];
     }
-    else {
-        UIAlertView *av_delete = [[UIAlertView alloc] initWithTitle:@"Delete"
-                                                            message:@"Dude, there is no image to delete!"
-                                                           delegate:self
-                                                  cancelButtonTitle:@"Oh, yeah!"
-                                                  otherButtonTitles:nil, nil];
-        [av_delete show];
-    }
+    
+    [self.photosCV reloadData];
+
 }
 
 #pragma mark - picker view delegate methods
@@ -100,7 +107,6 @@
 {
     UIImage *image = (UIImage*) [info valueForKey:UIImagePickerControllerOriginalImage];
     [picker dismissViewControllerAnimated:YES completion:nil];
-    self.imageView.image = image;
     [self.myPhotosArray addObject:image];
     [self.photosCV reloadData];
 }
@@ -109,15 +115,16 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(61, 62);
+    return CGSizeMake(70, 70);
 }
 
 #pragma mark - collection view data source delegate methods
 
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 1;
-}
+// // This code isn't necessary if we're using only 1 section
+//-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+//{
+//    return 1;
+//}
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -132,13 +139,14 @@
     
 //    if( cell.selected )
 //    {
-//        cell.backgroundColor = [UIColor orangeColor];
+//        cell.backgroundColor = [UIColor blueColor];
 //    }
 //    else
 //    {
 //        cell.backgroundColor = [UIColor blackColor];
 //    }
-    cell.backgroundColor = ( cell.selected ) ? [UIColor orangeColor] : [UIColor blackColor];
+    // By the way, this is another way of doing the same thing:
+    cell.backgroundColor = ( cell.selected ) ? [UIColor blueColor] : [UIColor blackColor];
     
     return cell;
 }
@@ -147,14 +155,15 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    long sectionID = indexPath.section;
-    long itemID = indexPath.item;
+//    // These indicate which section and item has been selected
+//    long sectionID = indexPath.section;
+//    long itemID = indexPath.item;
     
-    UIImage *selectedImage = [self.myPhotosArray objectAtIndex:indexPath.item];
-    self.imageView.image = selectedImage;
+//    UIImage *selectedImage = [self.myPhotosArray objectAtIndex:indexPath.item];
+//    self.imageView.image = selectedImage;
     
     UICollectionViewCell* cell = [self.photosCV cellForItemAtIndexPath:indexPath];
-    cell.backgroundColor = [UIColor orangeColor];
+    cell.backgroundColor = [UIColor blueColor];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
