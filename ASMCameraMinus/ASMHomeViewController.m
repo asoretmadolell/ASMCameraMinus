@@ -83,22 +83,24 @@
 
 - (IBAction)delete:(id)sender
 {
-//    UIAlertView *av_delete = [[UIAlertView alloc] initWithTitle:@"Delete"
-//                                                        message:@"Dude, there is no image to delete!"
-//                                                       delegate:self
-//                                              cancelButtonTitle:@"Oh, yeah!"
-//                                              otherButtonTitles:nil, nil];
-//    [av_delete show];
-    
     NSArray *selectedItems = [self.photosCV indexPathsForSelectedItems];
     
-    for (NSIndexPath *indexPath in selectedItems)
-    {
-        [self.myPhotosArray removeObjectAtIndex:indexPath.item];
+    if (selectedItems.count == 0) {
+        UIAlertView *av_delete = [[UIAlertView alloc] initWithTitle:@"Delete"
+                                                            message:@"Dude, there's no image selected!"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Oh, yeah!"
+                                                  otherButtonTitles:nil, nil];
+        [av_delete show];
     }
-    
-    [self.photosCV reloadData];
-
+    else {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure you want to delete the image?"
+                                                                 delegate:self
+                                                        cancelButtonTitle:@"Yup"
+                                                   destructiveButtonTitle:@"Nope"
+                                                        otherButtonTitles: nil];
+        [actionSheet showFromBarButtonItem:sender animated:YES];
+    }
 }
 
 #pragma mark - picker view delegate methods
@@ -137,16 +139,16 @@
     
     cell.image.image = [self.myPhotosArray objectAtIndex:indexPath.item];
     
-//    if( cell.selected )
-//    {
-//        cell.backgroundColor = [UIColor blueColor];
-//    }
-//    else
-//    {
-//        cell.backgroundColor = [UIColor blackColor];
-//    }
-    // By the way, this is another way of doing the same thing:
-    cell.backgroundColor = ( cell.selected ) ? [UIColor blueColor] : [UIColor blackColor];
+    if( cell.selected )
+    {
+        cell.backgroundColor = [UIColor blueColor];
+    }
+    else
+    {
+        cell.backgroundColor = [UIColor blackColor];
+    }
+//    // By the way, this is another way of doing the same thing:
+//    cell.backgroundColor = ( cell.selected ) ? [UIColor blueColor] : [UIColor blackColor];
     
     return cell;
 }
@@ -159,9 +161,6 @@
 //    long sectionID = indexPath.section;
 //    long itemID = indexPath.item;
     
-//    UIImage *selectedImage = [self.myPhotosArray objectAtIndex:indexPath.item];
-//    self.imageView.image = selectedImage;
-    
     UICollectionViewCell* cell = [self.photosCV cellForItemAtIndexPath:indexPath];
     cell.backgroundColor = [UIColor blueColor];
 }
@@ -170,6 +169,24 @@
 {
     UICollectionViewCell *cell = [self.photosCV cellForItemAtIndexPath:indexPath];
     cell.backgroundColor = [UIColor blackColor];
+}
+
+#pragma mark - action sheet delegate methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        
+        NSArray *selectedItems = [self.photosCV indexPathsForSelectedItems];
+        
+        for (NSIndexPath *indexPath in selectedItems)
+        {
+            [self.myPhotosArray removeObjectAtIndex:indexPath.item];
+        }
+        
+        [self.photosCV reloadData];
+        
+    }
 }
 
 @end
