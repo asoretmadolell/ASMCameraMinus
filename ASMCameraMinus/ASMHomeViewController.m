@@ -9,19 +9,15 @@
 #import "ASMHomeViewController.h"
 #import "ASMPhotoCell.h"
 
-@interface ASMHomeViewController ()
-{
+@interface ASMHomeViewController () {
     NSMutableArray *myPhotosArray;
 }
-
-
 
 @end
 
 @implementation ASMHomeViewController
 
 /*
- 
  
 */
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -50,6 +46,24 @@
     [myPhotosArray addObject:[UIImage imageNamed:@"candemor.jpg"]];
     [myPhotosArray addObject:[UIImage imageNamed:@"chewbacca.jpg"]];
     [myPhotosArray addObject:[UIImage imageNamed:@"darthVader.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"chewbacca.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"candemor.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"c3po.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"candemor.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"chewbacca.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"darthVader.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"chewbacca.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"candemor.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"candemor.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"chewbacca.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"darthVader.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"chewbacca.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"candemor.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"candemor.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"chewbacca.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"darthVader.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"chewbacca.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"candemor.jpg"]];
     
     [self.photosCV registerNib:[UINib nibWithNibName:@"ASMPhotoCell" bundle:nil] forCellWithReuseIdentifier:@"PhotoCell"];
 }
@@ -61,18 +75,14 @@
 }
 
 /*
- esa función la que se ejecuta cuando pulsas el botón list
-
- Si el usuario pulsa el botón list UIKit llama a este método.
+Si el usuario pulsa el botón list UIKit llama a este método.
 Se crea una nueva pantalla que se añade a la navegación y
 que mostrará las fotos en formato tabla
- */
-- (IBAction)list:(id)sender
-{
+*/
+- (IBAction)list:(id)sender {
 }
 
-- (IBAction)edit:(id)sender
-{
+- (IBAction)edit:(id)sender {
 }
 
 - (IBAction)shoot:(id)sender
@@ -102,23 +112,13 @@ que mostrará las fotos en formato tabla
 {
     NSArray *selectedItems = [self.photosCV indexPathsForSelectedItems];
     
-    if (selectedItems.count == 0) {
-        UIAlertView *av_delete = [[UIAlertView alloc] initWithTitle:@"Delete"
-                                                            message:@"Dude, there's no image selected!"
-                                                           delegate:self
-                                                  cancelButtonTitle:@"Oh, yeah!"
-                                                  otherButtonTitles:nil, nil];
-        [av_delete show];
-    }
-    else {
-        NSString* actionSheetTitle = [NSString stringWithFormat:@"Are you sure you want to delete these %lu images?", (unsigned long)selectedItems.count ];
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:actionSheetTitle
-                                                                 delegate:self
-                                                        cancelButtonTitle:@"Yup"
-                                                   destructiveButtonTitle:@"Nope"
-                                                        otherButtonTitles: nil];
-        [actionSheet showFromBarButtonItem:sender animated:YES];
-    }
+    NSString* actionSheetTitle = [NSString stringWithFormat:@"Are you sure you want to delete these %lu images?", (unsigned long)selectedItems.count ];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:actionSheetTitle
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Yup"
+                                               destructiveButtonTitle:@"Nope"
+                                                    otherButtonTitles: nil];
+    [actionSheet showFromBarButtonItem:sender animated:YES];
 }
 
 #pragma mark - picker view delegate methods
@@ -140,7 +140,7 @@ que mostrará las fotos en formato tabla
 
 #pragma mark - collection view data source delegate methods
 
-// // This code isn't necessary if we're using only 1 section
+// This code isn't necessary if we're using only 1 section
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     return 1;
@@ -157,7 +157,7 @@ que mostrará las fotos en formato tabla
     
     cell.image.image = [myPhotosArray objectAtIndex:indexPath.item];
     
-    if( cell.selected )
+    if (cell.selected)
     {
         cell.backgroundColor = [UIColor blueColor];
     }
@@ -175,9 +175,9 @@ que mostrará las fotos en formato tabla
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    // These indicate which section and item has been selected
-    long sectionID = indexPath.section;
-    long itemID = indexPath.item;
+//    // These indicate which section and item has been selected (mainly for debugging matters, because otherwise this crappy debugger won't tell us)
+//    long sectionID = indexPath.section;
+//    long itemID = indexPath.item;
     
     self.deleteButton.enabled = YES;
     
@@ -187,18 +187,12 @@ que mostrará las fotos en formato tabla
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    long sectionID = indexPath.section;
-    long itemID = indexPath.item;
-    
-//    NSArray *selectedItems = [self.photosCV indexPathsForSelectedItems];
-//    if( selectedItems.count == 0 )
-//    {
-//        self.deleteButton.enabled = NO;
-//    }
+//    // These indicate which section and item has been selected (mainly for debugging matters)
+//    long sectionID = indexPath.section;
+//    long itemID = indexPath.item;
     
     if( [self.photosCV indexPathsForSelectedItems].count == 0 ) self.deleteButton.enabled = NO;
 
-    
     UICollectionViewCell *cell = [self.photosCV cellForItemAtIndexPath:indexPath];
     cell.backgroundColor = [UIColor blackColor];
 }
@@ -209,8 +203,8 @@ que mostrará las fotos en formato tabla
 {
     if (buttonIndex == 1)
     {
-        NSArray* selectedItems = [self.photosCV indexPathsForSelectedItems];
-        NSArray* sortSelectedItems = [selectedItems sortedArrayWithOptions:0 usingComparator:^NSComparisonResult( id obj1, id obj2 )
+        NSArray *selectedItems = [self.photosCV indexPathsForSelectedItems];
+        NSArray *sortSelectedItems = [selectedItems sortedArrayWithOptions:0 usingComparator:^NSComparisonResult( id obj1, id obj2 )
         {
             if( ((NSIndexPath*)obj1).item > ( (NSIndexPath*)obj2).item) return (NSComparisonResult)NSOrderedAscending;
             if( ((NSIndexPath*)obj1).item < ( (NSIndexPath*)obj2).item) return (NSComparisonResult)NSOrderedDescending;
@@ -219,8 +213,6 @@ que mostrará las fotos en formato tabla
         
         for (NSIndexPath *indexPath in sortSelectedItems)
         {
-            long sectionID = indexPath.section;
-            long itemID = indexPath.item;
             [myPhotosArray removeObjectAtIndex:indexPath.item];
         }
         
