@@ -10,13 +10,20 @@
 #import "ASMPhotoCell.h"
 
 @interface ASMHomeViewController ()
+{
+    NSMutableArray *myPhotosArray;
+}
 
-@property (strong, nonatomic) NSMutableArray *myPhotosArray;
+
 
 @end
 
 @implementation ASMHomeViewController
 
+/*
+ 
+ 
+*/
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -34,14 +41,15 @@
     
     self.photosCV.delegate = self;
     self.photosCV.dataSource = self;
+    self.photosCV.allowsMultipleSelection = YES;
     
-    self.myPhotosArray = [[NSMutableArray alloc]init];
+    myPhotosArray = [[NSMutableArray alloc]init];
     
     // Thanks to our friends at U-Tad, we're unable to use their iPad devices at home... So we'll just init the array with some images.
-    [self.myPhotosArray addObject:[UIImage imageNamed:@"c3po.jpg"]];
-    [self.myPhotosArray addObject:[UIImage imageNamed:@"candemor.jpg"]];
-    [self.myPhotosArray addObject:[UIImage imageNamed:@"chewbacca.jpg"]];
-    [self.myPhotosArray addObject:[UIImage imageNamed:@"darthVader.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"c3po.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"candemor.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"chewbacca.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"darthVader.jpg"]];
     
     [self.photosCV registerNib:[UINib nibWithNibName:@"ASMPhotoCell" bundle:nil] forCellWithReuseIdentifier:@"PhotoCell"];
 }
@@ -52,10 +60,19 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)list:(id)sender {
+/*
+ esa función la que se ejecuta cuando pulsas el botón list
+
+ Si el usuario pulsa el botón list UIKit llama a este método.
+Se crea una nueva pantalla que se añade a la navegación y
+que mostrará las fotos en formato tabla
+ */
+- (IBAction)list:(id)sender
+{
 }
 
-- (IBAction)edit:(id)sender {
+- (IBAction)edit:(id)sender
+{
 }
 
 - (IBAction)shoot:(id)sender
@@ -94,7 +111,8 @@
         [av_delete show];
     }
     else {
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure you want to delete the image?"
+        NSString* actionSheetTitle = [NSString stringWithFormat:@"Are you sure you want to delete these %lu images?", (unsigned long)selectedItems.count ];
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:actionSheetTitle
                                                                  delegate:self
                                                         cancelButtonTitle:@"Yup"
                                                    destructiveButtonTitle:@"Nope"
@@ -109,7 +127,7 @@
 {
     UIImage *image = (UIImage*) [info valueForKey:UIImagePickerControllerOriginalImage];
     [picker dismissViewControllerAnimated:YES completion:nil];
-    [self.myPhotosArray addObject:image];
+    [myPhotosArray addObject:image];
     [self.photosCV reloadData];
 }
 
@@ -123,21 +141,21 @@
 #pragma mark - collection view data source delegate methods
 
 // // This code isn't necessary if we're using only 1 section
-//-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-//{
-//    return 1;
-//}
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.myPhotosArray.count;
+    return myPhotosArray.count;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ASMPhotoCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCell" forIndexPath:indexPath];
     
-    cell.image.image = [self.myPhotosArray objectAtIndex:indexPath.item];
+    cell.image.image = [myPhotosArray objectAtIndex:indexPath.item];
     
     if( cell.selected )
     {
@@ -158,8 +176,10 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
 //    // These indicate which section and item has been selected
-//    long sectionID = indexPath.section;
-//    long itemID = indexPath.item;
+    long sectionID = indexPath.section;
+    long itemID = indexPath.item;
+    
+    self.deleteButton.enabled = YES;
     
     UICollectionViewCell* cell = [self.photosCV cellForItemAtIndexPath:indexPath];
     cell.backgroundColor = [UIColor blueColor];
@@ -167,6 +187,18 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    long sectionID = indexPath.section;
+    long itemID = indexPath.item;
+    
+//    NSArray *selectedItems = [self.photosCV indexPathsForSelectedItems];
+//    if( selectedItems.count == 0 )
+//    {
+//        self.deleteButton.enabled = NO;
+//    }
+    
+    if( [self.photosCV indexPathsForSelectedItems].count == 0 ) self.deleteButton.enabled = NO;
+
+    
     UICollectionViewCell *cell = [self.photosCV cellForItemAtIndexPath:indexPath];
     cell.backgroundColor = [UIColor blackColor];
 }
@@ -175,17 +207,26 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 1) {
-        
-        NSArray *selectedItems = [self.photosCV indexPathsForSelectedItems];
-        
-        for (NSIndexPath *indexPath in selectedItems)
+    if (buttonIndex == 1)
+    {
+        NSArray* selectedItems = [self.photosCV indexPathsForSelectedItems];
+        NSArray* sortSelectedItems = [selectedItems sortedArrayWithOptions:0 usingComparator:^NSComparisonResult( id obj1, id obj2 )
         {
-            [self.myPhotosArray removeObjectAtIndex:indexPath.item];
+            if( ((NSIndexPath*)obj1).item > ( (NSIndexPath*)obj2).item) return (NSComparisonResult)NSOrderedAscending;
+            if( ((NSIndexPath*)obj1).item < ( (NSIndexPath*)obj2).item) return (NSComparisonResult)NSOrderedDescending;
+            return (NSComparisonResult)NSOrderedSame;
+        }];
+        
+        for (NSIndexPath *indexPath in sortSelectedItems)
+        {
+            long sectionID = indexPath.section;
+            long itemID = indexPath.item;
+            [myPhotosArray removeObjectAtIndex:indexPath.item];
         }
         
         [self.photosCV reloadData];
         
+        self.deleteButton.enabled = NO;
     }
 }
 

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ASMHomeViewController">
             <connections>
+                <outlet property="deleteButton" destination="J7K-a2-Dyv" id="coU-2q-7Yt"/>
                 <outlet property="photosCV" destination="ymo-4G-Sl0" id="cWs-1e-UBn"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
@@ -26,7 +27,7 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="N1w-xY-X10"/>
-                        <barButtonItem title="Edit" id="hyD-UJ-Xzc">
+                        <barButtonItem enabled="NO" title="Edit" id="hyD-UJ-Xzc">
                             <connections>
                                 <action selector="edit:" destination="-1" id="agI-aL-Y5Z"/>
                             </connections>
@@ -44,9 +45,9 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="bSI-aH-1mg"/>
-                        <barButtonItem title="Delete" id="J7K-a2-Dyv">
+                        <barButtonItem enabled="NO" title="Delete" id="J7K-a2-Dyv">
                             <connections>
-                                <action selector="delete:" destination="-1" id="Bpt-O5-lQt"/>
+                                <action selector="delete:" destination="-1" id="2gZ-u2-jjw"/>
                             </connections>
                         </barButtonItem>
                     </items>
