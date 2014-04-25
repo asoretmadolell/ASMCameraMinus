@@ -23,11 +23,20 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
         self.title = @"Camera Minus";
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        self.shootButton.enabled = YES;
+    }
 }
 
 - (void)viewDidLoad
@@ -66,6 +75,8 @@
     [myPhotosArray addObject:[UIImage imageNamed:@"candemor.jpg"]];
     
     [self.photosCV registerNib:[UINib nibWithNibName:@"ASMPhotoCell" bundle:nil] forCellWithReuseIdentifier:@"PhotoCell"];
+    
+    if (myPhotosArray.count == 0) self.listButton.enabled = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -112,12 +123,23 @@ que mostrará las fotos en formato tabla
 {
     NSArray *selectedItems = [self.photosCV indexPathsForSelectedItems];
     
-    NSString* actionSheetTitle = [NSString stringWithFormat:@"Are you sure you want to delete these %lu images?", (unsigned long)selectedItems.count ];
+    NSString *actionSheetTitle = [[NSString alloc] init];
+    
+    if (selectedItems.count == 1)
+    {
+        actionSheetTitle = [NSString stringWithFormat:@"Are you sure you want to delete this image?"];
+    }
+    else
+    {
+        actionSheetTitle = [NSString stringWithFormat:@"Are you sure you want to delete these %lu images?", (unsigned long)selectedItems.count];
+    }
+    
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:actionSheetTitle
                                                              delegate:self
                                                     cancelButtonTitle:@"Yup"
                                                destructiveButtonTitle:@"Nope"
-                                                    otherButtonTitles: nil];
+                                                    otherButtonTitles:nil];
+    
     [actionSheet showFromBarButtonItem:sender animated:YES];
 }
 
@@ -128,6 +150,7 @@ que mostrará las fotos en formato tabla
     UIImage *image = (UIImage*) [info valueForKey:UIImagePickerControllerOriginalImage];
     [picker dismissViewControllerAnimated:YES completion:nil];
     [myPhotosArray addObject:image];
+    if (myPhotosArray.count == 1) self.listButton.enabled = YES;
     [self.photosCV reloadData];
 }
 
@@ -219,6 +242,8 @@ que mostrará las fotos en formato tabla
         [self.photosCV reloadData];
         
         self.deleteButton.enabled = NO;
+        
+        if (myPhotosArray.count == 0) self.listButton.enabled = NO;
     }
 }
 

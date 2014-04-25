@@ -7,7 +7,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ASMHomeViewController">
             <connections>
                 <outlet property="deleteButton" destination="J7K-a2-Dyv" id="coU-2q-7Yt"/>
+                <outlet property="editButton" destination="hyD-UJ-Xzc" id="K3D-35-j63"/>
+                <outlet property="listButton" destination="cGZ-xf-KaR" id="USx-gL-cLY"/>
                 <outlet property="photosCV" destination="ymo-4G-Sl0" id="cWs-1e-UBn"/>
+                <outlet property="shootButton" destination="hUh-d2-IUc" id="7b7-Hj-xXE"/>
+                <outlet property="socialButton" destination="URI-aL-Gl4" id="5bb-fM-vR1"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -33,7 +37,7 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="vBG-FP-T8v"/>
-                        <barButtonItem title="Shoot" id="hUh-d2-IUc">
+                        <barButtonItem enabled="NO" title="Shoot" id="hUh-d2-IUc">
                             <connections>
                                 <action selector="shoot:" destination="-1" id="v2G-aK-hX5"/>
                             </connections>

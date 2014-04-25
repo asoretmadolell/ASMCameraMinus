@@ -11,6 +11,10 @@
 @interface ASMHomeViewController : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *photosCV;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *listButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shootButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *socialButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteButton;
 
 - (IBAction)list:(id)sender;
