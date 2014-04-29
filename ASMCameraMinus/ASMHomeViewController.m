@@ -8,6 +8,7 @@
 
 #import "ASMHomeViewController.h"
 #import "ASMPhotoCell.h"
+#import "ASMListViewController.h"
 
 @interface ASMHomeViewController () {
     NSMutableArray *myPhotosArray;
@@ -107,7 +108,10 @@
  Se crea una nueva pantalla que se añade a la navegación y
  que mostrará las fotos en formato tabla
 */
-- (IBAction)list:(id)sender {
+- (IBAction)list:(id)sender
+{
+    ASMListViewController *listVC = [[ASMListViewController alloc] init];
+    [self.navigationController pushViewController:listVC animated:YES];
 }
 
 /*

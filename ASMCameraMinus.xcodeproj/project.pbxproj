@@ -11,6 +11,7 @@
 		908675CE1906737700DDC3DD /* candemor.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 908675CA1906737700DDC3DD /* candemor.jpg */; };
 		908675CF1906737700DDC3DD /* chewbacca.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 908675CB1906737700DDC3DD /* chewbacca.jpg */; };
 		908675D01906737700DDC3DD /* darthVader.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 908675CC1906737700DDC3DD /* darthVader.jpg */; };
+		A40D243E190F9181006AE42C /* ASMListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A40D243D190F9181006AE42C /* ASMListViewController.m */; };
 		A4AADA4D18F6A1B400136C43 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4AADA4C18F6A1B400136C43 /* Foundation.framework */; };
 		A4AADA4F18F6A1B400136C43 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4AADA4E18F6A1B400136C43 /* CoreGraphics.framework */; };
 		A4AADA5118F6A1B400136C43 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4AADA5018F6A1B400136C43 /* UIKit.framework */; };
@@ -44,6 +45,8 @@
 		908675CA1906737700DDC3DD /* candemor.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = candemor.jpg; sourceTree = "<group>"; };
 		908675CB1906737700DDC3DD /* chewbacca.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = chewbacca.jpg; sourceTree = "<group>"; };
 		908675CC1906737700DDC3DD /* darthVader.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = darthVader.jpg; sourceTree = "<group>"; };
+		A40D243C190F9181006AE42C /* ASMListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMListViewController.h; sourceTree = "<group>"; };
+		A40D243D190F9181006AE42C /* ASMListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMListViewController.m; sourceTree = "<group>"; };
 		A4AADA4918F6A1B400136C43 /* ASMCameraMinus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ASMCameraMinus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4AADA4C18F6A1B400136C43 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A4AADA4E18F6A1B400136C43 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -184,6 +187,8 @@
 				D8DA237D18F841F800348E88 /* ASMPhotoCell.h */,
 				D8DA237E18F841F800348E88 /* ASMPhotoCell.m */,
 				D8DA238018F8420D00348E88 /* ASMPhotoCell.xib */,
+				A40D243C190F9181006AE42C /* ASMListViewController.h */,
+				A40D243D190F9181006AE42C /* ASMListViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -294,6 +299,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8DA237F18F841F800348E88 /* ASMPhotoCell.m in Sources */,
+				A40D243E190F9181006AE42C /* ASMListViewController.m in Sources */,
 				A4AADA7E18F6A4FA00136C43 /* ASMHomeViewController.m in Sources */,
 				A4AADA5D18F6A1B400136C43 /* ASMAppDelegate.m in Sources */,
 				A4AADA5918F6A1B400136C43 /* main.m in Sources */,
