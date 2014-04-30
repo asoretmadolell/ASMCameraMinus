@@ -110,7 +110,7 @@
 */
 - (IBAction)list:(id)sender
 {
-    ASMListViewController *listVC = [[ASMListViewController alloc] init];
+    ASMListViewController *listVC = [[ASMListViewController alloc] initWithStyle:UITableViewStylePlain andModel:myPhotosArray];
     [self.navigationController pushViewController:listVC animated:YES];
 }
 
@@ -200,7 +200,8 @@
 #pragma mark - collection view flow layout delegate methods
 
 /*
- Este método define el tamaño de las celdas del CollectionView.
+Este método del protocolo UICollectionViewLayout lo llama la Colletion View
+para saber el tamaño que de aplicar a cada celda
 */
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -210,7 +211,8 @@
 #pragma mark - collection view data source delegate methods
 
 /*
- Este método define la cantidad de secciones del CollectionView
+Este método del protocolo UICollectionViewLayout lo llama la Colletion View
+ para saber el número de secciones que contendrá la Collection View.
 */
 // This code isn't necessary if we're using only 1 section
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView

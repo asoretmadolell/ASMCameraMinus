@@ -10,4 +10,8 @@
 
 @interface ASMListViewController : UITableViewController
 
+@property (nonatomic, strong) NSArray *model;
+
+- (id)initWithStyle:(UITableViewStyle)style andModel:(NSArray*)model;
+
 @end

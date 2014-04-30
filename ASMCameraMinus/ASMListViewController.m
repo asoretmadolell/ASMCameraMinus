@@ -14,11 +14,22 @@
 
 @implementation ASMListViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+//- (id)initWithStyle:(UITableViewStyle)style
+//{
+//    self = [super initWithStyle:style];
+//    if (self) {
+//        // Custom initialization
+//        self.title = @"List";
+//    }
+//    return self;
+//}
+
+- (id)initWithStyle:(UITableViewStyle)style andModel:(NSArray*)model
 {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        self.model = model;
         self.title = @"List";
     }
     return self;
@@ -52,7 +63,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 10;
+    return self.model.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -67,7 +78,7 @@
     }
     
     cell.textLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row + 1];
-    cell.imageView.image = [UIImage imageNamed:@"candemor.jpg"];
+    cell.imageView.image = [self.model objectAtIndex:indexPath.row];
     
     return cell;
 }
