@@ -8,12 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ASMListViewController : UITableViewController
-// UITableViewController ya implementa estos dos protocolos :D
-// <UITableViewDelegate, UITableViewDataSource>
+@interface ASMListViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) NSArray *model;
+@property (weak, nonatomic) IBOutlet UITableView *photoTV;
 
-- (id)initWithStyle:(UITableViewStyle)style andModel:(NSArray*)model;
+- (id)initWithModel:(NSArray*)model;
 
 @end

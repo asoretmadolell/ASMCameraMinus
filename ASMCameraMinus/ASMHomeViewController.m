@@ -111,7 +111,7 @@
 */
 - (IBAction)list:(id)sender
 {
-    ASMListViewController *listVC = [[ASMListViewController alloc] initWithStyle:UITableViewStylePlain andModel:myPhotosArray];
+    ASMListViewController *listVC = [[ASMListViewController alloc] initWithModel:myPhotosArray];
     [self.navigationController pushViewController:listVC animated:YES];
 }
 

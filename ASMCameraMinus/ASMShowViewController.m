@@ -14,15 +14,6 @@
 
 @implementation ASMShowViewController
 
-//- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-//{
-//    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-//    if (self) {
-//        // Custom initialization
-//    }
-//    return self;
-//}
-
 - (id)initWithPhoto:(UIImage*)photo
 {
     self = [super initWithNibName:nil bundle:nil];
