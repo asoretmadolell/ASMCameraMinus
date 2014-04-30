@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface ASMListViewController : UITableViewController
+// UITableViewController ya implementa estos dos protocolos :D
+// <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) NSArray *model;
 

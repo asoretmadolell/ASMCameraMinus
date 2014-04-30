@@ -9,6 +9,7 @@
 #import "ASMHomeViewController.h"
 #import "ASMPhotoCell.h"
 #import "ASMListViewController.h"
+#import "ASMShowViewController.h"
 
 @interface ASMHomeViewController () {
     NSMutableArray *myPhotosArray;
@@ -60,7 +61,7 @@
     
     self.photosCV.delegate = self;
     self.photosCV.dataSource = self;
-    self.photosCV.allowsMultipleSelection = YES;
+//    self.photosCV.allowsMultipleSelection = YES;
     
     myPhotosArray = [[NSMutableArray alloc]init];
     
@@ -267,11 +268,16 @@ Este método del protocolo UICollectionViewLayout lo llama la Colletion View
 //    // These indicate which section and item has been selected (mainly for debugging matters, because otherwise this crappy debugger won't tell us)
 //    long sectionID = indexPath.section;
 //    long itemID = indexPath.item;
+
     
-    self.deleteButton.enabled = YES;
     
-    UICollectionViewCell* cell = [self.photosCV cellForItemAtIndexPath:indexPath];
-    cell.backgroundColor = [UIColor blueColor];
+//    self.deleteButton.enabled = YES;
+//    
+//    UICollectionViewCell* cell = [self.photosCV cellForItemAtIndexPath:indexPath];
+//    cell.backgroundColor = [UIColor blueColor];
+    
+    ASMShowViewController *showVC = [[ASMShowViewController alloc] initWithPhoto:[myPhotosArray objectAtIndex:indexPath.item]];
+    [self.navigationController pushViewController:showVC animated:YES];
 }
 
 /*

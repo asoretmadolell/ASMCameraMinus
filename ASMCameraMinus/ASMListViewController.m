@@ -7,6 +7,7 @@
 //
 
 #import "ASMListViewController.h"
+#import "ASMShowViewController.h"
 
 @interface ASMListViewController ()
 
@@ -131,5 +132,13 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - table view delegate methods
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ASMShowViewController *showVC = [[ASMShowViewController alloc] initWithPhoto:[self.model objectAtIndex:indexPath.item]];
+    [self.navigationController pushViewController:showVC animated:YES];
+}
 
 @end

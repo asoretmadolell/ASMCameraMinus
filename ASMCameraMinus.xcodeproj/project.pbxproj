@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		904464A019110DBC00CC1BD8 /* ASMShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9044649E19110DBC00CC1BD8 /* ASMShowViewController.m */; };
+		904464A119110DBC00CC1BD8 /* ASMShowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9044649F19110DBC00CC1BD8 /* ASMShowViewController.xib */; };
 		908675CD1906737700DDC3DD /* c3po.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 908675C91906737700DDC3DD /* c3po.jpg */; };
 		908675CE1906737700DDC3DD /* candemor.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 908675CA1906737700DDC3DD /* candemor.jpg */; };
 		908675CF1906737700DDC3DD /* chewbacca.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 908675CB1906737700DDC3DD /* chewbacca.jpg */; };
 		908675D01906737700DDC3DD /* darthVader.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 908675CC1906737700DDC3DD /* darthVader.jpg */; };
+		90E8437619111D2A0007AA21 /* ASMListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90E8437519111D2A0007AA21 /* ASMListViewController.xib */; };
 		A40D243E190F9181006AE42C /* ASMListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A40D243D190F9181006AE42C /* ASMListViewController.m */; };
 		A4AADA4D18F6A1B400136C43 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4AADA4C18F6A1B400136C43 /* Foundation.framework */; };
 		A4AADA4F18F6A1B400136C43 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4AADA4E18F6A1B400136C43 /* CoreGraphics.framework */; };
@@ -41,10 +44,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9044649D19110DBC00CC1BD8 /* ASMShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMShowViewController.h; sourceTree = "<group>"; };
+		9044649E19110DBC00CC1BD8 /* ASMShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMShowViewController.m; sourceTree = "<group>"; };
+		9044649F19110DBC00CC1BD8 /* ASMShowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMShowViewController.xib; sourceTree = "<group>"; };
 		908675C91906737700DDC3DD /* c3po.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = c3po.jpg; sourceTree = "<group>"; };
 		908675CA1906737700DDC3DD /* candemor.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = candemor.jpg; sourceTree = "<group>"; };
 		908675CB1906737700DDC3DD /* chewbacca.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = chewbacca.jpg; sourceTree = "<group>"; };
 		908675CC1906737700DDC3DD /* darthVader.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = darthVader.jpg; sourceTree = "<group>"; };
+		90E8437519111D2A0007AA21 /* ASMListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMListViewController.xib; sourceTree = "<group>"; };
 		A40D243C190F9181006AE42C /* ASMListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMListViewController.h; sourceTree = "<group>"; };
 		A40D243D190F9181006AE42C /* ASMListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMListViewController.m; sourceTree = "<group>"; };
 		A4AADA4918F6A1B400136C43 /* ASMCameraMinus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ASMCameraMinus.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -189,6 +196,10 @@
 				D8DA238018F8420D00348E88 /* ASMPhotoCell.xib */,
 				A40D243C190F9181006AE42C /* ASMListViewController.h */,
 				A40D243D190F9181006AE42C /* ASMListViewController.m */,
+				90E8437519111D2A0007AA21 /* ASMListViewController.xib */,
+				9044649D19110DBC00CC1BD8 /* ASMShowViewController.h */,
+				9044649E19110DBC00CC1BD8 /* ASMShowViewController.m */,
+				9044649F19110DBC00CC1BD8 /* ASMShowViewController.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -272,9 +283,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				904464A119110DBC00CC1BD8 /* ASMShowViewController.xib in Resources */,
 				D8DA238118F8420D00348E88 /* ASMPhotoCell.xib in Resources */,
 				908675CD1906737700DDC3DD /* c3po.jpg in Resources */,
 				908675D01906737700DDC3DD /* darthVader.jpg in Resources */,
+				90E8437619111D2A0007AA21 /* ASMListViewController.xib in Resources */,
 				908675CE1906737700DDC3DD /* candemor.jpg in Resources */,
 				A4AADA7F18F6A4FA00136C43 /* ASMHomeViewController.xib in Resources */,
 				A4AADA5718F6A1B400136C43 /* InfoPlist.strings in Resources */,
@@ -303,6 +316,7 @@
 				A4AADA7E18F6A4FA00136C43 /* ASMHomeViewController.m in Sources */,
 				A4AADA5D18F6A1B400136C43 /* ASMAppDelegate.m in Sources */,
 				A4AADA5918F6A1B400136C43 /* main.m in Sources */,
+				904464A019110DBC00CC1BD8 /* ASMShowViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
