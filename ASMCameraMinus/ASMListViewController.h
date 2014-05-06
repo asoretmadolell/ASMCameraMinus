@@ -8,12 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ASMListViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface ASMListViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate>
 
-@property (nonatomic, strong) NSArray *model;
+@property (nonatomic, strong) NSMutableArray *model;
 @property (weak, nonatomic) IBOutlet UITableView *photoTV;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *gridButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shootButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *socialButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteButton;
+
+- (IBAction)grid:(id)sender;
+- (IBAction)edit:(id)sender;
+- (IBAction)shoot:(id)sender;
+- (IBAction)social:(id)sender;
+- (IBAction)delete:(id)sender;
 
 - (id)initWithModel:(NSArray*)model;
 
-- (IBAction)gridButton:(id)sender;
 @end

@@ -9,13 +9,15 @@
 #import "ASMListViewController.h"
 #import "ASMInfoViewController.h"
 
-@interface ASMListViewController ()
+@interface ASMListViewController () {
+    NSMutableArray *myPhotosArray;
+}
 
 @end
 
 @implementation ASMListViewController
 
-- (id)initWithModel:(NSArray*)model
+- (id)initWithModel:(NSMutableArray*)model
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
@@ -26,24 +28,88 @@
     return self;
 }
 
-- (IBAction)gridButton:(id)sender
-{
-    [self.navigationController popViewControllerAnimated:NO];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    myPhotosArray = self.model;
     self.navigationItem.hidesBackButton = YES;
     self.photoTV.delegate = self;
     self.photoTV.dataSource = self;
+    self.photoTV.allowsMultipleSelection = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.photoTV reloadData];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)grid:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:NO];
+}
+
+- (IBAction)edit:(id)sender
+{
+    NSArray *selectedItems = [self.photoTV indexPathsForSelectedRows];
+    UITableViewCell *cell = [self.photoTV cellForRowAtIndexPath:[selectedItems objectAtIndex:0]];
+    ASMInfoViewController *infoVC = [[ASMInfoViewController alloc] initWithPhoto:cell.imageView.image];
+    [self.navigationController pushViewController:infoVC animated:YES];
+}
+
+- (IBAction)shoot:(id)sender
+{
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        UIImagePickerController *pc_shoot = [[UIImagePickerController alloc] init];
+        pc_shoot.delegate = self;
+        pc_shoot.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:pc_shoot animated:YES completion:nil];
+    }
+}
+
+- (IBAction)social:(id)sender {
+}
+
+- (IBAction)delete:(id)sender
+{
+    NSArray *selectedItems = [self.photoTV indexPathsForSelectedRows];
+    
+    NSString *actionSheetTitle = [[NSString alloc] init];
+    
+    if (selectedItems.count == 1)
+    {
+        actionSheetTitle = [NSString stringWithFormat:@"Are you sure you want to delete this image?"];
+    }
+    else
+    {
+        actionSheetTitle = [NSString stringWithFormat:@"Are you sure you want to delete these %lu images?", (unsigned long)selectedItems.count];
+    }
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:actionSheetTitle
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Yup"
+                                               destructiveButtonTitle:@"Nope"
+                                                    otherButtonTitles:nil];
+    
+    [actionSheet showFromBarButtonItem:sender animated:YES];
+}
+
+#pragma mark - picker view delegate methods
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = (UIImage*) [info valueForKey:UIImagePickerControllerOriginalImage];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    [myPhotosArray addObject:image];
+    if (myPhotosArray.count == 1) self.gridButton.enabled = YES;
+    [self.photoTV reloadData];
 }
 
 #pragma mark - Table view data source
@@ -57,7 +123,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.model.count;
+    return myPhotosArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -72,7 +138,7 @@
     }
     
     cell.textLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row + 1];
-    cell.imageView.image = [self.model objectAtIndex:indexPath.row];
+    cell.imageView.image = [myPhotosArray objectAtIndex:indexPath.row];
     
     return cell;
 }
@@ -81,11 +147,49 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    [cell setSelected:NO animated:YES];
+    // THE WAY OF THE GEORGE
+    self.editButton.enabled = ( [self.photoTV indexPathsForSelectedRows].count == 1 );
     
-    ASMInfoViewController *infoVC = [[ASMInfoViewController alloc] initWithPhoto:[self.model objectAtIndex:indexPath.item]];
-    [self.navigationController pushViewController:infoVC animated:YES];
+    self.deleteButton.enabled = YES;
+    
+    UITableViewCell* cell = [self.photoTV cellForRowAtIndexPath:indexPath];
+    cell.contentView.backgroundColor = [UIColor blueColor];
+}
+
+-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // THE WAY OF THE GEORGE
+    self.editButton.enabled = ( [self.photoTV indexPathsForSelectedRows].count == 1 );
+    
+    self.deleteButton.enabled = YES;
+    if( [self.photoTV indexPathsForSelectedRows].count == 0 ) self.deleteButton.enabled = NO;
+}
+
+#pragma mark - action sheet delegate methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1)
+    {
+        NSArray *selectedItems = [self.photoTV indexPathsForSelectedRows];
+        NSArray *sortSelectedItems = [selectedItems sortedArrayWithOptions:0 usingComparator:^NSComparisonResult( id obj1, id obj2 )
+                                      {
+                                          if( ((NSIndexPath*)obj1).item > ( (NSIndexPath*)obj2).item) return (NSComparisonResult)NSOrderedAscending;
+                                          if( ((NSIndexPath*)obj1).item < ( (NSIndexPath*)obj2).item) return (NSComparisonResult)NSOrderedDescending;
+                                          return (NSComparisonResult)NSOrderedSame;
+                                      }];
+        
+        for (NSIndexPath *indexPath in sortSelectedItems)
+        {
+            [myPhotosArray removeObjectAtIndex:indexPath.item];
+        }
+        
+        [self.photoTV reloadData];
+        
+        self.deleteButton.enabled = NO;
+        
+        if (myPhotosArray.count == 0) self.gridButton.enabled = NO;
+    }
 }
 
 @end

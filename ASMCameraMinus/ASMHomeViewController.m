@@ -47,6 +47,8 @@
     {
         self.shootButton.enabled = YES;
     }
+    
+    [self.photosCV reloadData];
 }
 
 /*
@@ -276,16 +278,8 @@ Este método del protocolo UICollectionViewLayout lo llama la Colletion View
 //    long sectionID = indexPath.section;
 //    long itemID = indexPath.item;
 
-    self.editButton.enabled = ( [self.photosCV indexPathsForSelectedItems].count == 1);
-//    NSArray *selectedItems = [self.photosCV indexPathsForSelectedItems];
-//    if( selectedItems.count == 1 )
-//    {
-//        self.editButton.enabled = YES;
-//    }
-//    else
-//    {
-//        self.editButton.enabled = NO;
-//    }
+    // THE WAY OF THE GEORGE
+    self.editButton.enabled = ( [self.photosCV indexPathsForSelectedItems].count == 1 );
     
     self.deleteButton.enabled = YES;
     
@@ -305,15 +299,8 @@ Este método del protocolo UICollectionViewLayout lo llama la Colletion View
 //    long sectionID = indexPath.section;
 //    long itemID = indexPath.item;
     
-    NSArray *selectedItems = [self.photosCV indexPathsForSelectedItems];
-    if( selectedItems.count == 1 )
-    {
-        self.editButton.enabled = YES;
-    }
-    else
-    {
-        self.editButton.enabled = NO;
-    }
+    // THE WAY OF THE GEORGE
+    self.editButton.enabled = ( [self.photosCV indexPathsForSelectedItems].count == 1 );
     
     self.deleteButton.enabled = YES;
     
