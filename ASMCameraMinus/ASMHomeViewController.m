@@ -9,7 +9,7 @@
 #import "ASMHomeViewController.h"
 #import "ASMPhotoCell.h"
 #import "ASMListViewController.h"
-#import "ASMShowViewController.h"
+#import "ASMInfoViewController.h"
 
 @interface ASMHomeViewController () {
     NSMutableArray *myPhotosArray;
@@ -61,7 +61,7 @@
     
     self.photosCV.delegate = self;
     self.photosCV.dataSource = self;
-//    self.photosCV.allowsMultipleSelection = YES;
+    self.photosCV.allowsMultipleSelection = YES;
     
     myPhotosArray = [[NSMutableArray alloc]init];
     
@@ -92,6 +92,8 @@
     [self.photosCV registerNib:[UINib nibWithNibName:@"ASMPhotoCell" bundle:nil] forCellWithReuseIdentifier:@"PhotoCell"];
     
     if (myPhotosArray.count == 0) self.listButton.enabled = NO;
+    
+    self.editButton.enabled = NO;
 }
 
 /*
@@ -112,7 +114,7 @@
 - (IBAction)list:(id)sender
 {
     ASMListViewController *listVC = [[ASMListViewController alloc] initWithModel:myPhotosArray];
-    [self.navigationController pushViewController:listVC animated:YES];
+    [self.navigationController pushViewController:listVC animated:NO];
 }
 
 /*
@@ -121,7 +123,12 @@
  añadirá a la navegación y que mostrará la imagen en pantalla
  completa con los cinco filtrillos a aplicar.
 */
-- (IBAction)edit:(id)sender {
+- (IBAction)edit:(id)sender
+{
+    NSArray *selectedItems = [self.photosCV indexPathsForSelectedItems];
+    ASMPhotoCell *cell = (ASMPhotoCell*)[self.photosCV cellForItemAtIndexPath:[selectedItems objectAtIndex:0]];
+    ASMInfoViewController *infoVC = [[ASMInfoViewController alloc] initWithPhoto:cell.image.image];
+    [self.navigationController pushViewController:infoVC animated:YES];
 }
 
 /*
@@ -269,15 +276,21 @@ Este método del protocolo UICollectionViewLayout lo llama la Colletion View
 //    long sectionID = indexPath.section;
 //    long itemID = indexPath.item;
 
+    self.editButton.enabled = ( [self.photosCV indexPathsForSelectedItems].count == 1);
+//    NSArray *selectedItems = [self.photosCV indexPathsForSelectedItems];
+//    if( selectedItems.count == 1 )
+//    {
+//        self.editButton.enabled = YES;
+//    }
+//    else
+//    {
+//        self.editButton.enabled = NO;
+//    }
     
+    self.deleteButton.enabled = YES;
     
-//    self.deleteButton.enabled = YES;
-//    
-//    UICollectionViewCell* cell = [self.photosCV cellForItemAtIndexPath:indexPath];
-//    cell.backgroundColor = [UIColor blueColor];
-    
-    ASMShowViewController *showVC = [[ASMShowViewController alloc] initWithPhoto:[myPhotosArray objectAtIndex:indexPath.item]];
-    [self.navigationController pushViewController:showVC animated:YES];
+    UICollectionViewCell* cell = [self.photosCV cellForItemAtIndexPath:indexPath];
+    cell.backgroundColor = [UIColor blueColor];
 }
 
 /*
@@ -291,6 +304,18 @@ Este método del protocolo UICollectionViewLayout lo llama la Colletion View
 //    // These indicate which section and item has been selected (mainly for debugging matters)
 //    long sectionID = indexPath.section;
 //    long itemID = indexPath.item;
+    
+    NSArray *selectedItems = [self.photosCV indexPathsForSelectedItems];
+    if( selectedItems.count == 1 )
+    {
+        self.editButton.enabled = YES;
+    }
+    else
+    {
+        self.editButton.enabled = NO;
+    }
+    
+    self.deleteButton.enabled = YES;
     
     if( [self.photosCV indexPathsForSelectedItems].count == 0 ) self.deleteButton.enabled = NO;
 

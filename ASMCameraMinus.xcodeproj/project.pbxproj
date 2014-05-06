@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		904464A019110DBC00CC1BD8 /* ASMShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9044649E19110DBC00CC1BD8 /* ASMShowViewController.m */; };
 		904464A119110DBC00CC1BD8 /* ASMShowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9044649F19110DBC00CC1BD8 /* ASMShowViewController.xib */; };
+		9048A4A71918F9240046C2C7 /* ASMInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9048A4A51918F9240046C2C7 /* ASMInfoViewController.m */; };
+		9048A4A81918F9240046C2C7 /* ASMInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9048A4A61918F9240046C2C7 /* ASMInfoViewController.xib */; };
 		908675CD1906737700DDC3DD /* c3po.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 908675C91906737700DDC3DD /* c3po.jpg */; };
 		908675CE1906737700DDC3DD /* candemor.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 908675CA1906737700DDC3DD /* candemor.jpg */; };
 		908675CF1906737700DDC3DD /* chewbacca.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 908675CB1906737700DDC3DD /* chewbacca.jpg */; };
@@ -47,6 +49,9 @@
 		9044649D19110DBC00CC1BD8 /* ASMShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMShowViewController.h; sourceTree = "<group>"; };
 		9044649E19110DBC00CC1BD8 /* ASMShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMShowViewController.m; sourceTree = "<group>"; };
 		9044649F19110DBC00CC1BD8 /* ASMShowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMShowViewController.xib; sourceTree = "<group>"; };
+		9048A4A41918F9240046C2C7 /* ASMInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMInfoViewController.h; sourceTree = "<group>"; };
+		9048A4A51918F9240046C2C7 /* ASMInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMInfoViewController.m; sourceTree = "<group>"; };
+		9048A4A61918F9240046C2C7 /* ASMInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMInfoViewController.xib; sourceTree = "<group>"; };
 		908675C91906737700DDC3DD /* c3po.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = c3po.jpg; sourceTree = "<group>"; };
 		908675CA1906737700DDC3DD /* candemor.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = candemor.jpg; sourceTree = "<group>"; };
 		908675CB1906737700DDC3DD /* chewbacca.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = chewbacca.jpg; sourceTree = "<group>"; };
@@ -200,6 +205,9 @@
 				9044649D19110DBC00CC1BD8 /* ASMShowViewController.h */,
 				9044649E19110DBC00CC1BD8 /* ASMShowViewController.m */,
 				9044649F19110DBC00CC1BD8 /* ASMShowViewController.xib */,
+				9048A4A41918F9240046C2C7 /* ASMInfoViewController.h */,
+				9048A4A51918F9240046C2C7 /* ASMInfoViewController.m */,
+				9048A4A61918F9240046C2C7 /* ASMInfoViewController.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -283,6 +291,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9048A4A81918F9240046C2C7 /* ASMInfoViewController.xib in Resources */,
 				904464A119110DBC00CC1BD8 /* ASMShowViewController.xib in Resources */,
 				D8DA238118F8420D00348E88 /* ASMPhotoCell.xib in Resources */,
 				908675CD1906737700DDC3DD /* c3po.jpg in Resources */,
@@ -311,6 +320,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9048A4A71918F9240046C2C7 /* ASMInfoViewController.m in Sources */,
 				D8DA237F18F841F800348E88 /* ASMPhotoCell.m in Sources */,
 				A40D243E190F9181006AE42C /* ASMListViewController.m in Sources */,
 				A4AADA7E18F6A4FA00136C43 /* ASMHomeViewController.m in Sources */,

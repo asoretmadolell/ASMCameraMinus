@@ -15,4 +15,5 @@
 
 - (id)initWithModel:(NSArray*)model;
 
+- (IBAction)gridButton:(id)sender;
 @end

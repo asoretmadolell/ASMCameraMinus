@@ -7,7 +7,7 @@
 //
 
 #import "ASMListViewController.h"
-#import "ASMShowViewController.h"
+#import "ASMInfoViewController.h"
 
 @interface ASMListViewController ()
 
@@ -26,10 +26,16 @@
     return self;
 }
 
+- (IBAction)gridButton:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:NO];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.navigationItem.hidesBackButton = YES;
     self.photoTV.delegate = self;
     self.photoTV.dataSource = self;
 }
@@ -75,8 +81,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ASMShowViewController *showVC = [[ASMShowViewController alloc] initWithPhoto:[self.model objectAtIndex:indexPath.item]];
-    [self.navigationController pushViewController:showVC animated:YES];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    [cell setSelected:NO animated:YES];
+    
+    ASMInfoViewController *infoVC = [[ASMInfoViewController alloc] initWithPhoto:[self.model objectAtIndex:indexPath.item]];
+    [self.navigationController pushViewController:infoVC animated:YES];
 }
 
 @end
