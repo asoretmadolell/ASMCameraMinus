@@ -8,6 +8,7 @@
 
 #import "ASMListViewController.h"
 #import "ASMInfoViewController.h"
+#import "ASMPhotoTableCell.h"
 
 @interface ASMListViewController () {
     NSMutableArray *myPhotosArray;
@@ -23,7 +24,7 @@
     if (self) {
         // Custom initialization
         self.model = model;
-        self.title = @"List";
+        self.title = @"Camera Minus";
     }
     return self;
 }
@@ -33,10 +34,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     myPhotosArray = self.model;
+    
     self.navigationItem.hidesBackButton = YES;
+    
     self.photoTV.delegate = self;
     self.photoTV.dataSource = self;
+    
     self.photoTV.allowsMultipleSelection = YES;
+    
+    [self.photoTV registerNib:[UINib nibWithNibName:@"ASMPhotoTableCell" bundle:nil] forCellReuseIdentifier:@"MYCELL"];
+//    [self.photoTV registerClass:[ASMPhotoTableCell class] forCellReuseIdentifier:@"MYCELL"];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -133,19 +140,25 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    // Removed the "forIndexPath:indexPath". Still don't know exactly why it crashed with it.
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//    static NSString *CellIdentifier = @"Cell";
+//    // Removed the "forIndexPath:indexPath". Still don't know exactly why it crashed with it.
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//    
+//    if (cell == nil)
+//    {
+//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+//    }
+//    
+//    cell.textLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row + 1];
+//    cell.imageView.image = [myPhotosArray objectAtIndex:indexPath.row];
     
-    if (cell == nil)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
+    UITableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:@"MYCELL" forIndexPath:indexPath];
+    ASMPhotoTableCell *myCell = (ASMPhotoTableCell*)cell;
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row + 1];
-    cell.imageView.image = [myPhotosArray objectAtIndex:indexPath.row];
+    myCell.myLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row + 1];
+    myCell.myImage.image = [myPhotosArray objectAtIndex:indexPath.row];
     
-    return cell;
+    return myCell;
 }
 
 #pragma mark - table view delegate methods

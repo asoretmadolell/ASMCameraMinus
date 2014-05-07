@@ -31,6 +31,8 @@
 		A4AADA7218F6A1B500136C43 /* ASMCameraMinusTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A4AADA7118F6A1B500136C43 /* ASMCameraMinusTests.m */; };
 		A4AADA7E18F6A4FA00136C43 /* ASMHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4AADA7C18F6A4FA00136C43 /* ASMHomeViewController.m */; };
 		A4AADA7F18F6A4FA00136C43 /* ASMHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4AADA7D18F6A4FA00136C43 /* ASMHomeViewController.xib */; };
+		D855F38F191A8AE90013BF39 /* ASMPhotoTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D855F38D191A8AE90013BF39 /* ASMPhotoTableCell.m */; };
+		D855F390191A8AE90013BF39 /* ASMPhotoTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D855F38E191A8AE90013BF39 /* ASMPhotoTableCell.xib */; };
 		D8DA237F18F841F800348E88 /* ASMPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8DA237E18F841F800348E88 /* ASMPhotoCell.m */; };
 		D8DA238118F8420D00348E88 /* ASMPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8DA238018F8420D00348E88 /* ASMPhotoCell.xib */; };
 /* End PBXBuildFile section */
@@ -78,6 +80,9 @@
 		A4AADA7B18F6A4FA00136C43 /* ASMHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMHomeViewController.h; sourceTree = "<group>"; };
 		A4AADA7C18F6A4FA00136C43 /* ASMHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMHomeViewController.m; sourceTree = "<group>"; };
 		A4AADA7D18F6A4FA00136C43 /* ASMHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMHomeViewController.xib; sourceTree = "<group>"; };
+		D855F38C191A8AE90013BF39 /* ASMPhotoTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMPhotoTableCell.h; sourceTree = "<group>"; };
+		D855F38D191A8AE90013BF39 /* ASMPhotoTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMPhotoTableCell.m; sourceTree = "<group>"; };
+		D855F38E191A8AE90013BF39 /* ASMPhotoTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMPhotoTableCell.xib; sourceTree = "<group>"; };
 		D8DA237D18F841F800348E88 /* ASMPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMPhotoCell.h; sourceTree = "<group>"; };
 		D8DA237E18F841F800348E88 /* ASMPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMPhotoCell.m; sourceTree = "<group>"; };
 		D8DA238018F8420D00348E88 /* ASMPhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMPhotoCell.xib; sourceTree = "<group>"; };
@@ -208,6 +213,9 @@
 				9048A4A41918F9240046C2C7 /* ASMInfoViewController.h */,
 				9048A4A51918F9240046C2C7 /* ASMInfoViewController.m */,
 				9048A4A61918F9240046C2C7 /* ASMInfoViewController.xib */,
+				D855F38C191A8AE90013BF39 /* ASMPhotoTableCell.h */,
+				D855F38D191A8AE90013BF39 /* ASMPhotoTableCell.m */,
+				D855F38E191A8AE90013BF39 /* ASMPhotoTableCell.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -292,6 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9048A4A81918F9240046C2C7 /* ASMInfoViewController.xib in Resources */,
+				D855F390191A8AE90013BF39 /* ASMPhotoTableCell.xib in Resources */,
 				904464A119110DBC00CC1BD8 /* ASMShowViewController.xib in Resources */,
 				D8DA238118F8420D00348E88 /* ASMPhotoCell.xib in Resources */,
 				908675CD1906737700DDC3DD /* c3po.jpg in Resources */,
@@ -321,6 +330,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9048A4A71918F9240046C2C7 /* ASMInfoViewController.m in Sources */,
+				D855F38F191A8AE90013BF39 /* ASMPhotoTableCell.m in Sources */,
 				D8DA237F18F841F800348E88 /* ASMPhotoCell.m in Sources */,
 				A40D243E190F9181006AE42C /* ASMListViewController.m in Sources */,
 				A4AADA7E18F6A4FA00136C43 /* ASMHomeViewController.m in Sources */,
