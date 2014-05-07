@@ -49,6 +49,9 @@
     }
     
     [self.photosCV reloadData];
+    
+    self.editButton.enabled = NO;
+    self.deleteButton.enabled = NO;
 }
 
 /*
@@ -191,6 +194,8 @@
                                                     otherButtonTitles:nil];
     
     [actionSheet showFromBarButtonItem:sender animated:YES];
+    
+    self.editButton.enabled = NO;
 }
 
 #pragma mark - picker view delegate methods
