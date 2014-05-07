@@ -8,7 +8,7 @@
 
 #import "ASMListViewController.h"
 #import "ASMInfoViewController.h"
-#import "ASMPhotoTableCell.h"
+#import "ASMTableViewCell.h"
 
 @interface ASMListViewController () {
     NSMutableArray *myPhotosArray;
@@ -42,7 +42,7 @@
     
     self.photoTV.allowsMultipleSelection = YES;
     
-    [self.photoTV registerNib:[UINib nibWithNibName:@"ASMPhotoTableCell" bundle:nil] forCellReuseIdentifier:@"MYCELL"];
+    [self.photoTV registerNib:[UINib nibWithNibName:@"ASMTableViewCell" bundle:nil] forCellReuseIdentifier:@"MYCELL"];
 //    [self.photoTV registerClass:[ASMPhotoTableCell class] forCellReuseIdentifier:@"MYCELL"];
 }
 
@@ -153,10 +153,10 @@
 //    cell.imageView.image = [myPhotosArray objectAtIndex:indexPath.row];
     
     UITableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:@"MYCELL" forIndexPath:indexPath];
-    ASMPhotoTableCell *myCell = (ASMPhotoTableCell*)cell;
+    ASMTableViewCell *myCell = (ASMTableViewCell*)cell;
     
     myCell.myLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row + 1];
-    myCell.myImage.image = [myPhotosArray objectAtIndex:indexPath.row];
+    myCell.myImageView.image = [myPhotosArray objectAtIndex:indexPath.row];
     
     return myCell;
 }

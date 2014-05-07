@@ -2,7 +2,7 @@
 //  ASMTableViewCell.m
 //  ASMCameraMinus
 //
-//  Created by Jorge Marcos Fernandez on 08/05/14.
+//  Created by SoReT on 07/05/14.
 //  Copyright (c) 2014 SoReT. All rights reserved.
 //
 
