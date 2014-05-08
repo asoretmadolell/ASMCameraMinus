@@ -43,7 +43,6 @@
     self.photoTV.allowsMultipleSelection = YES;
     
     [self.photoTV registerNib:[UINib nibWithNibName:@"ASMTableViewCell" bundle:nil] forCellReuseIdentifier:@"MYCELL"];
-//    [self.photoTV registerClass:[ASMPhotoTableCell class] forCellReuseIdentifier:@"MYCELL"];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -68,8 +67,8 @@
 - (IBAction)edit:(id)sender
 {
     NSArray *selectedItems = [self.photoTV indexPathsForSelectedRows];
-    UITableViewCell *cell = [self.photoTV cellForRowAtIndexPath:[selectedItems objectAtIndex:0]];
-    ASMInfoViewController *infoVC = [[ASMInfoViewController alloc] initWithPhoto:cell.imageView.image];
+    ASMTableViewCell *myCell = (ASMTableViewCell*)[self.photoTV cellForRowAtIndexPath:[selectedItems objectAtIndex:0]];
+    ASMInfoViewController *infoVC = [[ASMInfoViewController alloc] initWithPhoto:myCell.myImageView.image];
     [self.navigationController pushViewController:infoVC animated:YES];
 }
 
@@ -140,23 +139,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    static NSString *CellIdentifier = @"Cell";
-//    // Removed the "forIndexPath:indexPath". Still don't know exactly why it crashed with it.
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//    
-//    if (cell == nil)
-//    {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//    }
-//    
-//    cell.textLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row + 1];
-//    cell.imageView.image = [myPhotosArray objectAtIndex:indexPath.row];
-    
     UITableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:@"MYCELL" forIndexPath:indexPath];
     ASMTableViewCell *myCell = (ASMTableViewCell*)cell;
     
     myCell.myLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row + 1];
     myCell.myImageView.image = [myPhotosArray objectAtIndex:indexPath.row];
+    
+//    int width = myCell.myImageView.image.size.width;
+//    int height = myCell.myImageView.image.size.height;
+    
+    myCell.mySizeLabel.text = [NSString stringWithFormat:@"Size: %.0f x %.0f", myCell.myImageView.image.size.width, myCell.myImageView.image.size.height];
     
     return myCell;
 }
@@ -181,6 +173,20 @@
     
     self.deleteButton.enabled = YES;
     if( [self.photoTV indexPathsForSelectedRows].count == 0 ) self.deleteButton.enabled = NO;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return ( indexPath.row % 2 == 0 );
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [myPhotosArray removeObjectAtIndex:indexPath.row];
+    [tableView reloadData];
+    
+    self.editButton.enabled = NO;
+    self.deleteButton.enabled = NO;
 }
 
 #pragma mark - action sheet delegate methods

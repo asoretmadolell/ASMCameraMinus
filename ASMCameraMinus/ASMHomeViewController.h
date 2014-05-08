@@ -23,5 +23,6 @@
 - (IBAction)social:(id)sender;
 - (IBAction)delete:(id)sender;
 
+- (void)infoClicked:(id)sender;
 
 @end

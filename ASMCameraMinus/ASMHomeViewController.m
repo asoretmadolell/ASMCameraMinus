@@ -64,6 +64,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    //Navigation Bar Buttons
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Info"
+                                                                              style:UIBarButtonItemStylePlain
+                                                                             target:self
+                                                                             action:@selector( infoClicked: )];
+    
     self.photosCV.delegate = self;
     self.photosCV.dataSource = self;
     self.photosCV.allowsMultipleSelection = YES;
@@ -346,5 +352,12 @@ Este método del protocolo UICollectionViewLayout lo llama la Colletion View
         if (myPhotosArray.count == 0) self.listButton.enabled = NO;
     }
 }
+
+#pragma mark - class instance methods
+- (void)infoClicked:(id)sender
+{
+    
+}
+
 
 @end
