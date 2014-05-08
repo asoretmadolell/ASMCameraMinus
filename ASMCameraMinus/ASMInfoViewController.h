@@ -12,6 +12,8 @@
 
 @property (strong, nonatomic) UIImage *photo;
 @property (weak, nonatomic) IBOutlet UIImageView *infoImage;
+@property (weak, nonatomic) IBOutlet UILabel *imageSize;
+@property (weak, nonatomic) IBOutlet UILabel *imageWeight;
 
 - (id)initWithPhoto:(UIImage*)photo;
 

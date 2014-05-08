@@ -10,6 +10,7 @@
 #import "ASMPhotoCell.h"
 #import "ASMListViewController.h"
 #import "ASMInfoViewController.h"
+#import "ASMEditViewController.h"
 
 @interface ASMHomeViewController () {
     NSMutableArray *myPhotosArray;
@@ -37,24 +38,6 @@
 }
 
 /*
- A este método se le llama justo antes de que se empiece a
- cargar cualquier vista. Por tanto, aquí conviene implementar
- todo aquello que tenga que ver con mostrar la vista.
-*/
-- (void)viewWillAppear:(BOOL)animated
-{
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-    {
-        self.shootButton.enabled = YES;
-    }
-    
-    [self.photosCV reloadData];
-    
-    self.editButton.enabled = NO;
-    self.deleteButton.enabled = NO;
-}
-
-/*
  Este método es llamado después de que se haya cargado la vista.
  Por eso inicializamos aquí las vistas que metimos en el xib,
  además de inicializar el controlador de mi celdita.
@@ -64,7 +47,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    //Navigation Bar Buttons
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Info"
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
@@ -72,6 +54,7 @@
     
     self.photosCV.delegate = self;
     self.photosCV.dataSource = self;
+    
     self.photosCV.allowsMultipleSelection = YES;
     
     myPhotosArray = [[NSMutableArray alloc]init];
@@ -103,8 +86,23 @@
     [self.photosCV registerNib:[UINib nibWithNibName:@"ASMPhotoCell" bundle:nil] forCellWithReuseIdentifier:@"PhotoCell"];
     
     if (myPhotosArray.count == 0) self.listButton.enabled = NO;
+}
+
+/*
+ A este método se le llama justo antes de que se empiece a
+ cargar cualquier vista. Por tanto, aquí conviene implementar
+ todo aquello que tenga que ver con mostrar la vista.
+ */
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.photosCV reloadData];
+    
+    // THE WAY OF THE GEORGE
+    self.shootButton.enabled = ( [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] );
     
     self.editButton.enabled = NO;
+    self.deleteButton.enabled = NO;
+    self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
 /*
@@ -138,8 +136,8 @@
 {
     NSArray *selectedItems = [self.photosCV indexPathsForSelectedItems];
     ASMPhotoCell *cell = (ASMPhotoCell*)[self.photosCV cellForItemAtIndexPath:[selectedItems objectAtIndex:0]];
-    ASMInfoViewController *infoVC = [[ASMInfoViewController alloc] initWithPhoto:cell.image.image];
-    [self.navigationController pushViewController:infoVC animated:YES];
+    ASMEditViewController *editVC = [[ASMEditViewController alloc] initWithPhoto:cell.image.image];
+    [self.navigationController pushViewController:editVC animated:YES];
 }
 
 /*
@@ -155,15 +153,6 @@
         pc_shoot.sourceType = UIImagePickerControllerSourceTypeCamera;
         [self presentViewController:pc_shoot animated:YES completion:nil];
     }
-    
-    // okay, we really don't need any of this code right here...
-//    // this checks if the device has a camera
-//    BOOL hasCamera = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
-//    // this checks if the device has front and rear camera
-//    BOOL hasFrontCamera = [UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront];
-//    BOOL hasRearCamera = [UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceRear];
-//    // this specifies which camera to use
-//    pc_shoot.cameraDevice = UIImagePickerControllerCameraDeviceFront;
 }
 
 /*
@@ -202,6 +191,7 @@
     [actionSheet showFromBarButtonItem:sender animated:YES];
     
     self.editButton.enabled = NO;
+    self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
 #pragma mark - picker view delegate methods
@@ -262,16 +252,8 @@ Este método del protocolo UICollectionViewLayout lo llama la Colletion View
     
     cell.image.image = [myPhotosArray objectAtIndex:indexPath.item];
     
-    if (cell.selected)
-    {
-        cell.backgroundColor = [UIColor blueColor];
-    }
-    else
-    {
-        cell.backgroundColor = [UIColor blackColor];
-    }
-//    // By the way, this is another way of doing the same thing:
-//    cell.backgroundColor = ( cell.selected ) ? [UIColor blueColor] : [UIColor blackColor];
+    // THE WAY OF THE GEORGE
+    cell.backgroundColor = ( cell.selected ) ? [UIColor blueColor] : [UIColor blackColor];
     
     return cell;
 }
@@ -285,12 +267,9 @@ Este método del protocolo UICollectionViewLayout lo llama la Colletion View
 */
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    // These indicate which section and item has been selected (mainly for debugging matters, because otherwise this crappy debugger won't tell us)
-//    long sectionID = indexPath.section;
-//    long itemID = indexPath.item;
-
     // THE WAY OF THE GEORGE
     self.editButton.enabled = ( [self.photosCV indexPathsForSelectedItems].count == 1 );
+    self.navigationItem.rightBarButtonItem.enabled = ( [self.photosCV indexPathsForSelectedItems].count == 1 );
     
     self.deleteButton.enabled = YES;
     
@@ -306,12 +285,9 @@ Este método del protocolo UICollectionViewLayout lo llama la Colletion View
 */
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    // These indicate which section and item has been selected (mainly for debugging matters)
-//    long sectionID = indexPath.section;
-//    long itemID = indexPath.item;
-    
     // THE WAY OF THE GEORGE
     self.editButton.enabled = ( [self.photosCV indexPathsForSelectedItems].count == 1 );
+    self.navigationItem.rightBarButtonItem.enabled = ( [self.photosCV indexPathsForSelectedItems].count == 1 );
     
     self.deleteButton.enabled = YES;
     
@@ -354,10 +330,13 @@ Este método del protocolo UICollectionViewLayout lo llama la Colletion View
 }
 
 #pragma mark - class instance methods
+
 - (void)infoClicked:(id)sender
 {
-    
+    NSArray *selectedItems = [self.photosCV indexPathsForSelectedItems];
+    ASMPhotoCell *cell = (ASMPhotoCell*)[self.photosCV cellForItemAtIndexPath:[selectedItems objectAtIndex:0]];
+    ASMInfoViewController *infoVC = [[ASMInfoViewController alloc] initWithPhoto:cell.image.image];
+    [self.navigationController pushViewController:infoVC animated:YES];
 }
-
 
 @end

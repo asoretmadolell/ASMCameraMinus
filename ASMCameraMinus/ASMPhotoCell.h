@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ASMPhotoCell : UICollectionViewCell
+
 @property (weak, nonatomic) IBOutlet UIImageView *image;
 
 @end

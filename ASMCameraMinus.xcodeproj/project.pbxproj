@@ -33,6 +33,8 @@
 		A4AADA7218F6A1B500136C43 /* ASMCameraMinusTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A4AADA7118F6A1B500136C43 /* ASMCameraMinusTests.m */; };
 		A4AADA7E18F6A4FA00136C43 /* ASMHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4AADA7C18F6A4FA00136C43 /* ASMHomeViewController.m */; };
 		A4AADA7F18F6A4FA00136C43 /* ASMHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4AADA7D18F6A4FA00136C43 /* ASMHomeViewController.xib */; };
+		D8A76308191BF8C700E7CE93 /* ASMEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8A76306191BF8C700E7CE93 /* ASMEditViewController.m */; };
+		D8A76309191BF8C700E7CE93 /* ASMEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8A76307191BF8C700E7CE93 /* ASMEditViewController.xib */; };
 		D8DA237F18F841F800348E88 /* ASMPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8DA237E18F841F800348E88 /* ASMPhotoCell.m */; };
 		D8DA238118F8420D00348E88 /* ASMPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8DA238018F8420D00348E88 /* ASMPhotoCell.xib */; };
 /* End PBXBuildFile section */
@@ -83,6 +85,9 @@
 		A4AADA7B18F6A4FA00136C43 /* ASMHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMHomeViewController.h; sourceTree = "<group>"; };
 		A4AADA7C18F6A4FA00136C43 /* ASMHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMHomeViewController.m; sourceTree = "<group>"; };
 		A4AADA7D18F6A4FA00136C43 /* ASMHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMHomeViewController.xib; sourceTree = "<group>"; };
+		D8A76305191BF8C700E7CE93 /* ASMEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMEditViewController.h; sourceTree = "<group>"; };
+		D8A76306191BF8C700E7CE93 /* ASMEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMEditViewController.m; sourceTree = "<group>"; };
+		D8A76307191BF8C700E7CE93 /* ASMEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMEditViewController.xib; sourceTree = "<group>"; };
 		D8DA237D18F841F800348E88 /* ASMPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMPhotoCell.h; sourceTree = "<group>"; };
 		D8DA237E18F841F800348E88 /* ASMPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMPhotoCell.m; sourceTree = "<group>"; };
 		D8DA238018F8420D00348E88 /* ASMPhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMPhotoCell.xib; sourceTree = "<group>"; };
@@ -216,6 +221,9 @@
 				90646964191AE857000485EB /* ASMTableViewCell.h */,
 				90646965191AE857000485EB /* ASMTableViewCell.m */,
 				90646966191AE857000485EB /* ASMTableViewCell.xib */,
+				D8A76305191BF8C700E7CE93 /* ASMEditViewController.h */,
+				D8A76306191BF8C700E7CE93 /* ASMEditViewController.m */,
+				D8A76307191BF8C700E7CE93 /* ASMEditViewController.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -308,6 +316,7 @@
 				90E8437619111D2A0007AA21 /* ASMListViewController.xib in Resources */,
 				908675CE1906737700DDC3DD /* candemor.jpg in Resources */,
 				A4AADA7F18F6A4FA00136C43 /* ASMHomeViewController.xib in Resources */,
+				D8A76309191BF8C700E7CE93 /* ASMEditViewController.xib in Resources */,
 				A4AADA5718F6A1B400136C43 /* InfoPlist.strings in Resources */,
 				A4AADA5F18F6A1B400136C43 /* Images.xcassets in Resources */,
 				908675CF1906737700DDC3DD /* chewbacca.jpg in Resources */,
@@ -334,6 +343,7 @@
 				D8DA237F18F841F800348E88 /* ASMPhotoCell.m in Sources */,
 				A40D243E190F9181006AE42C /* ASMListViewController.m in Sources */,
 				A4AADA7E18F6A4FA00136C43 /* ASMHomeViewController.m in Sources */,
+				D8A76308191BF8C700E7CE93 /* ASMEditViewController.m in Sources */,
 				A4AADA5D18F6A1B400136C43 /* ASMAppDelegate.m in Sources */,
 				A4AADA5918F6A1B400136C43 /* main.m in Sources */,
 				904464A019110DBC00CC1BD8 /* ASMShowViewController.m in Sources */,

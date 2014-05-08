@@ -9,6 +9,7 @@
 #import "ASMListViewController.h"
 #import "ASMInfoViewController.h"
 #import "ASMTableViewCell.h"
+#import "ASMEditViewController.h"
 
 @interface ASMListViewController () {
     NSMutableArray *myPhotosArray;
@@ -35,7 +36,10 @@
     // Do any additional setup after loading the view from its nib.
     myPhotosArray = self.model;
     
-    self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Info"
+                                                                              style:UIBarButtonItemStylePlain
+                                                                             target:self
+                                                                             action:@selector( infoClicked: )];
     
     self.photoTV.delegate = self;
     self.photoTV.dataSource = self;
@@ -49,6 +53,11 @@
 {
     [self.photoTV reloadData];
     
+    // THE WAY OF THE GEORGE
+    self.shootButton.enabled = ( [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] );
+    
+    self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     self.editButton.enabled = NO;
     self.deleteButton.enabled = NO;
 }
@@ -67,9 +76,9 @@
 - (IBAction)edit:(id)sender
 {
     NSArray *selectedItems = [self.photoTV indexPathsForSelectedRows];
-    ASMTableViewCell *myCell = (ASMTableViewCell*)[self.photoTV cellForRowAtIndexPath:[selectedItems objectAtIndex:0]];
-    ASMInfoViewController *infoVC = [[ASMInfoViewController alloc] initWithPhoto:myCell.myImageView.image];
-    [self.navigationController pushViewController:infoVC animated:YES];
+    ASMTableViewCell *cell = (ASMTableViewCell*)[self.photoTV cellForRowAtIndexPath:[selectedItems objectAtIndex:0]];
+    ASMEditViewController *editVC = [[ASMEditViewController alloc] initWithPhoto:cell.myImageView.image];
+    [self.navigationController pushViewController:editVC animated:YES];
 }
 
 - (IBAction)shoot:(id)sender
@@ -110,6 +119,7 @@
     [actionSheet showFromBarButtonItem:sender animated:YES];
     
     self.editButton.enabled = NO;
+    self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
 #pragma mark - picker view delegate methods
@@ -144,11 +154,10 @@
     
     myCell.myLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row + 1];
     myCell.myImageView.image = [myPhotosArray objectAtIndex:indexPath.row];
-    
-//    int width = myCell.myImageView.image.size.width;
-//    int height = myCell.myImageView.image.size.height;
-    
     myCell.mySizeLabel.text = [NSString stringWithFormat:@"Size: %.0f x %.0f", myCell.myImageView.image.size.width, myCell.myImageView.image.size.height];
+    
+    NSData* imgData = UIImageJPEGRepresentation(myCell.myImageView.image, 0);
+    myCell.myWeightLabel.text = [NSString stringWithFormat:@"Weight: %.2f", (float)imgData.length / 1024.0f / 1024.0f ];
     
     return myCell;
 }
@@ -159,6 +168,7 @@
 {
     // THE WAY OF THE GEORGE
     self.editButton.enabled = ( [self.photoTV indexPathsForSelectedRows].count == 1 );
+    self.navigationItem.rightBarButtonItem.enabled = ( [self.photoTV indexPathsForSelectedRows].count == 1 );
     
     self.deleteButton.enabled = YES;
     
@@ -170,6 +180,7 @@
 {
     // THE WAY OF THE GEORGE
     self.editButton.enabled = ( [self.photoTV indexPathsForSelectedRows].count == 1 );
+    self.navigationItem.rightBarButtonItem.enabled = ( [self.photoTV indexPathsForSelectedRows].count == 1 );
     
     self.deleteButton.enabled = YES;
     if( [self.photoTV indexPathsForSelectedRows].count == 0 ) self.deleteButton.enabled = NO;
@@ -177,7 +188,7 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return ( indexPath.row % 2 == 0 );
+    return YES;
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -187,6 +198,7 @@
     
     self.editButton.enabled = NO;
     self.deleteButton.enabled = NO;
+    self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
 #pragma mark - action sheet delegate methods
@@ -214,6 +226,16 @@
         
         if (myPhotosArray.count == 0) self.gridButton.enabled = NO;
     }
+}
+
+#pragma mark - class instance methods
+
+- (void)infoClicked:(id)sender
+{
+    NSArray *selectedItems = [self.photoTV indexPathsForSelectedRows];
+    ASMTableViewCell *myCell = (ASMTableViewCell*)[self.photoTV cellForRowAtIndexPath:[selectedItems objectAtIndex:0]];
+    ASMInfoViewController *infoVC = [[ASMInfoViewController alloc] initWithPhoto:myCell.myImageView.image];
+    [self.navigationController pushViewController:infoVC animated:YES];
 }
 
 @end
