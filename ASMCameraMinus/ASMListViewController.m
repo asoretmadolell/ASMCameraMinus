@@ -13,6 +13,8 @@
 
 @interface ASMListViewController () {
     NSMutableArray *myPhotosArray;
+    UIActionSheet *socialActionSheet;
+    UIActionSheet *deleteActionSheet;
 }
 
 @end
@@ -92,15 +94,20 @@
     }
 }
 
-- (IBAction)social:(id)sender {
+- (IBAction)social:(id)sender
+{
+    socialActionSheet = [[UIActionSheet alloc] initWithTitle:@"Select Flickr to download some images, or select Facebook or Twitter to publish the selected image."
+                                                    delegate:self
+                                           cancelButtonTitle:@"Back"
+                                      destructiveButtonTitle:@"Flickr"
+                                           otherButtonTitles:@"Facebook",@"Twitter",nil];
+    [socialActionSheet showFromBarButtonItem:sender animated:YES];
 }
 
 - (IBAction)delete:(id)sender
 {
     NSArray *selectedItems = [self.photoTV indexPathsForSelectedRows];
-    
     NSString *actionSheetTitle = [[NSString alloc] init];
-    
     if (selectedItems.count == 1)
     {
         actionSheetTitle = [NSString stringWithFormat:@"Are you sure you want to delete this image?"];
@@ -109,14 +116,12 @@
     {
         actionSheetTitle = [NSString stringWithFormat:@"Are you sure you want to delete these %lu images?", (unsigned long)selectedItems.count];
     }
-    
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:actionSheetTitle
-                                                             delegate:self
-                                                    cancelButtonTitle:@"Yup"
-                                               destructiveButtonTitle:@"Nope"
-                                                    otherButtonTitles:nil];
-    
-    [actionSheet showFromBarButtonItem:sender animated:YES];
+    deleteActionSheet = [[UIActionSheet alloc] initWithTitle:actionSheetTitle
+                                                    delegate:self
+                                           cancelButtonTitle:@"Yup"
+                                      destructiveButtonTitle:@"Nope"
+                                           otherButtonTitles:nil];
+    [deleteActionSheet showFromBarButtonItem:sender animated:YES];
     
     self.editButton.enabled = NO;
     self.navigationItem.rightBarButtonItem.enabled = NO;
@@ -205,26 +210,46 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 1)
-    {
-        NSArray *selectedItems = [self.photoTV indexPathsForSelectedRows];
-        NSArray *sortSelectedItems = [selectedItems sortedArrayWithOptions:0 usingComparator:^NSComparisonResult( id obj1, id obj2 )
-                                      {
-                                          if( ((NSIndexPath*)obj1).item > ( (NSIndexPath*)obj2).item) return (NSComparisonResult)NSOrderedAscending;
-                                          if( ((NSIndexPath*)obj1).item < ( (NSIndexPath*)obj2).item) return (NSComparisonResult)NSOrderedDescending;
-                                          return (NSComparisonResult)NSOrderedSame;
-                                      }];
-        
-        for (NSIndexPath *indexPath in sortSelectedItems)
+    if ( actionSheet == socialActionSheet ) {
+        if (buttonIndex == 0)
         {
-            [myPhotosArray removeObjectAtIndex:indexPath.item];
+            NSLog(@"First button clicked");
         }
-        
-        [self.photoTV reloadData];
-        
-        self.deleteButton.enabled = NO;
-        
-        if (myPhotosArray.count == 0) self.gridButton.enabled = NO;
+        else if (buttonIndex == 1)
+        {
+            NSLog(@"Second button clicked");
+        }
+        else if (buttonIndex == 2)
+        {
+            NSLog(@"Third button clicked");
+        }
+        else
+        {
+            NSLog(@"Nothing was clicked, man");
+        }
+    }
+    else if ( actionSheet == deleteActionSheet ) {
+        if (buttonIndex == 1)
+        {
+            NSArray *selectedItems = [self.photoTV indexPathsForSelectedRows];
+            NSArray *sortSelectedItems = [selectedItems sortedArrayWithOptions:0 usingComparator:^NSComparisonResult( id obj1, id obj2 )
+                                          {
+                                              if( ((NSIndexPath*)obj1).item > ( (NSIndexPath*)obj2).item) return (NSComparisonResult)NSOrderedAscending;
+                                              if( ((NSIndexPath*)obj1).item < ( (NSIndexPath*)obj2).item) return (NSComparisonResult)NSOrderedDescending;
+                                              return (NSComparisonResult)NSOrderedSame;
+                                          }];
+            
+            for (NSIndexPath *indexPath in sortSelectedItems)
+            {
+                [myPhotosArray removeObjectAtIndex:indexPath.item];
+            }
+            
+            [self.photoTV reloadData];
+            
+            self.deleteButton.enabled = NO;
+            
+            if (myPhotosArray.count == 0) self.gridButton.enabled = NO;
+        }
     }
 }
 
