@@ -97,6 +97,7 @@
  */
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     [self.photosCV reloadData];
     
     // THE WAY OF THE GEORGE

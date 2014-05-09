@@ -53,6 +53,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     [self.photoTV reloadData];
     
     // THE WAY OF THE GEORGE

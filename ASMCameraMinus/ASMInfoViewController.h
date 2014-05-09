@@ -7,13 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+@import CoreLocation;
 
-@interface ASMInfoViewController : UIViewController
+@interface ASMInfoViewController : UIViewController <CLLocationManagerDelegate>
 
 @property (strong, nonatomic) UIImage *photo;
 @property (weak, nonatomic) IBOutlet UIImageView *infoImage;
 @property (weak, nonatomic) IBOutlet UILabel *imageSize;
 @property (weak, nonatomic) IBOutlet UILabel *imageWeight;
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (weak, nonatomic) IBOutlet UILabel *imageLongitude;
+@property (weak, nonatomic) IBOutlet UILabel *imageLatitude;
+@property (weak, nonatomic) IBOutlet UILabel *imageHeight;
 
 - (id)initWithPhoto:(UIImage*)photo;
 

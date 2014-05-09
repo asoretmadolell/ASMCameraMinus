@@ -36,6 +36,22 @@
     self.imageWeight.text = [NSString stringWithFormat:@"Weight: %.2f", (float)imgData.length / 1024.0f / 1024.0f ];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if ([CLLocationManager locationServicesEnabled]) {
+        self.locationManager = [[CLLocationManager alloc] init];
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        self.locationManager.delegate = self;
+        [self.locationManager startUpdatingLocation];
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self.locationManager stopUpdatingLocation];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -51,6 +67,16 @@
         ASMShowViewController *showVC = [[ASMShowViewController alloc] initWithPhoto:self.infoImage.image];
         [self.navigationController pushViewController:showVC animated:YES];
     }
-
 }
+
+#pragma mark - location manager methods
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    CLLocation *lastLocation = [locations lastObject];
+    self.imageLatitude.text = [NSString stringWithFormat:@"Latitude: %.4f", lastLocation.coordinate.latitude];
+    self.imageLongitude.text = [NSString stringWithFormat:@"Longitude: %.4f", lastLocation.coordinate.longitude];
+    self.imageHeight.text = [NSString stringWithFormat:@"Altitude: %.4f", lastLocation.altitude];
+}
+
 @end
