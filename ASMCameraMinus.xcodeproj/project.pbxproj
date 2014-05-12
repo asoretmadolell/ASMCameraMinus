@@ -13,10 +13,6 @@
 		9048A4A81918F9240046C2C7 /* ASMInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9048A4A61918F9240046C2C7 /* ASMInfoViewController.xib */; };
 		90646967191AE857000485EB /* ASMTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90646965191AE857000485EB /* ASMTableViewCell.m */; };
 		90646968191AE857000485EB /* ASMTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90646966191AE857000485EB /* ASMTableViewCell.xib */; };
-		908675CD1906737700DDC3DD /* c3po.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 908675C91906737700DDC3DD /* c3po.jpg */; };
-		908675CE1906737700DDC3DD /* candemor.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 908675CA1906737700DDC3DD /* candemor.jpg */; };
-		908675CF1906737700DDC3DD /* chewbacca.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 908675CB1906737700DDC3DD /* chewbacca.jpg */; };
-		908675D01906737700DDC3DD /* darthVader.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 908675CC1906737700DDC3DD /* darthVader.jpg */; };
 		90E8437619111D2A0007AA21 /* ASMListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90E8437519111D2A0007AA21 /* ASMListViewController.xib */; };
 		A40D243E190F9181006AE42C /* ASMListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A40D243D190F9181006AE42C /* ASMListViewController.m */; };
 		A4AADA4D18F6A1B400136C43 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4AADA4C18F6A1B400136C43 /* Foundation.framework */; };
@@ -35,6 +31,14 @@
 		A4AADA7F18F6A4FA00136C43 /* ASMHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4AADA7D18F6A4FA00136C43 /* ASMHomeViewController.xib */; };
 		D8A76308191BF8C700E7CE93 /* ASMEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8A76306191BF8C700E7CE93 /* ASMEditViewController.m */; };
 		D8A76309191BF8C700E7CE93 /* ASMEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8A76307191BF8C700E7CE93 /* ASMEditViewController.xib */; };
+		D8AD957F192133EE00699941 /* dump.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8AD9578192133EE00699941 /* dump.jpg */; };
+		D8AD9580192133EE00699941 /* fruit_killer.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8AD9579192133EE00699941 /* fruit_killer.jpg */; };
+		D8AD9581192133EE00699941 /* people.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8AD957A192133EE00699941 /* people.jpg */; };
+		D8AD9582192133EE00699941 /* walking_on_water.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8AD957B192133EE00699941 /* walking_on_water.jpg */; };
+		D8AD9583192133EE00699941 /* olympic_dive.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8AD957C192133EE00699941 /* olympic_dive.jpg */; };
+		D8AD9584192133EE00699941 /* funny_shirt.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8AD957D192133EE00699941 /* funny_shirt.jpg */; };
+		D8AD9585192133EE00699941 /* seal_singer.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8AD957E192133EE00699941 /* seal_singer.jpg */; };
+		D8AD9587192134FC00699941 /* facedetectionpic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8AD9586192134FC00699941 /* facedetectionpic.jpg */; };
 		D8DA237F18F841F800348E88 /* ASMPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8DA237E18F841F800348E88 /* ASMPhotoCell.m */; };
 		D8DA238118F8420D00348E88 /* ASMPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8DA238018F8420D00348E88 /* ASMPhotoCell.xib */; };
 /* End PBXBuildFile section */
@@ -59,10 +63,6 @@
 		90646964191AE857000485EB /* ASMTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMTableViewCell.h; sourceTree = "<group>"; };
 		90646965191AE857000485EB /* ASMTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMTableViewCell.m; sourceTree = "<group>"; };
 		90646966191AE857000485EB /* ASMTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMTableViewCell.xib; sourceTree = "<group>"; };
-		908675C91906737700DDC3DD /* c3po.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = c3po.jpg; sourceTree = "<group>"; };
-		908675CA1906737700DDC3DD /* candemor.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = candemor.jpg; sourceTree = "<group>"; };
-		908675CB1906737700DDC3DD /* chewbacca.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = chewbacca.jpg; sourceTree = "<group>"; };
-		908675CC1906737700DDC3DD /* darthVader.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = darthVader.jpg; sourceTree = "<group>"; };
 		90E8437519111D2A0007AA21 /* ASMListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMListViewController.xib; sourceTree = "<group>"; };
 		A40D243C190F9181006AE42C /* ASMListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMListViewController.h; sourceTree = "<group>"; };
 		A40D243D190F9181006AE42C /* ASMListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMListViewController.m; sourceTree = "<group>"; };
@@ -88,6 +88,14 @@
 		D8A76305191BF8C700E7CE93 /* ASMEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMEditViewController.h; sourceTree = "<group>"; };
 		D8A76306191BF8C700E7CE93 /* ASMEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMEditViewController.m; sourceTree = "<group>"; };
 		D8A76307191BF8C700E7CE93 /* ASMEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMEditViewController.xib; sourceTree = "<group>"; };
+		D8AD9578192133EE00699941 /* dump.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dump.jpg; sourceTree = "<group>"; };
+		D8AD9579192133EE00699941 /* fruit_killer.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fruit_killer.jpg; sourceTree = "<group>"; };
+		D8AD957A192133EE00699941 /* people.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = people.jpg; sourceTree = "<group>"; };
+		D8AD957B192133EE00699941 /* walking_on_water.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = walking_on_water.jpg; sourceTree = "<group>"; };
+		D8AD957C192133EE00699941 /* olympic_dive.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = olympic_dive.jpg; sourceTree = "<group>"; };
+		D8AD957D192133EE00699941 /* funny_shirt.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = funny_shirt.jpg; sourceTree = "<group>"; };
+		D8AD957E192133EE00699941 /* seal_singer.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = seal_singer.jpg; sourceTree = "<group>"; };
+		D8AD9586192134FC00699941 /* facedetectionpic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = facedetectionpic.jpg; sourceTree = "<group>"; };
 		D8DA237D18F841F800348E88 /* ASMPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMPhotoCell.h; sourceTree = "<group>"; };
 		D8DA237E18F841F800348E88 /* ASMPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMPhotoCell.m; sourceTree = "<group>"; };
 		D8DA238018F8420D00348E88 /* ASMPhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMPhotoCell.xib; sourceTree = "<group>"; };
@@ -120,10 +128,14 @@
 		908675C8190672EA00DDC3DD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				908675C91906737700DDC3DD /* c3po.jpg */,
-				908675CA1906737700DDC3DD /* candemor.jpg */,
-				908675CB1906737700DDC3DD /* chewbacca.jpg */,
-				908675CC1906737700DDC3DD /* darthVader.jpg */,
+				D8AD9586192134FC00699941 /* facedetectionpic.jpg */,
+				D8AD9578192133EE00699941 /* dump.jpg */,
+				D8AD9579192133EE00699941 /* fruit_killer.jpg */,
+				D8AD957A192133EE00699941 /* people.jpg */,
+				D8AD957B192133EE00699941 /* walking_on_water.jpg */,
+				D8AD957C192133EE00699941 /* olympic_dive.jpg */,
+				D8AD957D192133EE00699941 /* funny_shirt.jpg */,
+				D8AD957E192133EE00699941 /* seal_singer.jpg */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -308,18 +320,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				9048A4A81918F9240046C2C7 /* ASMInfoViewController.xib in Resources */,
+				D8AD9580192133EE00699941 /* fruit_killer.jpg in Resources */,
+				D8AD9581192133EE00699941 /* people.jpg in Resources */,
+				D8AD9582192133EE00699941 /* walking_on_water.jpg in Resources */,
+				D8AD957F192133EE00699941 /* dump.jpg in Resources */,
 				90646968191AE857000485EB /* ASMTableViewCell.xib in Resources */,
 				904464A119110DBC00CC1BD8 /* ASMShowViewController.xib in Resources */,
 				D8DA238118F8420D00348E88 /* ASMPhotoCell.xib in Resources */,
-				908675CD1906737700DDC3DD /* c3po.jpg in Resources */,
-				908675D01906737700DDC3DD /* darthVader.jpg in Resources */,
 				90E8437619111D2A0007AA21 /* ASMListViewController.xib in Resources */,
-				908675CE1906737700DDC3DD /* candemor.jpg in Resources */,
 				A4AADA7F18F6A4FA00136C43 /* ASMHomeViewController.xib in Resources */,
+				D8AD9585192133EE00699941 /* seal_singer.jpg in Resources */,
 				D8A76309191BF8C700E7CE93 /* ASMEditViewController.xib in Resources */,
+				D8AD9587192134FC00699941 /* facedetectionpic.jpg in Resources */,
 				A4AADA5718F6A1B400136C43 /* InfoPlist.strings in Resources */,
 				A4AADA5F18F6A1B400136C43 /* Images.xcassets in Resources */,
-				908675CF1906737700DDC3DD /* chewbacca.jpg in Resources */,
+				D8AD9583192133EE00699941 /* olympic_dive.jpg in Resources */,
+				D8AD9584192133EE00699941 /* funny_shirt.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

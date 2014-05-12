@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 @import CoreLocation;
+@import CoreImage;
+@import QuartzCore;
+
+@class ViewController;
 
 @interface ASMInfoViewController : UIViewController <CLLocationManagerDelegate>
 
@@ -19,6 +23,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *imageLongitude;
 @property (weak, nonatomic) IBOutlet UILabel *imageLatitude;
 @property (weak, nonatomic) IBOutlet UILabel *imageHeight;
+@property (weak, nonatomic) IBOutlet UILabel *imageMouth;
+@property (weak, nonatomic) IBOutlet UILabel *imageLeftEye;
+@property (weak, nonatomic) IBOutlet UILabel *imageRightEye;
 
 - (id)initWithPhoto:(UIImage*)photo;
 

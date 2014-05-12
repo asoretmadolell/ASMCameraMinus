@@ -62,28 +62,14 @@
     myPhotosArray = [[NSMutableArray alloc]init];
     
     // Thanks to our friends at U-Tad, we're unable to use their iPad devices at home... So we'll just init the array with some images.
-    [myPhotosArray addObject:[UIImage imageNamed:@"c3po.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"candemor.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"chewbacca.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"darthVader.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"chewbacca.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"candemor.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"c3po.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"candemor.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"chewbacca.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"darthVader.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"chewbacca.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"candemor.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"candemor.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"chewbacca.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"darthVader.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"chewbacca.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"candemor.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"candemor.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"chewbacca.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"darthVader.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"chewbacca.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"candemor.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"facedetectionpic.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"dump.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"fruit_killer.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"people.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"walking_on_water.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"olympic_dive.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"funny_shirt.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"seal_singer.jpg"]];
     
     [self.photosCV registerNib:[UINib nibWithNibName:@"ASMPhotoCell" bundle:nil] forCellWithReuseIdentifier:@"PhotoCell"];
     
