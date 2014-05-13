@@ -49,11 +49,20 @@
     self.photoTV.allowsMultipleSelection = YES;
     
     [self.photoTV registerNib:[UINib nibWithNibName:@"ASMTableViewCell" bundle:nil] forCellReuseIdentifier:@"MYCELL"];
+
+    // MANUAL SPINNER
+//    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+//    CGRect screenRect = [[UIScreen mainScreen] bounds];
+//    CGFloat screenWidth = screenRect.size.width;
+//    CGFloat screenHeight = screenRect.size.height;
+//    [spinner setCenter:CGPointMake(screenWidth/2.0, screenHeight/2.0)];
+//    [self.view addSubview:spinner];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     [self.photoTV reloadData];
     
     // THE WAY OF THE GEORGE
@@ -167,7 +176,7 @@
         myCell.weight = imgData.length / 1024.0f / 1024.0f;
     }
     
-    myCell.myWeightLabel.text = [NSString stringWithFormat:@"Weight: %.2f", myCell.weight ];
+    myCell.myWeightLabel.text = [NSString stringWithFormat:@"Weight: %.2f MB", myCell.weight ];
     
     if ( myCell.isSelected ) myCell.contentView.backgroundColor = [UIColor blueColor];
     

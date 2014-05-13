@@ -33,7 +33,7 @@
     self.imageSize.text = [NSString stringWithFormat:@"Size: %.0f x %.0f", self.infoImage.image.size.width, self.infoImage.image.size.height];
     
     NSData* imgData = UIImageJPEGRepresentation(self.infoImage.image, 0);
-    self.imageWeight.text = [NSString stringWithFormat:@"Weight: %.2f", (float)imgData.length / 1024.0f / 1024.0f ];
+    self.imageWeight.text = [NSString stringWithFormat:@"Weight: %.2f MB", (float)imgData.length / 1024.0f / 1024.0f ];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -80,6 +80,21 @@
     self.imageLatitude.text = [NSString stringWithFormat:@"Latitude: %.4f", lastLocation.coordinate.latitude];
     self.imageLongitude.text = [NSString stringWithFormat:@"Longitude: %.4f", lastLocation.coordinate.longitude];
     self.imageHeight.text = [NSString stringWithFormat:@"Altitude: %.4f", lastLocation.altitude];
+    
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    CLLocation *userCLLocation = [[CLLocation alloc] initWithLatitude:lastLocation.coordinate.latitude
+                                                            longitude:lastLocation.coordinate.longitude];
+    __block ASMInfoViewController *weakSelf = self;
+    [geocoder reverseGeocodeLocation:userCLLocation completionHandler:^(NSArray *placemarks, NSError *error) {
+        if (placemarks.count > 0) {
+            CLPlacemark *info = [placemarks lastObject];
+            weakSelf.reverseGeocoding.text = [NSString stringWithFormat:@"%@, %@, %@",
+                                              [[info addressDictionary] objectForKey:(NSString*)kABPersonAddressStreetKey],
+                                              [[info addressDictionary] objectForKey:(NSString*)kABPersonAddressZIPKey],
+                                              [[info addressDictionary] objectForKey:(NSString*)kABPersonAddressCountryKey]];
+        }
+    }];
+
 }
 
 #pragma mark - instance methods

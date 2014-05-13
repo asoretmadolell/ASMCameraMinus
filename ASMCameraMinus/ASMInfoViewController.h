@@ -10,6 +10,7 @@
 @import CoreLocation;
 @import CoreImage;
 @import QuartzCore;
+@import AddressBook;
 
 @class ViewController;
 
@@ -26,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *imageMouth;
 @property (weak, nonatomic) IBOutlet UILabel *imageLeftEye;
 @property (weak, nonatomic) IBOutlet UILabel *imageRightEye;
+@property (weak, nonatomic) IBOutlet UILabel *reverseGeocoding;
 
 - (id)initWithPhoto:(UIImage*)photo;
 
