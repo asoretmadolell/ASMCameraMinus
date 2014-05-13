@@ -13,6 +13,7 @@
 		9048A4A81918F9240046C2C7 /* ASMInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9048A4A61918F9240046C2C7 /* ASMInfoViewController.xib */; };
 		90646967191AE857000485EB /* ASMTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90646965191AE857000485EB /* ASMTableViewCell.m */; };
 		90646968191AE857000485EB /* ASMTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90646966191AE857000485EB /* ASMTableViewCell.xib */; };
+		90D8DFD119223AEE00A2975A /* ASMDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 90D8DFCF19223AEE00A2975A /* ASMDataModel.xcdatamodeld */; };
 		90E8437619111D2A0007AA21 /* ASMListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90E8437519111D2A0007AA21 /* ASMListViewController.xib */; };
 		A40D243E190F9181006AE42C /* ASMListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A40D243D190F9181006AE42C /* ASMListViewController.m */; };
 		A4AADA4D18F6A1B400136C43 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4AADA4C18F6A1B400136C43 /* Foundation.framework */; };
@@ -63,6 +64,7 @@
 		90646964191AE857000485EB /* ASMTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMTableViewCell.h; sourceTree = "<group>"; };
 		90646965191AE857000485EB /* ASMTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMTableViewCell.m; sourceTree = "<group>"; };
 		90646966191AE857000485EB /* ASMTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMTableViewCell.xib; sourceTree = "<group>"; };
+		90D8DFD019223AEE00A2975A /* ASMDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ASMDataModel.xcdatamodel; sourceTree = "<group>"; };
 		90E8437519111D2A0007AA21 /* ASMListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMListViewController.xib; sourceTree = "<group>"; };
 		A40D243C190F9181006AE42C /* ASMListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMListViewController.h; sourceTree = "<group>"; };
 		A40D243D190F9181006AE42C /* ASMListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMListViewController.m; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 				A4AADA5E18F6A1B400136C43 /* Images.xcassets */,
 				A4AADA5318F6A1B400136C43 /* Supporting Files */,
 				A4AADA8018F6A51000136C43 /* Controllers */,
+				90D8DFCF19223AEE00A2975A /* ASMDataModel.xcdatamodeld */,
 			);
 			path = ASMCameraMinus;
 			sourceTree = "<group>";
@@ -359,6 +362,7 @@
 				D8DA237F18F841F800348E88 /* ASMPhotoCell.m in Sources */,
 				A40D243E190F9181006AE42C /* ASMListViewController.m in Sources */,
 				A4AADA7E18F6A4FA00136C43 /* ASMHomeViewController.m in Sources */,
+				90D8DFD119223AEE00A2975A /* ASMDataModel.xcdatamodeld in Sources */,
 				D8A76308191BF8C700E7CE93 /* ASMEditViewController.m in Sources */,
 				A4AADA5D18F6A1B400136C43 /* ASMAppDelegate.m in Sources */,
 				A4AADA5918F6A1B400136C43 /* main.m in Sources */,
@@ -581,6 +585,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		90D8DFCF19223AEE00A2975A /* ASMDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				90D8DFD019223AEE00A2975A /* ASMDataModel.xcdatamodel */,
+			);
+			currentVersion = 90D8DFD019223AEE00A2975A /* ASMDataModel.xcdatamodel */;
+			path = ASMDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A4AADA4118F6A1B400136C43 /* Project object */;
 }
