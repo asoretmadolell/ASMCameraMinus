@@ -155,15 +155,21 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:@"MYCELL" forIndexPath:indexPath];
-    ASMTableViewCell *myCell = (ASMTableViewCell*)cell;
+    ASMTableViewCell *myCell = (ASMTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"MYCELL" forIndexPath:indexPath];
     
     myCell.myLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row + 1];
     myCell.myImageView.image = [myPhotosArray objectAtIndex:indexPath.row];
     myCell.mySizeLabel.text = [NSString stringWithFormat:@"Size: %.0f x %.0f", myCell.myImageView.image.size.width, myCell.myImageView.image.size.height];
     
-    NSData* imgData = UIImageJPEGRepresentation(myCell.myImageView.image, 0);
-    myCell.myWeightLabel.text = [NSString stringWithFormat:@"Weight: %.2f", (float)imgData.length / 1024.0f / 1024.0f ];
+    if ( myCell.weight == 0 )
+    {
+        NSData* imgData = UIImageJPEGRepresentation(myCell.myImageView.image, 1);
+        myCell.weight = imgData.length / 1024.0f / 1024.0f;
+    }
+    
+    myCell.myWeightLabel.text = [NSString stringWithFormat:@"Weight: %.2f", myCell.weight ];
+    
+    if ( myCell.isSelected ) myCell.contentView.backgroundColor = [UIColor blueColor];
     
     return myCell;
 }

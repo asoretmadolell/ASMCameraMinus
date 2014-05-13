@@ -15,4 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *mySizeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *myWeightLabel;
 
+@property (nonatomic) float weight;
+
 @end

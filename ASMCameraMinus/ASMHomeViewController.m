@@ -70,6 +70,22 @@
     [myPhotosArray addObject:[UIImage imageNamed:@"olympic_dive.jpg"]];
     [myPhotosArray addObject:[UIImage imageNamed:@"funny_shirt.jpg"]];
     [myPhotosArray addObject:[UIImage imageNamed:@"seal_singer.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"facedetectionpic.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"dump.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"fruit_killer.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"people.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"walking_on_water.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"olympic_dive.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"funny_shirt.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"seal_singer.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"facedetectionpic.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"dump.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"fruit_killer.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"people.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"walking_on_water.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"olympic_dive.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"funny_shirt.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"seal_singer.jpg"]];
     
     [self.photosCV registerNib:[UINib nibWithNibName:@"ASMPhotoCell" bundle:nil] forCellWithReuseIdentifier:@"PhotoCell"];
     
