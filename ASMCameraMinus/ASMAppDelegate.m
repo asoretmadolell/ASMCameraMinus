@@ -9,6 +9,8 @@
 #import "ASMAppDelegate.h"
 #import "ASMHomeViewController.h"
 #import "ASMListViewController.h"
+#import "ASMCDStackTableViewController.h"
+#import "ASMPhoto.h"
 
 @interface ASMAppDelegate () {
     NSMutableArray *myPhotosArray;
@@ -23,10 +25,16 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    [self initModel];
+//    [self initModel];
+    self.model = [AGTCoreDataStack coreDataStackWithModelName:@"ASMDataModel"];
     
-    ASMListViewController *lvc = [[ASMListViewController alloc] initWithModel:myPhotosArray];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:lvc];
+    NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName:[ASMPhoto entityName]];
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:ASMBaseEntityAttributes.creationDate ascending:NO],
+                                [NSSortDescriptor sortDescriptorWithKey:ASMBaseEntityAttributes.name ascending:YES selector:@selector(caseInsensitiveCompare:)]];
+    NSFetchedResultsController* fetchResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.model.context sectionNameKeyPath:nil cacheName:nil];
+    
+    ASMCDStackTableViewController *vc = [[ASMCDStackTableViewController alloc] initWithFetchedResultsController:fetchResultsController style:UITableViewStylePlain];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     self.window.rootViewController = nav;
     
     self.window.backgroundColor = [UIColor whiteColor];

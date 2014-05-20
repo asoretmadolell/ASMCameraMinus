@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AGTCoreDataStack.h"
 
 @interface ASMAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) AGTCoreDataStack *model;
 
 @end
