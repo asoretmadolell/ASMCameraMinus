@@ -8,6 +8,13 @@
 
 #import "ASMAppDelegate.h"
 #import "ASMHomeViewController.h"
+#import "ASMListViewController.h"
+
+@interface ASMAppDelegate () {
+    NSMutableArray *myPhotosArray;
+}
+
+@end
 
 @implementation ASMAppDelegate
 
@@ -16,8 +23,10 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    ASMHomeViewController *hvc = [[ASMHomeViewController alloc] init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:hvc];
+    [self initModel];
+    
+    ASMListViewController *lvc = [[ASMListViewController alloc] initWithModel:myPhotosArray];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:lvc];
     self.window.rootViewController = nav;
     
     self.window.backgroundColor = [UIColor whiteColor];
@@ -50,6 +59,38 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+# pragma mark - instance methods
+
+- (void)initModel
+{
+    myPhotosArray = [[NSMutableArray alloc]init];
+    
+    [myPhotosArray addObject:[UIImage imageNamed:@"facedetectionpic.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"dump.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"fruit_killer.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"people.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"walking_on_water.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"olympic_dive.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"funny_shirt.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"seal_singer.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"facedetectionpic.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"dump.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"fruit_killer.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"people.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"walking_on_water.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"olympic_dive.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"funny_shirt.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"seal_singer.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"facedetectionpic.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"dump.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"fruit_killer.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"people.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"walking_on_water.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"olympic_dive.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"funny_shirt.jpg"]];
+    [myPhotosArray addObject:[UIImage imageNamed:@"seal_singer.jpg"]];
 }
 
 @end

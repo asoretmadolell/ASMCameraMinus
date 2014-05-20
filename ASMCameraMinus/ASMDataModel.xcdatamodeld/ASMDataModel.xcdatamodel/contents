@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C1021" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="BaseEntity" syncable="YES">
+    <entity name="BaseEntity" representedClassName="ASMBaseEntity" syncable="YES">
         <attribute name="creationDate" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="modifiedDate" attributeType="Date" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Photo" parentEntity="BaseEntity" syncable="YES">
+    <entity name="Photo" representedClassName="ASMPhoto" parentEntity="BaseEntity" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="altitude" optional="YES" attributeType="Float" minValueString="0" defaultValueString="0.0" syncable="YES"/>
         <attribute name="height" optional="YES" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
@@ -15,7 +15,7 @@
         <attribute name="width" optional="YES" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="BaseEntity" positionX="-63" positionY="-18" width="128" height="90"/>
-        <element name="Photo" positionX="252" positionY="-180" width="128" height="148"/>
+        <element name="BaseEntity" positionX="-63" positionY="-18" width="128" height="88"/>
+        <element name="Photo" positionX="252" positionY="-180" width="128" height="150"/>
     </elements>
 </model>

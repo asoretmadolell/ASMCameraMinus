@@ -24,6 +24,6 @@
 - (IBAction)social:(id)sender;
 - (IBAction)delete:(id)sender;
 
-- (id)initWithModel:(NSArray*)model;
+- (id)initWithModel:(NSMutableArray*)model;
 
 @end

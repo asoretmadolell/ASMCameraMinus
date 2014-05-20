@@ -13,7 +13,6 @@
 #import "ASMEditViewController.h"
 
 @interface ASMHomeViewController () {
-    NSMutableArray *myPhotosArray;
     UIActionSheet *socialActionSheet;
     UIActionSheet *deleteActionSheet;
 }
@@ -27,13 +26,24 @@
  fichero nib (también conocido como xib) en el bundle. También
  nombre del fichero. Por eso, para la celda, había que hacer
  un registerNib :-)
-*/
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+//*/
+//- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+//{
+//    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+//    if (self)
+//    {
+//        // Custom initialization
+//        self.title = @"Camera Minus";
+//    }
+//    return self;
+//}
+
+- (id)initWithModel:(NSMutableArray*)model
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
-    {
+    self = [super initWithNibName:nil bundle:nil];
+    if (self) {
         // Custom initialization
+        self.model = model;
         self.title = @"Camera Minus";
     }
     return self;
@@ -59,37 +69,9 @@
     
     self.photosCV.allowsMultipleSelection = YES;
     
-    myPhotosArray = [[NSMutableArray alloc]init];
-    
-    // Thanks to our friends at U-Tad, we're unable to use their iPad devices at home... So we'll just init the array with some images.
-    [myPhotosArray addObject:[UIImage imageNamed:@"facedetectionpic.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"dump.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"fruit_killer.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"people.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"walking_on_water.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"olympic_dive.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"funny_shirt.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"seal_singer.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"facedetectionpic.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"dump.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"fruit_killer.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"people.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"walking_on_water.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"olympic_dive.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"funny_shirt.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"seal_singer.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"facedetectionpic.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"dump.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"fruit_killer.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"people.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"walking_on_water.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"olympic_dive.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"funny_shirt.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"seal_singer.jpg"]];
-    
     [self.photosCV registerNib:[UINib nibWithNibName:@"ASMPhotoCell" bundle:nil] forCellWithReuseIdentifier:@"PhotoCell"];
     
-    if (myPhotosArray.count == 0) self.listButton.enabled = NO;
+    if (self.model.count == 0) self.listButton.enabled = NO;
 }
 
 /*
@@ -127,7 +109,7 @@
 */
 - (IBAction)list:(id)sender
 {
-    ASMListViewController *listVC = [[ASMListViewController alloc] initWithModel:myPhotosArray];
+    ASMListViewController *listVC = [[ASMListViewController alloc] initWithModel:self.model];
     [self.navigationController pushViewController:listVC animated:NO];
 }
 
@@ -211,8 +193,8 @@
 {
     UIImage *image = (UIImage*) [info valueForKey:UIImagePickerControllerOriginalImage];
     [picker dismissViewControllerAnimated:YES completion:nil];
-    [myPhotosArray addObject:image];
-    if (myPhotosArray.count == 1) self.listButton.enabled = YES;
+    [self.model addObject:image];
+    if (self.model.count == 1) self.listButton.enabled = YES;
     [self.photosCV reloadData];
 }
 
@@ -245,7 +227,7 @@ Este método del protocolo UICollectionViewLayout lo llama la Colletion View
 */
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return myPhotosArray.count;
+    return self.model.count;
 }
 
 /*
@@ -258,7 +240,7 @@ Este método del protocolo UICollectionViewLayout lo llama la Colletion View
 {
     ASMPhotoCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCell" forIndexPath:indexPath];
     
-    cell.image.image = [myPhotosArray objectAtIndex:indexPath.item];
+    cell.image.image = [self.model objectAtIndex:indexPath.item];
     
     // THE WAY OF THE GEORGE
     cell.backgroundColor = ( cell.selected ) ? [UIColor blueColor] : [UIColor blackColor];
@@ -345,14 +327,14 @@ Este método del protocolo UICollectionViewLayout lo llama la Colletion View
             
             for (NSIndexPath *indexPath in sortSelectedItems)
             {
-                [myPhotosArray removeObjectAtIndex:indexPath.item];
+                [self.model removeObjectAtIndex:indexPath.item];
             }
             
             [self.photosCV reloadData];
             
             self.deleteButton.enabled = NO;
             
-            if (myPhotosArray.count == 0) self.listButton.enabled = NO;
+            if (self.model.count == 0) self.listButton.enabled = NO;
         }
     }
 }

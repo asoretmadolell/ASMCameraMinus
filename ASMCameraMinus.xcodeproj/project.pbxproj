@@ -11,6 +11,12 @@
 		904464A119110DBC00CC1BD8 /* ASMShowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9044649F19110DBC00CC1BD8 /* ASMShowViewController.xib */; };
 		9048A4A71918F9240046C2C7 /* ASMInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9048A4A51918F9240046C2C7 /* ASMInfoViewController.m */; };
 		9048A4A81918F9240046C2C7 /* ASMInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9048A4A61918F9240046C2C7 /* ASMInfoViewController.xib */; };
+		9052FEDE192B64F900B6FCCF /* _ASMBaseEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9052FED7192B64F900B6FCCF /* _ASMBaseEntity.m */; };
+		9052FEDF192B64F900B6FCCF /* _ASMPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 9052FED9192B64F900B6FCCF /* _ASMPhoto.m */; };
+		9052FEE0192B64F900B6FCCF /* ASMBaseEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9052FEDB192B64F900B6FCCF /* ASMBaseEntity.m */; };
+		9052FEE1192B64F900B6FCCF /* ASMPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 9052FEDD192B64F900B6FCCF /* ASMPhoto.m */; };
+		9052FEE6192B6C2500B6FCCF /* AGTCoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 9052FEE3192B6C2500B6FCCF /* AGTCoreDataStack.m */; };
+		9052FEE7192B6C2500B6FCCF /* AGTCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9052FEE5192B6C2500B6FCCF /* AGTCoreDataTableViewController.m */; };
 		90646967191AE857000485EB /* ASMTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90646965191AE857000485EB /* ASMTableViewCell.m */; };
 		90646968191AE857000485EB /* ASMTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90646966191AE857000485EB /* ASMTableViewCell.xib */; };
 		90D8DFD119223AEE00A2975A /* ASMDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 90D8DFCF19223AEE00A2975A /* ASMDataModel.xcdatamodeld */; };
@@ -61,6 +67,18 @@
 		9048A4A41918F9240046C2C7 /* ASMInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMInfoViewController.h; sourceTree = "<group>"; };
 		9048A4A51918F9240046C2C7 /* ASMInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMInfoViewController.m; sourceTree = "<group>"; };
 		9048A4A61918F9240046C2C7 /* ASMInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMInfoViewController.xib; sourceTree = "<group>"; };
+		9052FED6192B64F900B6FCCF /* _ASMBaseEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _ASMBaseEntity.h; sourceTree = "<group>"; };
+		9052FED7192B64F900B6FCCF /* _ASMBaseEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _ASMBaseEntity.m; sourceTree = "<group>"; };
+		9052FED8192B64F900B6FCCF /* _ASMPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _ASMPhoto.h; sourceTree = "<group>"; };
+		9052FED9192B64F900B6FCCF /* _ASMPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _ASMPhoto.m; sourceTree = "<group>"; };
+		9052FEDA192B64F900B6FCCF /* ASMBaseEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMBaseEntity.h; sourceTree = "<group>"; };
+		9052FEDB192B64F900B6FCCF /* ASMBaseEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMBaseEntity.m; sourceTree = "<group>"; };
+		9052FEDC192B64F900B6FCCF /* ASMPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMPhoto.h; sourceTree = "<group>"; };
+		9052FEDD192B64F900B6FCCF /* ASMPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMPhoto.m; sourceTree = "<group>"; };
+		9052FEE2192B6C2500B6FCCF /* AGTCoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGTCoreDataStack.h; sourceTree = "<group>"; };
+		9052FEE3192B6C2500B6FCCF /* AGTCoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGTCoreDataStack.m; sourceTree = "<group>"; };
+		9052FEE4192B6C2500B6FCCF /* AGTCoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGTCoreDataTableViewController.h; sourceTree = "<group>"; };
+		9052FEE5192B6C2500B6FCCF /* AGTCoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGTCoreDataTableViewController.m; sourceTree = "<group>"; };
 		90646964191AE857000485EB /* ASMTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMTableViewCell.h; sourceTree = "<group>"; };
 		90646965191AE857000485EB /* ASMTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMTableViewCell.m; sourceTree = "<group>"; };
 		90646966191AE857000485EB /* ASMTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMTableViewCell.xib; sourceTree = "<group>"; };
@@ -127,6 +145,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9052FED5192B645D00B6FCCF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9052FED6192B64F900B6FCCF /* _ASMBaseEntity.h */,
+				9052FED7192B64F900B6FCCF /* _ASMBaseEntity.m */,
+				9052FED8192B64F900B6FCCF /* _ASMPhoto.h */,
+				9052FED9192B64F900B6FCCF /* _ASMPhoto.m */,
+				9052FEDA192B64F900B6FCCF /* ASMBaseEntity.h */,
+				9052FEDB192B64F900B6FCCF /* ASMBaseEntity.m */,
+				9052FEDC192B64F900B6FCCF /* ASMPhoto.h */,
+				9052FEDD192B64F900B6FCCF /* ASMPhoto.m */,
+				90D8DFCF19223AEE00A2975A /* ASMDataModel.xcdatamodeld */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		9052FEE8192B6C2900B6FCCF /* CoreDataStack */ = {
+			isa = PBXGroup;
+			children = (
+				9052FEE2192B6C2500B6FCCF /* AGTCoreDataStack.h */,
+				9052FEE3192B6C2500B6FCCF /* AGTCoreDataStack.m */,
+				9052FEE4192B6C2500B6FCCF /* AGTCoreDataTableViewController.h */,
+				9052FEE5192B6C2500B6FCCF /* AGTCoreDataTableViewController.m */,
+			);
+			name = CoreDataStack;
+			sourceTree = "<group>";
+		};
 		908675C8190672EA00DDC3DD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -175,13 +220,14 @@
 		A4AADA5218F6A1B400136C43 /* ASMCameraMinus */ = {
 			isa = PBXGroup;
 			children = (
+				9052FEE8192B6C2900B6FCCF /* CoreDataStack */,
+				9052FED5192B645D00B6FCCF /* Model */,
 				908675C8190672EA00DDC3DD /* Resources */,
 				A4AADA5B18F6A1B400136C43 /* ASMAppDelegate.h */,
 				A4AADA5C18F6A1B400136C43 /* ASMAppDelegate.m */,
 				A4AADA5E18F6A1B400136C43 /* Images.xcassets */,
 				A4AADA5318F6A1B400136C43 /* Supporting Files */,
 				A4AADA8018F6A51000136C43 /* Controllers */,
-				90D8DFCF19223AEE00A2975A /* ASMDataModel.xcdatamodeld */,
 			);
 			path = ASMCameraMinus;
 			sourceTree = "<group>";
@@ -359,13 +405,19 @@
 			files = (
 				9048A4A71918F9240046C2C7 /* ASMInfoViewController.m in Sources */,
 				90646967191AE857000485EB /* ASMTableViewCell.m in Sources */,
+				9052FEE7192B6C2500B6FCCF /* AGTCoreDataTableViewController.m in Sources */,
 				D8DA237F18F841F800348E88 /* ASMPhotoCell.m in Sources */,
 				A40D243E190F9181006AE42C /* ASMListViewController.m in Sources */,
+				9052FEDF192B64F900B6FCCF /* _ASMPhoto.m in Sources */,
 				A4AADA7E18F6A4FA00136C43 /* ASMHomeViewController.m in Sources */,
+				9052FEE6192B6C2500B6FCCF /* AGTCoreDataStack.m in Sources */,
 				90D8DFD119223AEE00A2975A /* ASMDataModel.xcdatamodeld in Sources */,
 				D8A76308191BF8C700E7CE93 /* ASMEditViewController.m in Sources */,
+				9052FEE1192B64F900B6FCCF /* ASMPhoto.m in Sources */,
+				9052FEE0192B64F900B6FCCF /* ASMBaseEntity.m in Sources */,
 				A4AADA5D18F6A1B400136C43 /* ASMAppDelegate.m in Sources */,
 				A4AADA5918F6A1B400136C43 /* main.m in Sources */,
+				9052FEDE192B64F900B6FCCF /* _ASMBaseEntity.m in Sources */,
 				904464A019110DBC00CC1BD8 /* ASMShowViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
