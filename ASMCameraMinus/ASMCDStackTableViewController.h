@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "AGTCoreDataTableViewController.h"
 
-@interface ASMCDStackTableViewController : AGTCoreDataTableViewController
+@interface ASMCDStackTableViewController : AGTCoreDataTableViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @end

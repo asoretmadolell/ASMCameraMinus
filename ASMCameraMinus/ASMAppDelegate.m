@@ -26,6 +26,7 @@
     // Override point for customization after application launch.
     
 //    [self initModel];
+    [self initDefaults];
     self.model = [AGTCoreDataStack coreDataStackWithModelName:@"ASMDataModel"];
     
     NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName:[ASMPhoto entityName]];
@@ -99,6 +100,16 @@
     [myPhotosArray addObject:[UIImage imageNamed:@"olympic_dive.jpg"]];
     [myPhotosArray addObject:[UIImage imageNamed:@"funny_shirt.jpg"]];
     [myPhotosArray addObject:[UIImage imageNamed:@"seal_singer.jpg"]];
+}
+
+- (void)initDefaults
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if( ![userDefaults objectForKey:FILE_NUM] )
+    {
+        [userDefaults setObject:@0 forKey:FILE_NUM];
+        [userDefaults synchronize];
+    }
 }
 
 @end

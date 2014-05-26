@@ -43,6 +43,11 @@
     ASMPhoto* photo = (ASMPhoto*)[[self.fetchedResultsController fetchedObjects]objectAtIndex:indexPath.row];
     cell.textLabel.text = photo.name;
     
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, photo.name];
+    
+    cell.imageView.image = [UIImage imageWithContentsOfFile:fullFilePath];
+    
     return cell;
 }
 
@@ -67,10 +72,44 @@
 
 - (void)onAddPhoto:(id) sender
 {
-    static int i = 0;
-    NSString* name = [NSString stringWithFormat:@"photo # %d", ++i];
-    ASMPhoto *photo = [ASMPhoto photoWithName:name inContext:self.fetchedResultsController.managedObjectContext];
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        UIImagePickerController *pc_shoot = [[UIImagePickerController alloc] init];
+        pc_shoot.delegate = self;
+        pc_shoot.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:pc_shoot animated:YES completion:nil];
+    }
+}
+
+#pragma mark - picker view delegate methods
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = (UIImage*) [info valueForKey:UIImagePickerControllerOriginalImage];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    int value = [[userDefaults objectForKey:FILE_NUM] intValue] + 1;
+    NSString *fileName = [NSString stringWithFormat:@"ASMIMG%04d.jpg", value];
+    
+//    NSArray *directories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentsDirectory = [directories objectAtIndex:0];
+    
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    
+    NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, fileName];
+    
+    [UIImageJPEGRepresentation(image, 1) writeToFile:fullFilePath atomically:YES];
+    
+    ASMPhoto *photo = [ASMPhoto photoWithName:fileName inContext:self.fetchedResultsController.managedObjectContext];
     [self.fetchedResultsController.managedObjectContext save:nil];
+    
+    [userDefaults setObject:[NSNumber numberWithInt:value] forKey:FILE_NUM];
+    [userDefaults synchronize];
+}
+
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
