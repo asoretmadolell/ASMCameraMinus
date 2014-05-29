@@ -27,15 +27,16 @@
     
 //    [self initModel];
     [self initDefaults];
-    self.model = [AGTCoreDataStack coreDataStackWithModelName:@"ASMDataModel"];
     
+    self.model = [AGTCoreDataStack coreDataStackWithModelName:@"ASMDataModel"];
     NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName:[ASMPhoto entityName]];
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:ASMBaseEntityAttributes.creationDate ascending:NO],
                                 [NSSortDescriptor sortDescriptorWithKey:ASMBaseEntityAttributes.name ascending:YES selector:@selector(caseInsensitiveCompare:)]];
-    NSFetchedResultsController* fetchResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.model.context sectionNameKeyPath:nil cacheName:nil];
+    NSFetchedResultsController* fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.model.context sectionNameKeyPath:nil cacheName:nil];
     
-    ASMCDStackTableViewController *vc = [[ASMCDStackTableViewController alloc] initWithFetchedResultsController:fetchResultsController style:UITableViewStylePlain];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+//    ASMCDStackTableViewController *vc = [[ASMCDStackTableViewController alloc] initWithFetchedResultsController:fetchResultsController style:UITableViewStylePlain];
+    ASMListViewController *lvc = [[ASMListViewController alloc] initWithFetchedResultsController:fetchedResultsController];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:lvc];
     self.window.rootViewController = nav;
     
     self.window.backgroundColor = [UIColor whiteColor];
@@ -72,35 +73,35 @@
 
 # pragma mark - instance methods
 
-- (void)initModel
-{
-    myPhotosArray = [[NSMutableArray alloc]init];
-    
-    [myPhotosArray addObject:[UIImage imageNamed:@"facedetectionpic.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"dump.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"fruit_killer.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"people.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"walking_on_water.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"olympic_dive.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"funny_shirt.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"seal_singer.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"facedetectionpic.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"dump.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"fruit_killer.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"people.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"walking_on_water.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"olympic_dive.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"funny_shirt.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"seal_singer.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"facedetectionpic.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"dump.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"fruit_killer.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"people.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"walking_on_water.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"olympic_dive.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"funny_shirt.jpg"]];
-    [myPhotosArray addObject:[UIImage imageNamed:@"seal_singer.jpg"]];
-}
+//- (void)initModel
+//{
+//    myPhotosArray = [[NSMutableArray alloc]init];
+//    
+//    [myPhotosArray addObject:[UIImage imageNamed:@"facedetectionpic.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"dump.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"fruit_killer.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"people.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"walking_on_water.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"olympic_dive.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"funny_shirt.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"seal_singer.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"facedetectionpic.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"dump.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"fruit_killer.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"people.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"walking_on_water.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"olympic_dive.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"funny_shirt.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"seal_singer.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"facedetectionpic.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"dump.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"fruit_killer.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"people.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"walking_on_water.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"olympic_dive.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"funny_shirt.jpg"]];
+//    [myPhotosArray addObject:[UIImage imageNamed:@"seal_singer.jpg"]];
+//}
 
 - (void)initDefaults
 {
