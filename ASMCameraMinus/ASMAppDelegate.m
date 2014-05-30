@@ -34,8 +34,10 @@
                                 [NSSortDescriptor sortDescriptorWithKey:ASMBaseEntityAttributes.name ascending:YES selector:@selector(caseInsensitiveCompare:)]];
     NSFetchedResultsController* fetchResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.model.context sectionNameKeyPath:nil cacheName:nil];
     
-    ASMCDStackTableViewController *vc = [[ASMCDStackTableViewController alloc] initWithFetchedResultsController:fetchResultsController style:UITableViewStylePlain];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+//    ASMCDStackTableViewController* vc = [[ASMCDStackTableViewController alloc]initWithFetchedResultsController:fetchResultsController style:UITableViewStylePlain];
+    
+    ASMListViewController *lvc = [[ASMListViewController alloc] initWithFetchedResultsController:fetchResultsController];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:lvc];
     self.window.rootViewController = nav;
     
     self.window.backgroundColor = [UIColor whiteColor];

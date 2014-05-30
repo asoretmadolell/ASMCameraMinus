@@ -109,8 +109,8 @@
 */
 - (IBAction)list:(id)sender
 {
-    ASMListViewController *listVC = [[ASMListViewController alloc] initWithModel:self.model];
-    [self.navigationController pushViewController:listVC animated:NO];
+//    ASMListViewController *listVC = [[ASMListViewController alloc] initWithModel:self.model];
+//    [self.navigationController pushViewController:listVC animated:NO];
 }
 
 /*
@@ -164,7 +164,7 @@
 - (IBAction)delete:(id)sender
 {
     NSArray *selectedItems = [self.photosCV indexPathsForSelectedItems];
-    NSString *actionSheetTitle = [[NSString alloc] init];
+    NSString *actionSheetTitle = nil;
     if (selectedItems.count == 1)
     {
         actionSheetTitle = [NSString stringWithFormat:@"Are you sure you want to delete this image?"];

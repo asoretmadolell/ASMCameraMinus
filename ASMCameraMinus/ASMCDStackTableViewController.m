@@ -72,20 +72,7 @@
     // Push the view controller.
     [self.navigationController pushViewController:detailViewController animated:YES];
 }
-*/
-
-#pragma mark - instance methods
-
-- (void)onAddPhoto:(id) sender
-{
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-    {
-        UIImagePickerController *pc_shoot = [[UIImagePickerController alloc] init];
-        pc_shoot.delegate = self;
-        pc_shoot.sourceType = UIImagePickerControllerSourceTypeCamera;
-        [self presentViewController:pc_shoot animated:YES completion:nil];
-    }
-}
+ */
 
 #pragma mark - picker view delegate methods
 
@@ -100,6 +87,19 @@
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - instance methods
+
+- (void)onAddPhoto:(id) sender
+{
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        UIImagePickerController *pc_shoot = [[UIImagePickerController alloc] init];
+        pc_shoot.delegate = self;
+        pc_shoot.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:pc_shoot animated:YES completion:nil];
+    }
 }
 
 -(void)reloadModel:(id) sender {

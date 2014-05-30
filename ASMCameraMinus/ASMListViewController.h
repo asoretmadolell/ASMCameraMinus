@@ -6,9 +6,11 @@
 //  Copyright (c) 2014 SoReT. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 
-@interface ASMListViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate>
+@interface ASMListViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *model;
 @property (weak, nonatomic) IBOutlet UITableView *photoTV;
@@ -24,6 +26,14 @@
 - (IBAction)social:(id)sender;
 - (IBAction)delete:(id)sender;
 
-- (id)initWithModel:(NSMutableArray*)model;
+//- (id)initWithModel:(NSMutableArray*)model;
+
+// CoreDataStack
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+- (void)performFetch;
+@property (nonatomic) BOOL suspendAutomaticTrackingOfChangesInManagedObjectContext;
+@property BOOL debug;
+
+-(id) initWithFetchedResultsController: (NSFetchedResultsController *) aFetchedResultsController;
 
 @end
