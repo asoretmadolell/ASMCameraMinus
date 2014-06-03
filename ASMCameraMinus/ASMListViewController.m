@@ -11,33 +11,42 @@
 #import "ASMTableViewCell.h"
 #import "ASMEditViewController.h"
 #import "ASMPhoto.h"
+#import "Flickr.h"
+#import "FlickrPhoto.h"
 
 @interface ASMListViewController () {
-    NSMutableArray *myPhotosArray;
     UIActionSheet *socialActionSheet;
     UIActionSheet *deleteActionSheet;
+    Flickr* flickr;
 }
+
 @property (nonatomic) BOOL beganUpdates;
+
 @end
 
 @implementation ASMListViewController
 
-- (id)initWithFetchedResultsController:(NSFetchedResultsController *)aFetchedResultsController
+-(id) initWithFetchedResultsController: (NSFetchedResultsController *) aFetchedResultsController
 {
-    self = [super initWithNibName:nil bundle:nil];
-    if (self) {
-        // Custom initialization
+    
+    if (self = [super initWithNibName:nil bundle:nil]) {
         self.fetchedResultsController = aFetchedResultsController;
         self.title = @"Camera Minus";
+        flickr = [[Flickr alloc] init];
     }
     return self;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return YES;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    myPhotosArray = (NSMutableArray*)[self fetchedResultsController];
+    [self performFetch];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Info"
                                                                               style:UIBarButtonItemStylePlain
@@ -81,13 +90,45 @@
     // Dispose of any resources that can be recreated.
 }
 
-//    // I think that this method is deprecated (O.o)
-//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-//{
-//    return YES;
-//}
+#pragma mark - Fetching
 
-#pragma mark - my toolbar buttons
+- (void)performFetch
+{
+    if (self.fetchedResultsController) {
+        if (self.fetchedResultsController.fetchRequest.predicate) {
+            NSLog(@"[%@ %@] fetching %@ with predicate: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), self.fetchedResultsController.fetchRequest.entityName, self.fetchedResultsController.fetchRequest.predicate);
+        } else {
+            NSLog(@"[%@ %@] fetching all %@ (i.e., no predicate)", NSStringFromClass([self class]), NSStringFromSelector(_cmd), self.fetchedResultsController.fetchRequest.entityName);
+        }
+        NSError *error;
+        [self.fetchedResultsController performFetch:&error];
+        if (error) NSLog(@"[%@ %@] %@ (%@)", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [error localizedDescription], [error localizedFailureReason]);
+    } else {
+        NSLog(@"[%@ %@] no NSFetchedResultsController (yet?)", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    }
+    [self.photoTV reloadData];
+}
+
+- (void)setFetchedResultsController:(NSFetchedResultsController *)newfrc
+{
+    NSFetchedResultsController *oldfrc = _fetchedResultsController;
+    if (newfrc != oldfrc) {
+        _fetchedResultsController = newfrc;
+        newfrc.delegate = self;
+        if ((!self.title || [self.title isEqualToString:oldfrc.fetchRequest.entity.name]) && (!self.navigationController || !self.navigationItem.title)) {
+            self.title = newfrc.fetchRequest.entity.name;
+        }
+        if (newfrc) {
+            NSLog(@"[%@ %@] %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), oldfrc ? @"updated" : @"set");
+            [self performFetch];
+        } else {
+            NSLog(@"[%@ %@] reset to nil", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+            [self.photoTV reloadData];
+        }
+    }
+}
+
+#pragma mark - toolbar buttons
 
 - (IBAction)grid:(id)sender
 {
@@ -126,7 +167,7 @@
 - (IBAction)delete:(id)sender
 {
     NSArray *selectedItems = [self.photoTV indexPathsForSelectedRows];
-    NSString *actionSheetTitle = [[NSString alloc] init];
+    NSString *actionSheetTitle = nil;
     if (selectedItems.count == 1)
     {
         actionSheetTitle = [NSString stringWithFormat:@"Are you sure you want to delete this image?"];
@@ -152,61 +193,14 @@
 {
     UIImage* image = (UIImage*) [info valueForKey:UIImagePickerControllerOriginalImage];
     [picker dismissViewControllerAnimated:YES completion:nil];
-    
-    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-    int value = [[userDefaults objectForKey:FILE_NUM] intValue] + 1;
-    NSString* fileName = [NSString stringWithFormat:@"ASMIMG%04d.jpg", value];
-    NSString* documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString* imageFilePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, fileName];
-    [UIImageJPEGRepresentation(image, 1) writeToFile:imageFilePath atomically:YES];
-    
-    ASMPhoto* photo = [ASMPhoto photoWithName:fileName inContext:self.fetchedResultsController.managedObjectContext];
+    [self saveImageToDiskAndCoreData:image];
+    if ([self.fetchedResultsController fetchedObjects].count == 1) self.gridButton.enabled = YES;
     [self.fetchedResultsController.managedObjectContext save:nil];
-    
-    [userDefaults setObject:[NSNumber numberWithInt:value] forKey:FILE_NUM];
-    [userDefaults synchronize];
-    
-//    [myPhotosArray addObject:image];
-//    if (myPhotosArray.count == 1) self.gridButton.enabled = YES;
-    [self.photoTV reloadData];
 }
 
-#pragma mark - Fetching
-
-- (void)performFetch
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    if (self.fetchedResultsController) {
-        if (self.fetchedResultsController.fetchRequest.predicate) {
-            if (self.debug) NSLog(@"[%@ %@] fetching %@ with predicate: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), self.fetchedResultsController.fetchRequest.entityName, self.fetchedResultsController.fetchRequest.predicate);
-        } else {
-            if (self.debug) NSLog(@"[%@ %@] fetching all %@ (i.e., no predicate)", NSStringFromClass([self class]), NSStringFromSelector(_cmd), self.fetchedResultsController.fetchRequest.entityName);
-        }
-        NSError *error;
-        [self.fetchedResultsController performFetch:&error];
-        if (error) NSLog(@"[%@ %@] %@ (%@)", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [error localizedDescription], [error localizedFailureReason]);
-    } else {
-        if (self.debug) NSLog(@"[%@ %@] no NSFetchedResultsController (yet?)", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-    }
-    [self.photoTV reloadData];
-}
-
-- (void)setFetchedResultsController:(NSFetchedResultsController *)newfrc
-{
-    NSFetchedResultsController *oldfrc = _fetchedResultsController;
-    if (newfrc != oldfrc) {
-        _fetchedResultsController = newfrc;
-        newfrc.delegate = self;
-        if ((!self.title || [self.title isEqualToString:oldfrc.fetchRequest.entity.name]) && (!self.navigationController || !self.navigationItem.title)) {
-            self.title = newfrc.fetchRequest.entity.name;
-        }
-        if (newfrc) {
-            if (self.debug) NSLog(@"[%@ %@] %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), oldfrc ? @"updated" : @"set");
-            [self performFetch];
-        } else {
-            if (self.debug) NSLog(@"[%@ %@] reset to nil", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-            [self.photoTV reloadData];
-        }
-    }
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Table view data source
@@ -241,11 +235,11 @@
     ASMTableViewCell *myCell = (ASMTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"MYCELL" forIndexPath:indexPath];
     
     ASMPhoto* photo = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
-    
     myCell.myLabel.text = [NSString stringWithFormat:@"%ld - %@", (long)indexPath.row + 1, photo.name];
     
-    NSString *imageFilePath = [NSString stringWithFormat:@"%@/%@", [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0], photo.name];
-    myCell.myImageView.image = [UIImage imageWithContentsOfFile:imageFilePath];
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, photo.name];
+    myCell.myImageView.image = [UIImage imageWithContentsOfFile:fullFilePath];
     
     myCell.mySizeLabel.text = [NSString stringWithFormat:@"Size: %.0f x %.0f", myCell.myImageView.image.size.width, myCell.myImageView.image.size.height];
     
@@ -293,12 +287,12 @@
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [myPhotosArray removeObjectAtIndex:indexPath.row];
-    [tableView reloadData];
-    
-    self.editButton.enabled = NO;
-    self.deleteButton.enabled = NO;
-    self.navigationItem.rightBarButtonItem.enabled = NO;
+//    [myPhotosArray removeObjectAtIndex:indexPath.row];
+//    [tableView reloadData];
+//    
+//    self.editButton.enabled = NO;
+//    self.deleteButton.enabled = NO;
+//    self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
 #pragma mark - action sheet delegate methods
@@ -309,6 +303,7 @@
         if (buttonIndex == 0)
         {
             NSLog(@"First button clicked");
+            [self reloadModel:actionSheet];
         }
         else if (buttonIndex == 1)
         {
@@ -336,14 +331,14 @@
             
             for (NSIndexPath *indexPath in sortSelectedItems)
             {
-                [myPhotosArray removeObjectAtIndex:indexPath.item];
+//                [myPhotosArray removeObjectAtIndex:indexPath.item];
             }
             
             [self.photoTV reloadData];
             
             self.deleteButton.enabled = NO;
             
-            if (myPhotosArray.count == 0) self.gridButton.enabled = NO;
+            if ([self.fetchedResultsController fetchedObjects].count == 0) self.gridButton.enabled = NO;
         }
     }
 }
@@ -437,5 +432,51 @@
     ASMInfoViewController *infoVC = [[ASMInfoViewController alloc] initWithPhoto:myCell.myImageView.image];
     [self.navigationController pushViewController:infoVC animated:YES];
 }
+
+-(void)reloadModel:(id) sender {
+    [flickr searchFlickrForTerm:@"Spain" completionBlock:^(NSString *searchTerm, NSArray *results, NSError *error) {
+        if (error) {
+            // debemos mostrar mensaje de error
+        } else {
+            if (results.count > 0)
+            {
+                for( FlickrPhoto* photo in results )
+                {
+                    [self saveImageToDiskAndCoreData:photo.thumbnail];
+                }
+                dispatch_async(dispatch_get_main_queue(), ^
+                               {
+                                   [self.fetchedResultsController.managedObjectContext save:nil];
+                                   [self.photoTV reloadData];
+                               });
+                
+            }
+        }
+    }];
+}
+
+-(void)saveImageToDiskAndCoreData:(UIImage*)image
+{
+    if( !image ) return;
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    int value = [[userDefaults objectForKey:FILE_NUM] intValue] + 1;
+    NSString *fileName = [NSString stringWithFormat:@"ASMIMG%04d.jpg", value];
+    
+    //    NSArray *directories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    //    NSString *documentsDirectory = [directories objectAtIndex:0];
+    
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    
+    NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, fileName];
+    
+    [UIImageJPEGRepresentation(image, 1) writeToFile:fullFilePath atomically:YES];
+    
+    ASMPhoto *photo = [ASMPhoto photoWithName:fileName inContext:self.fetchedResultsController.managedObjectContext];
+    
+    [userDefaults setObject:[NSNumber numberWithInt:value] forKey:FILE_NUM];
+    [userDefaults synchronize];
+}
+
 
 @end

@@ -20,6 +20,8 @@
 		9052FEEF192B700600B6FCCF /* ASMCDStackTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9052FEED192B700600B6FCCF /* ASMCDStackTableViewController.m */; };
 		90646967191AE857000485EB /* ASMTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90646965191AE857000485EB /* ASMTableViewCell.m */; };
 		90646968191AE857000485EB /* ASMTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90646966191AE857000485EB /* ASMTableViewCell.xib */; };
+		90D2D00919388BAC0002A354 /* Flickr.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2D00619388BAC0002A354 /* Flickr.m */; };
+		90D2D00A19388BAC0002A354 /* FlickrPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2D00819388BAC0002A354 /* FlickrPhoto.m */; };
 		90D8DFD119223AEE00A2975A /* ASMDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 90D8DFCF19223AEE00A2975A /* ASMDataModel.xcdatamodeld */; };
 		90E8437619111D2A0007AA21 /* ASMListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90E8437519111D2A0007AA21 /* ASMListViewController.xib */; };
 		A40D243E190F9181006AE42C /* ASMListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A40D243D190F9181006AE42C /* ASMListViewController.m */; };
@@ -85,6 +87,10 @@
 		90646964191AE857000485EB /* ASMTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMTableViewCell.h; sourceTree = "<group>"; };
 		90646965191AE857000485EB /* ASMTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMTableViewCell.m; sourceTree = "<group>"; };
 		90646966191AE857000485EB /* ASMTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMTableViewCell.xib; sourceTree = "<group>"; };
+		90D2D00519388BAC0002A354 /* Flickr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flickr.h; sourceTree = "<group>"; };
+		90D2D00619388BAC0002A354 /* Flickr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Flickr.m; sourceTree = "<group>"; };
+		90D2D00719388BAC0002A354 /* FlickrPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrPhoto.h; sourceTree = "<group>"; };
+		90D2D00819388BAC0002A354 /* FlickrPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrPhoto.m; sourceTree = "<group>"; };
 		90D8DFD019223AEE00A2975A /* ASMDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ASMDataModel.xcdatamodel; sourceTree = "<group>"; };
 		90E8437519111D2A0007AA21 /* ASMListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMListViewController.xib; sourceTree = "<group>"; };
 		A40D243C190F9181006AE42C /* ASMListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMListViewController.h; sourceTree = "<group>"; };
@@ -190,6 +196,17 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		90D2D00B19388BB10002A354 /* Flickr */ = {
+			isa = PBXGroup;
+			children = (
+				90D2D00519388BAC0002A354 /* Flickr.h */,
+				90D2D00619388BAC0002A354 /* Flickr.m */,
+				90D2D00719388BAC0002A354 /* FlickrPhoto.h */,
+				90D2D00819388BAC0002A354 /* FlickrPhoto.m */,
+			);
+			name = Flickr;
+			sourceTree = "<group>";
+		};
 		A4AADA4018F6A1B400136C43 = {
 			isa = PBXGroup;
 			children = (
@@ -223,6 +240,7 @@
 		A4AADA5218F6A1B400136C43 /* ASMCameraMinus */ = {
 			isa = PBXGroup;
 			children = (
+				90D2D00B19388BB10002A354 /* Flickr */,
 				9052FEE8192B6C2900B6FCCF /* CoreDataStack */,
 				9052FED5192B645D00B6FCCF /* Model */,
 				908675C8190672EA00DDC3DD /* Resources */,
@@ -412,6 +430,8 @@
 				90646967191AE857000485EB /* ASMTableViewCell.m in Sources */,
 				9052FEE7192B6C2500B6FCCF /* AGTCoreDataTableViewController.m in Sources */,
 				D8DA237F18F841F800348E88 /* ASMPhotoCell.m in Sources */,
+				90D2D00919388BAC0002A354 /* Flickr.m in Sources */,
+				90D2D00A19388BAC0002A354 /* FlickrPhoto.m in Sources */,
 				9052FEEF192B700600B6FCCF /* ASMCDStackTableViewController.m in Sources */,
 				A40D243E190F9181006AE42C /* ASMListViewController.m in Sources */,
 				9052FEDF192B64F900B6FCCF /* _ASMPhoto.m in Sources */,
