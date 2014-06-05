@@ -6,11 +6,13 @@
 //  Copyright (c) 2014 SoReT. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 
-@interface ASMHomeViewController : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIActionSheetDelegate>
+@interface ASMHomeViewController : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIActionSheetDelegate, NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, strong) NSMutableArray *model;
+//@property (nonatomic, strong) NSMutableArray *model;
 @property (weak, nonatomic) IBOutlet UICollectionView *photosCV;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *listButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
@@ -24,8 +26,14 @@
 - (IBAction)social:(id)sender;
 - (IBAction)delete:(id)sender;
 
-- (void)infoClicked:(id)sender;
+//- (id)initWithModel:(NSMutableArray*)model;
 
-- (id)initWithModel:(NSMutableArray*)model;
+// CoreDataStack
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+- (void)performFetch;
+@property (nonatomic) BOOL suspendAutomaticTrackingOfChangesInManagedObjectContext;
+@property BOOL debug;
+
+-(id) initWithFetchedResultsController: (NSFetchedResultsController *) aFetchedResultsController;
 
 @end

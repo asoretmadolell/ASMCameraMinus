@@ -11,31 +11,41 @@
 #import "ASMListViewController.h"
 #import "ASMInfoViewController.h"
 #import "ASMEditViewController.h"
+#import "ASMPhoto.h"
+#import "Flickr.h"
+#import "FlickrPhoto.h"
 
 @interface ASMHomeViewController () {
     UIActionSheet *socialActionSheet;
     UIActionSheet *deleteActionSheet;
+    Flickr* flickr;
+    UIActivityIndicatorView *spinner;
 }
 
 @end
 
 @implementation ASMHomeViewController
 
-- (id)initWithModel:(NSMutableArray*)model
+- (id)initWithFetchedResultsController:(NSFetchedResultsController *)aFetchedResultsController
 {
-    self = [super initWithNibName:nil bundle:nil];
-    if (self) {
-        // Custom initialization
-        self.model = model;
+    if (self = [super init]) {
+        self.fetchedResultsController = aFetchedResultsController;
         self.title = @"Camera Minus";
+        flickr = [[Flickr alloc] init];
     }
     return self;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return YES;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self performFetch];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Info"
                                                                               style:UIBarButtonItemStylePlain
@@ -49,20 +59,30 @@
     
     [self.photosCV registerNib:[UINib nibWithNibName:@"ASMPhotoCell" bundle:nil] forCellWithReuseIdentifier:@"PhotoCell"];
     
-    if (self.model.count == 0) self.listButton.enabled = NO;
+//    if (self.model.count == 0) self.listButton.enabled = NO;
+    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
+    [spinner setCenter:CGPointMake(screenWidth/2.0, screenHeight/2.0)];
+    [self.view addSubview:spinner];
+    [spinner stopAnimating];
+    spinner.hidden = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     [self.photosCV reloadData];
     
     // THE WAY OF THE GEORGE
     self.shootButton.enabled = ( [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] );
     
+    self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     self.editButton.enabled = NO;
     self.deleteButton.enabled = NO;
-    self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -71,10 +91,48 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Fetching
+
+- (void)performFetch
+{
+    if (self.fetchedResultsController) {
+        if (self.fetchedResultsController.fetchRequest.predicate) {
+            NSLog(@"[%@ %@] fetching %@ with predicate: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), self.fetchedResultsController.fetchRequest.entityName, self.fetchedResultsController.fetchRequest.predicate);
+        } else {
+            NSLog(@"[%@ %@] fetching all %@ (i.e., no predicate)", NSStringFromClass([self class]), NSStringFromSelector(_cmd), self.fetchedResultsController.fetchRequest.entityName);
+        }
+        NSError *error;
+        [self.fetchedResultsController performFetch:&error];
+        if (error) NSLog(@"[%@ %@] %@ (%@)", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [error localizedDescription], [error localizedFailureReason]);
+    } else {
+        NSLog(@"[%@ %@] no NSFetchedResultsController (yet?)", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    }
+    [self.photosCV reloadData];
+}
+
+- (void)setFetchedResultsController:(NSFetchedResultsController *)newfrc
+{
+    NSFetchedResultsController *oldfrc = _fetchedResultsController;
+    if (newfrc != oldfrc) {
+        _fetchedResultsController = newfrc;
+        newfrc.delegate = self;
+        if ((!self.title || [self.title isEqualToString:oldfrc.fetchRequest.entity.name]) && (!self.navigationController || !self.navigationItem.title)) {
+            self.title = newfrc.fetchRequest.entity.name;
+        }
+        if (newfrc) {
+            NSLog(@"[%@ %@] %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), oldfrc ? @"updated" : @"set");
+            [self performFetch];
+        } else {
+            NSLog(@"[%@ %@] reset to nil", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+            [self.photosCV reloadData];
+        }
+    }
+}
+
+#pragma mark - toolbar buttons
+
 - (IBAction)list:(id)sender
 {
-//    ASMListViewController *listVC = [[ASMListViewController alloc] initWithModel:self.model];
-//    [self.navigationController pushViewController:listVC animated:NO];
     [self.navigationController popViewControllerAnimated:NO];
 }
 
@@ -136,9 +194,14 @@
 {
     UIImage *image = (UIImage*) [info valueForKey:UIImagePickerControllerOriginalImage];
     [picker dismissViewControllerAnimated:YES completion:nil];
-    [self.model addObject:image];
-    if (self.model.count == 1) self.listButton.enabled = YES;
-    [self.photosCV reloadData];
+    [self saveImageToDiskAndCoreData:image];
+    if ([self.fetchedResultsController fetchedObjects].count == 1) self.listButton.enabled = YES;
+    [self.fetchedResultsController.managedObjectContext save:nil];
+}
+
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - collection view flow layout delegate methods
@@ -150,22 +213,40 @@
 
 #pragma mark - collection view data source delegate methods
 
-// This code isn't necessary if we're using only 1 section
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 1;
+    return [[self.fetchedResultsController sections] count];
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.model.count;
+    return [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
 }
+
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+//{
+//	return [[[self.fetchedResultsController sections] objectAtIndex:section] name];
+//}
+//
+//- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
+//{
+//	return [self.fetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
+//}
+//
+//- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+//{
+//    return [self.fetchedResultsController sectionIndexTitles];
+//}
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ASMPhotoCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCell" forIndexPath:indexPath];
     
-    cell.image.image = [self.model objectAtIndex:indexPath.item];
+    ASMPhoto* photo = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.item];
+    
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, photo.name];
+    cell.image.image = [UIImage imageWithContentsOfFile:fullFilePath];
     
     // THE WAY OF THE GEORGE
     cell.backgroundColor = ( cell.selected ) ? [UIColor blueColor] : [UIColor blackColor];
@@ -201,6 +282,11 @@
     cell.backgroundColor = [UIColor blackColor];
 }
 
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return YES;
+//}
+
 #pragma mark - action sheet delegate methods
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -208,7 +294,10 @@
     if ( actionSheet == socialActionSheet ) {
         if (buttonIndex == 0)
         {
-            NSLog(@"First button clicked");
+            NSLog(@"Flickr button clicked");
+            spinner.hidden = NO;
+            [spinner startAnimating];
+            [self reloadModel:actionSheet];
         }
         else if (buttonIndex == 1)
         {
@@ -236,15 +325,92 @@
             
             for (NSIndexPath *indexPath in sortSelectedItems)
             {
-                [self.model removeObjectAtIndex:indexPath.item];
+                ASMPhoto* photo = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
+                [self.fetchedResultsController.managedObjectContext deleteObject:photo];
+                [self.fetchedResultsController.managedObjectContext save:nil];
             }
-            
-            [self.photosCV reloadData];
             
             self.deleteButton.enabled = NO;
             
-            if (self.model.count == 0) self.listButton.enabled = NO;
+            if ([self.fetchedResultsController fetchedObjects].count == 0) self.listButton.enabled = NO;
         }
+    }
+}
+
+#pragma mark - NSFetchedResultsControllerDelegate
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
+    if (!self.suspendAutomaticTrackingOfChangesInManagedObjectContext) {
+    }
+}
+
+- (void)controller:(NSFetchedResultsController *)controller
+  didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+		   atIndex:(NSUInteger)sectionIndex
+	 forChangeType:(NSFetchedResultsChangeType)type
+{
+    if (!self.suspendAutomaticTrackingOfChangesInManagedObjectContext)
+    {
+        switch(type)
+        {
+            case NSFetchedResultsChangeInsert:
+                [self.photosCV insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]];
+                break;
+                
+            case NSFetchedResultsChangeDelete:
+                [self.photosCV deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]];
+                break;
+        }
+    }
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller
+   didChangeObject:(id)anObject
+	   atIndexPath:(NSIndexPath *)indexPath
+	 forChangeType:(NSFetchedResultsChangeType)type
+	  newIndexPath:(NSIndexPath *)newIndexPath
+{
+    if (!self.suspendAutomaticTrackingOfChangesInManagedObjectContext)
+    {
+        switch(type)
+        {
+            case NSFetchedResultsChangeInsert:
+                [self.photosCV insertItemsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]];
+                break;
+                
+            case NSFetchedResultsChangeDelete:
+                [self.photosCV deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
+                break;
+                
+            case NSFetchedResultsChangeUpdate:
+                [self.photosCV reloadItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
+                break;
+                
+            case NSFetchedResultsChangeMove:
+                [self.photosCV deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
+                [self.photosCV insertItemsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]];
+                break;
+        }
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+}
+
+- (void)endSuspensionOfUpdatesDueToContextChanges
+{
+    _suspendAutomaticTrackingOfChangesInManagedObjectContext = NO;
+}
+
+- (void)setSuspendAutomaticTrackingOfChangesInManagedObjectContext:(BOOL)suspend
+{
+    if (suspend) {
+        _suspendAutomaticTrackingOfChangesInManagedObjectContext = YES;
+    } else {
+        [self performSelector:@selector(endSuspensionOfUpdatesDueToContextChanges) withObject:0 afterDelay:0];
     }
 }
 
@@ -256,6 +422,53 @@
     ASMPhotoCell *cell = (ASMPhotoCell*)[self.photosCV cellForItemAtIndexPath:[selectedItems objectAtIndex:0]];
     ASMInfoViewController *infoVC = [[ASMInfoViewController alloc] initWithPhoto:cell.image.image];
     [self.navigationController pushViewController:infoVC animated:YES];
+}
+
+-(void)reloadModel:(id) sender {
+    [flickr searchFlickrForTerm:@"Spain" completionBlock:^(NSString *searchTerm, NSArray *results, NSError *error) {
+        if (error) {
+            // debemos mostrar mensaje de error
+        } else {
+            if (results.count > 0)
+            {
+                for( FlickrPhoto* photo in results )
+                {
+                    [self saveImageToDiskAndCoreData:photo.thumbnail];
+                }
+                dispatch_async(dispatch_get_main_queue(), ^
+                               {
+                                   [self.fetchedResultsController.managedObjectContext save:nil];
+                                   [self.photosCV reloadData];
+                                   [spinner stopAnimating];
+                                   spinner.hidden = YES;
+                               });
+                
+            }
+        }
+    }];
+}
+
+-(void)saveImageToDiskAndCoreData:(UIImage*)image
+{
+    if( !image ) return;
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    int value = [[userDefaults objectForKey:FILE_NUM] intValue] + 1;
+    NSString *fileName = [NSString stringWithFormat:@"ASMIMG%04d.jpg", value];
+    
+    //    NSArray *directories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    //    NSString *documentsDirectory = [directories objectAtIndex:0];
+    
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    
+    NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, fileName];
+    
+    [UIImageJPEGRepresentation(image, 1) writeToFile:fullFilePath atomically:YES];
+    
+    ASMPhoto *photo = [ASMPhoto photoWithName:fileName inContext:self.fetchedResultsController.managedObjectContext];
+    
+    [userDefaults setObject:[NSNumber numberWithInt:value] forKey:FILE_NUM];
+    [userDefaults synchronize];
 }
 
 @end

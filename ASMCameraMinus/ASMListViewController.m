@@ -7,6 +7,7 @@
 //
 
 #import "ASMListViewController.h"
+#import "ASMHomeViewController.h"
 #import "ASMInfoViewController.h"
 #import "ASMTableViewCell.h"
 #import "ASMEditViewController.h"
@@ -29,7 +30,6 @@
 
 -(id) initWithFetchedResultsController: (NSFetchedResultsController *) aFetchedResultsController
 {
-    
     if (self = [super initWithNibName:nil bundle:nil]) {
         self.fetchedResultsController = aFetchedResultsController;
         self.title = @"Camera Minus";
@@ -80,7 +80,6 @@
     // THE WAY OF THE GEORGE
     self.shootButton.enabled = ( [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] );
     
-    self.navigationItem.hidesBackButton = YES;
     self.navigationItem.rightBarButtonItem.enabled = NO;
     self.editButton.enabled = NO;
     self.deleteButton.enabled = NO;
@@ -134,7 +133,8 @@
 
 - (IBAction)grid:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:NO];
+    ASMHomeViewController *homeVC = [[ASMHomeViewController alloc] initWithFetchedResultsController:self.fetchedResultsController];
+    [self.navigationController pushViewController:homeVC animated:NO];
 }
 
 - (IBAction)edit:(id)sender
