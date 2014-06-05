@@ -21,23 +21,6 @@
 
 @implementation ASMHomeViewController
 
-/*
- Este método devuelve un ViewController inicializado con el
- fichero nib (también conocido como xib) en el bundle. También
- nombre del fichero. Por eso, para la celda, había que hacer
- un registerNib :-)
-//*/
-//- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-//{
-//    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-//    if (self)
-//    {
-//        // Custom initialization
-//        self.title = @"Camera Minus";
-//    }
-//    return self;
-//}
-
 - (id)initWithModel:(NSMutableArray*)model
 {
     self = [super initWithNibName:nil bundle:nil];
@@ -49,11 +32,6 @@
     return self;
 }
 
-/*
- Este método es llamado después de que se haya cargado la vista.
- Por eso inicializamos aquí las vistas que metimos en el xib,
- además de inicializar el controlador de mi celdita.
-*/
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -74,11 +52,6 @@
     if (self.model.count == 0) self.listButton.enabled = NO;
 }
 
-/*
- A este método se le llama justo antes de que se empiece a
- cargar cualquier vista. Por tanto, aquí conviene implementar
- todo aquello que tenga que ver con mostrar la vista.
- */
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -92,33 +65,19 @@
     self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
-/*
- Este método es llamado por el sistema cuando éste considera
- que la cantidad de memoria disponible es baja.
-*/
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
- Si el usuario pulsa el botón list UIKit llama a este método.
- Se crea una nueva pantalla que se añade a la navegación y
- que mostrará las fotos en formato tabla
-*/
 - (IBAction)list:(id)sender
 {
 //    ASMListViewController *listVC = [[ASMListViewController alloc] initWithModel:self.model];
 //    [self.navigationController pushViewController:listVC animated:NO];
+    [self.navigationController popViewControllerAnimated:NO];
 }
 
-/*
- A este método se le llama cuando el usuario pulsa el botón "Edit"
- con una imagen seleccionada. Se creará una nueva pantalla que se
- añadirá a la navegación y que mostrará la imagen en pantalla
- completa con los cinco filtrillos a aplicar.
-*/
 - (IBAction)edit:(id)sender
 {
     NSArray *selectedItems = [self.photosCV indexPathsForSelectedItems];
@@ -127,10 +86,6 @@
     [self.navigationController pushViewController:editVC animated:YES];
 }
 
-/*
- A este método se le llama cuando el usuario pulsa el botón "Shoot"
- para cascar una foto.
-*/
 - (IBAction)shoot:(id)sender
 {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
@@ -142,10 +97,6 @@
     }
 }
 
-/*
- A este método se le llama cuando el usuario pulsa el botón "Social",
- y la idea inicial es que salga un PopOver con los tres botones distintos.
-*/
 - (IBAction)social:(id)sender
 {
     socialActionSheet = [[UIActionSheet alloc] initWithTitle:@"Select Flickr to download some images, or select Facebook or Twitter to publish the selected image."
@@ -156,11 +107,6 @@
     [socialActionSheet showFromBarButtonItem:sender animated:YES];
 }
 
-/*
- A este método se le llama cuando el usuario pulsa el botón "Delete",
- y lo que hace es borrar las imágenes seleccionadas después de confirmarlo
- en el ActionSheet.
-*/
 - (IBAction)delete:(id)sender
 {
     NSArray *selectedItems = [self.photosCV indexPathsForSelectedItems];
@@ -186,9 +132,6 @@
 
 #pragma mark - picker view delegate methods
 
-/*
- Este método lo llama la cámara después de haber cascado la foto.
-*/
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = (UIImage*) [info valueForKey:UIImagePickerControllerOriginalImage];
@@ -200,10 +143,6 @@
 
 #pragma mark - collection view flow layout delegate methods
 
-/*
-Este método del protocolo UICollectionViewLayout lo llama la Colletion View
-para saber el tamaño que de aplicar a cada celda
-*/
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return CGSizeMake(70, 70);
@@ -211,31 +150,17 @@ para saber el tamaño que de aplicar a cada celda
 
 #pragma mark - collection view data source delegate methods
 
-/*
-Este método del protocolo UICollectionViewLayout lo llama la Colletion View
- para saber el número de secciones que contendrá la Collection View.
-*/
 // This code isn't necessary if we're using only 1 section
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     return 1;
 }
 
-/*
- Este método define la cantidad de ítems (celdas) que tiene el
- CollectionView. Vamos, el total de ítems del array de fotos.
-*/
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return self.model.count;
 }
 
-/*
- Este método devuelve la celda ya visible en el indexPath especificado,
- por tanto, dentro creamos mi celdita, y dentro de ésta ponemos
- la imagen que toque, además de distinguir las que estén seleccionadas
- de las que no.
-*/
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ASMPhotoCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCell" forIndexPath:indexPath];
@@ -250,11 +175,6 @@ Este método del protocolo UICollectionViewLayout lo llama la Colletion View
 
 #pragma mark - collection view delegate methods
 
-/*
- Este método se ejecuta cuando se pincha en un elemento del Collection
- View, independientemente de si la selección múltiple está habilitada
- o no.
-*/
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     // THE WAY OF THE GEORGE
@@ -267,12 +187,6 @@ Este método del protocolo UICollectionViewLayout lo llama la Colletion View
     cell.backgroundColor = [UIColor blueColor];
 }
 
-/*
- Este método se ejecuta cuando se anula la selección de un elemento
- del CollectionView. Esto es, si la selección múltiple está habilitada,
- cuando se pincha en un elemento seleccionado, o si está deshabilitada,
- cuando un elemento deja de estarlo por haber pinchado otro.
-*/
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     // THE WAY OF THE GEORGE
@@ -289,11 +203,6 @@ Este método del protocolo UICollectionViewLayout lo llama la Colletion View
 
 #pragma mark - action sheet delegate methods
 
-/*
- Este método lo llama el ActionSheet que hemos creado para preguntar
- al usuario que si está seguro de que quiere borrar las fotos.
- Nos devuelve un número, 0 para cancelar, 1 para aceptar.
-*/
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if ( actionSheet == socialActionSheet ) {
