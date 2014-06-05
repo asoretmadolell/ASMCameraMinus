@@ -18,6 +18,7 @@
     UIActionSheet *socialActionSheet;
     UIActionSheet *deleteActionSheet;
     Flickr* flickr;
+    UIActivityIndicatorView *spinner;
 }
 
 @property (nonatomic) BOOL beganUpdates;
@@ -60,13 +61,14 @@
     
     [self.photoTV registerNib:[UINib nibWithNibName:@"ASMTableViewCell" bundle:nil] forCellReuseIdentifier:@"MYCELL"];
 
-    // MANUAL SPINNER
-//    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-//    CGRect screenRect = [[UIScreen mainScreen] bounds];
-//    CGFloat screenWidth = screenRect.size.width;
-//    CGFloat screenHeight = screenRect.size.height;
-//    [spinner setCenter:CGPointMake(screenWidth/2.0, screenHeight/2.0)];
-//    [self.view addSubview:spinner];
+    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
+    [spinner setCenter:CGPointMake(screenWidth/2.0, screenHeight/2.0)];
+    [self.view addSubview:spinner];
+    [spinner stopAnimating];
+    spinner.hidden = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -287,12 +289,13 @@
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    [myPhotosArray removeObjectAtIndex:indexPath.row];
-//    [tableView reloadData];
-//    
-//    self.editButton.enabled = NO;
-//    self.deleteButton.enabled = NO;
-//    self.navigationItem.rightBarButtonItem.enabled = NO;
+    ASMPhoto* photo = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
+    [self.fetchedResultsController.managedObjectContext deleteObject:photo];
+    [self.fetchedResultsController.managedObjectContext save:nil];
+    
+    self.editButton.enabled = NO;
+    self.deleteButton.enabled = NO;
+    self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
 #pragma mark - action sheet delegate methods
@@ -302,7 +305,9 @@
     if ( actionSheet == socialActionSheet ) {
         if (buttonIndex == 0)
         {
-            NSLog(@"First button clicked");
+            NSLog(@"Flickr button clicked");
+            spinner.hidden = NO;
+            [spinner startAnimating];
             [self reloadModel:actionSheet];
         }
         else if (buttonIndex == 1)
@@ -331,10 +336,10 @@
             
             for (NSIndexPath *indexPath in sortSelectedItems)
             {
-//                [myPhotosArray removeObjectAtIndex:indexPath.item];
+                ASMPhoto* photo = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
+                [self.fetchedResultsController.managedObjectContext deleteObject:photo];
+                [self.fetchedResultsController.managedObjectContext save:nil];
             }
-            
-            [self.photoTV reloadData];
             
             self.deleteButton.enabled = NO;
             
@@ -448,6 +453,8 @@
                                {
                                    [self.fetchedResultsController.managedObjectContext save:nil];
                                    [self.photoTV reloadData];
+                                   [spinner stopAnimating];
+                                   spinner.hidden = YES;
                                });
                 
             }
