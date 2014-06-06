@@ -7,20 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-@import CoreLocation;
 @import CoreImage;
 @import QuartzCore;
-@import AddressBook;
+#import "ASMPhoto.h"
 
 @class ViewController;
 
-@interface ASMInfoViewController : UIViewController <CLLocationManagerDelegate>
+@interface ASMInfoViewController : UIViewController
 
-@property (strong, nonatomic) UIImage *photo;
+@property (strong, nonatomic) ASMPhoto *photo;
 @property (weak, nonatomic) IBOutlet UIImageView *infoImage;
 @property (weak, nonatomic) IBOutlet UILabel *imageSize;
 @property (weak, nonatomic) IBOutlet UILabel *imageWeight;
-@property (strong, nonatomic) CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UILabel *imageLongitude;
 @property (weak, nonatomic) IBOutlet UILabel *imageLatitude;
 @property (weak, nonatomic) IBOutlet UILabel *imageHeight;
@@ -29,6 +27,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *imageRightEye;
 @property (weak, nonatomic) IBOutlet UILabel *reverseGeocoding;
 
-- (id)initWithPhoto:(UIImage*)photo;
+- (id)initWithPhoto:(ASMPhoto*)photo;
 
 @end

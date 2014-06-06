@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import "AGTCoreDataStack.h"
 
 @interface ASMHomeViewController : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIActionSheetDelegate, NSFetchedResultsControllerDelegate>
 
@@ -29,11 +30,12 @@
 //- (id)initWithModel:(NSMutableArray*)model;
 
 // CoreDataStack
+@property (strong, nonatomic) AGTCoreDataStack *model;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 - (void)performFetch;
 @property (nonatomic) BOOL suspendAutomaticTrackingOfChangesInManagedObjectContext;
 @property BOOL debug;
 
--(id) initWithFetchedResultsController: (NSFetchedResultsController *) aFetchedResultsController;
+-(id) initWithFetchedResultsController: (NSFetchedResultsController *) aFetchedResultsController model:(AGTCoreDataStack*)model;
 
 @end

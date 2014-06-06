@@ -14,22 +14,25 @@
 #import "ASMPhoto.h"
 #import "Flickr.h"
 #import "FlickrPhoto.h"
+#import "ASMAppDelegate.h"
 
 @interface ASMHomeViewController () {
     UIActionSheet *socialActionSheet;
     UIActionSheet *deleteActionSheet;
     Flickr* flickr;
     UIActivityIndicatorView *spinner;
+    ASMAppDelegate* appDelegate;
 }
 
 @end
 
 @implementation ASMHomeViewController
 
-- (id)initWithFetchedResultsController:(NSFetchedResultsController *)aFetchedResultsController
+- (id)initWithFetchedResultsController:(NSFetchedResultsController *)aFetchedResultsController model:(AGTCoreDataStack *)model
 {
     if (self = [super init]) {
         self.fetchedResultsController = aFetchedResultsController;
+        self.model = model;
         self.title = @"Camera Minus";
         flickr = [[Flickr alloc] init];
     }
@@ -45,6 +48,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    appDelegate = (ASMAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
     [self performFetch];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Info"
@@ -74,6 +80,10 @@
 {
     [super viewWillAppear:animated];
     
+    if ([CLLocationManager locationServicesEnabled]) {
+        [appDelegate.locationManager startUpdatingLocation];
+    }
+    
     [self.photosCV reloadData];
     
     // THE WAY OF THE GEORGE
@@ -89,6 +99,12 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [appDelegate.locationManager stopUpdatingLocation];
 }
 
 #pragma mark - Fetching
@@ -419,8 +435,9 @@
 - (void)infoClicked:(id)sender
 {
     NSArray *selectedItems = [self.photosCV indexPathsForSelectedItems];
-    ASMPhotoCell *cell = (ASMPhotoCell*)[self.photosCV cellForItemAtIndexPath:[selectedItems objectAtIndex:0]];
-    ASMInfoViewController *infoVC = [[ASMInfoViewController alloc] initWithPhoto:cell.image.image];
+    NSIndexPath* selectedItem = [selectedItems objectAtIndex:0];
+    ASMPhoto* photo = [[self.fetchedResultsController fetchedObjects] objectAtIndex:selectedItem.item];
+    ASMInfoViewController *infoVC = [[ASMInfoViewController alloc] initWithPhoto:photo];
     [self.navigationController pushViewController:infoVC animated:YES];
 }
 
@@ -466,6 +483,13 @@
     [UIImageJPEGRepresentation(image, 1) writeToFile:fullFilePath atomically:YES];
     
     ASMPhoto *photo = [ASMPhoto photoWithName:fileName inContext:self.fetchedResultsController.managedObjectContext];
+    photo.altitude = [NSNumber numberWithFloat:appDelegate.lastLocation.altitude];
+    photo.longitude = [NSNumber numberWithDouble:appDelegate.lastLocation.coordinate.longitude];
+    photo.latitude = [NSNumber numberWithDouble:appDelegate.lastLocation.coordinate.latitude];
+    photo.address = appDelegate.reverseGeocoding;
+    photo.weight = [NSNumber numberWithFloat:UIImageJPEGRepresentation(image, 1).length / 1024.0f / 1024.0f];
+    photo.height = [NSNumber numberWithInt:image.size.height];
+    photo.width = [NSNumber numberWithInt:image.size.width];
     
     [userDefaults setObject:[NSNumber numberWithInt:value] forKey:FILE_NUM];
     [userDefaults synchronize];

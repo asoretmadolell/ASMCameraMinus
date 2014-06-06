@@ -25,8 +25,9 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-//    [self initModel];
     [self initDefaults];
+    
+    [self manageLocation];
     
     self.model = [AGTCoreDataStack coreDataStackWithModelName:@"ASMDataModel"];
     NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName:[ASMPhoto entityName]];
@@ -35,7 +36,7 @@
     NSFetchedResultsController* fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.model.context sectionNameKeyPath:nil cacheName:nil];
     
 //    ASMCDStackTableViewController *vc = [[ASMCDStackTableViewController alloc] initWithFetchedResultsController:fetchResultsController style:UITableViewStylePlain];
-    ASMListViewController *lvc = [[ASMListViewController alloc] initWithFetchedResultsController:fetchedResultsController];
+    ASMListViewController *lvc = [[ASMListViewController alloc] initWithFetchedResultsController:fetchedResultsController model:self.model];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:lvc];
     self.window.rootViewController = nav;
     
@@ -73,36 +74,6 @@
 
 # pragma mark - instance methods
 
-//- (void)initModel
-//{
-//    myPhotosArray = [[NSMutableArray alloc]init];
-//    
-//    [myPhotosArray addObject:[UIImage imageNamed:@"facedetectionpic.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"dump.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"fruit_killer.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"people.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"walking_on_water.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"olympic_dive.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"funny_shirt.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"seal_singer.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"facedetectionpic.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"dump.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"fruit_killer.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"people.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"walking_on_water.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"olympic_dive.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"funny_shirt.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"seal_singer.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"facedetectionpic.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"dump.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"fruit_killer.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"people.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"walking_on_water.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"olympic_dive.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"funny_shirt.jpg"]];
-//    [myPhotosArray addObject:[UIImage imageNamed:@"seal_singer.jpg"]];
-//}
-
 - (void)initDefaults
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -111,6 +82,35 @@
         [userDefaults setObject:@0 forKey:FILE_NUM];
         [userDefaults synchronize];
     }
+}
+
+- (void)manageLocation
+{
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+    self.locationManager.delegate = self;
+}
+
+#pragma mark - location manager methods
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    self.lastLocation = [locations lastObject];
+    
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    CLLocation *userCLLocation = [[CLLocation alloc] initWithLatitude:self.lastLocation.coordinate.latitude
+                                                            longitude:self.lastLocation.coordinate.longitude];
+    __block ASMAppDelegate *weakSelf = self;
+    [geocoder reverseGeocodeLocation:userCLLocation completionHandler:^(NSArray *placemarks, NSError *error) {
+        if (placemarks.count > 0) {
+            CLPlacemark *info = [placemarks lastObject];
+            weakSelf.reverseGeocoding = [NSString stringWithFormat:@"%@, %@, %@",
+                                         [[info addressDictionary] objectForKey:(NSString*)kABPersonAddressStreetKey],
+                                         [[info addressDictionary] objectForKey:(NSString*)kABPersonAddressZIPKey],
+                                         [[info addressDictionary] objectForKey:(NSString*)kABPersonAddressCountryKey]];
+        }
+    }];
+    
 }
 
 @end

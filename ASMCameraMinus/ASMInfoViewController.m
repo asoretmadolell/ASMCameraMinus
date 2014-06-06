@@ -8,18 +8,21 @@
 
 #import "ASMInfoViewController.h"
 #import "ASMShowViewController.h"
+#import "UIImageView+GeometryConversion.h"
 
-@interface ASMInfoViewController ()
+@interface ASMInfoViewController () {
+    UIImage* photoImage;
+}
 
 @end
 
 @implementation ASMInfoViewController
 
-- (id)initWithPhoto:(UIImage*)photo
+- (id)initWithPhoto:(ASMPhoto*)photo
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
-        self.title = @"Image Info";
+        self.title = photo.name;
         self.photo = photo;
     }
     return self;
@@ -29,7 +32,16 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.infoImage.image = self.photo;
+    
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, self.photo.name];
+    photoImage = self.infoImage.image = [UIImage imageWithContentsOfFile:fullFilePath];
+    
+    self.imageLatitude.text = [NSString stringWithFormat:@"%@", self.photo.latitude];
+    self.imageLongitude.text = [NSString stringWithFormat:@"%@", self.photo.longitude];
+    self.reverseGeocoding.text = self.photo.address;
+//    self.imageAltitude.text = [NSString stringWithFormat:@"%@", self.photo.altitude];
+    
     self.imageSize.text = [NSString stringWithFormat:@"Size: %.0f x %.0f", self.infoImage.image.size.width, self.infoImage.image.size.height];
     
     NSData* imgData = UIImageJPEGRepresentation(self.infoImage.image, 0);
@@ -40,19 +52,11 @@
 {
     [super viewWillAppear:animated];
     
-    if ([CLLocationManager locationServicesEnabled]) {
-        self.locationManager = [[CLLocationManager alloc] init];
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-        self.locationManager.delegate = self;
-        [self.locationManager startUpdatingLocation];
-    }
-    
     [self faceDetector];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [self.locationManager stopUpdatingLocation];
 }
 
 - (void)didReceiveMemoryWarning
@@ -72,37 +76,12 @@
     }
 }
 
-#pragma mark - location manager methods
-
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
-    CLLocation *lastLocation = [locations lastObject];
-    self.imageLatitude.text = [NSString stringWithFormat:@"Latitude: %.4f", lastLocation.coordinate.latitude];
-    self.imageLongitude.text = [NSString stringWithFormat:@"Longitude: %.4f", lastLocation.coordinate.longitude];
-    self.imageHeight.text = [NSString stringWithFormat:@"Altitude: %.4f", lastLocation.altitude];
-    
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    CLLocation *userCLLocation = [[CLLocation alloc] initWithLatitude:lastLocation.coordinate.latitude
-                                                            longitude:lastLocation.coordinate.longitude];
-    __block ASMInfoViewController *weakSelf = self;
-    [geocoder reverseGeocodeLocation:userCLLocation completionHandler:^(NSArray *placemarks, NSError *error) {
-        if (placemarks.count > 0) {
-            CLPlacemark *info = [placemarks lastObject];
-            weakSelf.reverseGeocoding.text = [NSString stringWithFormat:@"%@, %@, %@",
-                                              [[info addressDictionary] objectForKey:(NSString*)kABPersonAddressStreetKey],
-                                              [[info addressDictionary] objectForKey:(NSString*)kABPersonAddressZIPKey],
-                                              [[info addressDictionary] objectForKey:(NSString*)kABPersonAddressCountryKey]];
-        }
-    }];
-
-}
-
 #pragma mark - instance methods
 
 -(void)faceDetector
 {
     // Load the picture for face detection
-    UIImageView *image = [[UIImageView alloc] initWithImage:self.photo];
+    UIImageView *image = [[UIImageView alloc] initWithImage:photoImage];
     
     // Draw the face detection image
     [self.infoImage addSubview:image];

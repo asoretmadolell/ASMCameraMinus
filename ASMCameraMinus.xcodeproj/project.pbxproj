@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		902872E71941C783007F4D94 /* UIImageView+GeometryConversion.m in Sources */ = {isa = PBXBuildFile; fileRef = 902872E61941C783007F4D94 /* UIImageView+GeometryConversion.m */; };
 		904464A019110DBC00CC1BD8 /* ASMShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9044649E19110DBC00CC1BD8 /* ASMShowViewController.m */; };
 		904464A119110DBC00CC1BD8 /* ASMShowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9044649F19110DBC00CC1BD8 /* ASMShowViewController.xib */; };
 		9048A4A71918F9240046C2C7 /* ASMInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9048A4A51918F9240046C2C7 /* ASMInfoViewController.m */; };
@@ -64,6 +65,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		902872E51941C783007F4D94 /* UIImageView+GeometryConversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+GeometryConversion.h"; sourceTree = "<group>"; };
+		902872E61941C783007F4D94 /* UIImageView+GeometryConversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+GeometryConversion.m"; sourceTree = "<group>"; };
 		9044649D19110DBC00CC1BD8 /* ASMShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMShowViewController.h; sourceTree = "<group>"; };
 		9044649E19110DBC00CC1BD8 /* ASMShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMShowViewController.m; sourceTree = "<group>"; };
 		9044649F19110DBC00CC1BD8 /* ASMShowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMShowViewController.xib; sourceTree = "<group>"; };
@@ -154,6 +157,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		902872E81941C78C007F4D94 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				902872E51941C783007F4D94 /* UIImageView+GeometryConversion.h */,
+				902872E61941C783007F4D94 /* UIImageView+GeometryConversion.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		9052FED5192B645D00B6FCCF /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,6 +252,7 @@
 		A4AADA5218F6A1B400136C43 /* ASMCameraMinus */ = {
 			isa = PBXGroup;
 			children = (
+				902872E81941C78C007F4D94 /* Categories */,
 				90D2D00B19388BB10002A354 /* Flickr */,
 				9052FEE8192B6C2900B6FCCF /* CoreDataStack */,
 				9052FED5192B645D00B6FCCF /* Model */,
@@ -442,6 +455,7 @@
 				9052FEE1192B64F900B6FCCF /* ASMPhoto.m in Sources */,
 				9052FEE0192B64F900B6FCCF /* ASMBaseEntity.m in Sources */,
 				A4AADA5D18F6A1B400136C43 /* ASMAppDelegate.m in Sources */,
+				902872E71941C783007F4D94 /* UIImageView+GeometryConversion.m in Sources */,
 				A4AADA5918F6A1B400136C43 /* main.m in Sources */,
 				9052FEDE192B64F900B6FCCF /* _ASMBaseEntity.m in Sources */,
 				904464A019110DBC00CC1BD8 /* ASMShowViewController.m in Sources */,

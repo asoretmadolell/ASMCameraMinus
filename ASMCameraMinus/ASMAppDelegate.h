@@ -8,10 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "AGTCoreDataStack.h"
+@import CoreLocation;
+@import AddressBook;
 
-@interface ASMAppDelegate : UIResponder <UIApplicationDelegate>
+@interface ASMAppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) AGTCoreDataStack *model;
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) NSString *reverseGeocoding;
+@property (strong, nonatomic) CLLocation *lastLocation;
 
 @end

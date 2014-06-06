@@ -14,12 +14,15 @@
 #import "ASMPhoto.h"
 #import "Flickr.h"
 #import "FlickrPhoto.h"
+#import "ASMAppDelegate.h"
 
 @interface ASMListViewController () {
     UIActionSheet *socialActionSheet;
     UIActionSheet *deleteActionSheet;
     Flickr* flickr;
     UIActivityIndicatorView *spinner;
+    ASMAppDelegate* appDelegate;
+
 }
 
 @property (nonatomic) BOOL beganUpdates;
@@ -28,10 +31,11 @@
 
 @implementation ASMListViewController
 
--(id) initWithFetchedResultsController: (NSFetchedResultsController *) aFetchedResultsController
+-(id) initWithFetchedResultsController: (NSFetchedResultsController *) aFetchedResultsController model:(AGTCoreDataStack *)model
 {
     if (self = [super initWithNibName:nil bundle:nil]) {
         self.fetchedResultsController = aFetchedResultsController;
+        self.model = model;
         self.title = @"Camera Minus";
         flickr = [[Flickr alloc] init];
     }
@@ -47,6 +51,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    appDelegate = (ASMAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
     [self performFetch];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Info"
@@ -75,6 +82,10 @@
 {
     [super viewWillAppear:animated];
     
+    if ([CLLocationManager locationServicesEnabled]) {
+        [appDelegate.locationManager startUpdatingLocation];
+    }
+    
     [self.photoTV reloadData];
     
     // THE WAY OF THE GEORGE
@@ -89,6 +100,12 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [appDelegate.locationManager stopUpdatingLocation];
 }
 
 #pragma mark - Fetching
@@ -133,7 +150,7 @@
 
 - (IBAction)grid:(id)sender
 {
-    ASMHomeViewController *homeVC = [[ASMHomeViewController alloc] initWithFetchedResultsController:self.fetchedResultsController];
+    ASMHomeViewController *homeVC = [[ASMHomeViewController alloc] initWithFetchedResultsController:self.fetchedResultsController model:self.model];
     [self.navigationController pushViewController:homeVC animated:NO];
 }
 
@@ -243,15 +260,8 @@
     NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, photo.name];
     myCell.myImageView.image = [UIImage imageWithContentsOfFile:fullFilePath];
     
-    myCell.mySizeLabel.text = [NSString stringWithFormat:@"Size: %.0f x %.0f", myCell.myImageView.image.size.width, myCell.myImageView.image.size.height];
-    
-    if ( myCell.weight == 0 )
-    {
-        NSData* imgData = UIImageJPEGRepresentation(myCell.myImageView.image, 1);
-        myCell.weight = imgData.length / 1024.0f / 1024.0f;
-    }
-    
-    myCell.myWeightLabel.text = [NSString stringWithFormat:@"Weight: %.2f MB", myCell.weight ];
+    myCell.mySizeLabel.text = [NSString stringWithFormat:@"Size: %.0f x %.0f", [photo.width floatValue], [photo.height floatValue]];
+    myCell.myWeightLabel.text = [NSString stringWithFormat:@"Weight: %.2f MB", [photo.weight floatValue]];
     
     if ( myCell.isSelected ) myCell.contentView.backgroundColor = [UIColor blueColor];
     
@@ -289,13 +299,17 @@
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ASMPhoto* photo = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
-    [self.fetchedResultsController.managedObjectContext deleteObject:photo];
-    [self.fetchedResultsController.managedObjectContext save:nil];
-    
-    self.editButton.enabled = NO;
-    self.deleteButton.enabled = NO;
-    self.navigationItem.rightBarButtonItem.enabled = NO;
+    if( editingStyle == UITableViewCellEditingStyleDelete )
+    {
+        ASMPhoto* photo = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
+        [self.model.context deleteObject:photo];
+        [self.model saveWithErrorBlock:^(NSError *error){
+            NSLog( @"Error saving Context: %@", error );
+        }];
+        self.editButton.enabled = NO;
+        self.deleteButton.enabled = NO;
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+    }
 }
 
 #pragma mark - action sheet delegate methods
@@ -337,8 +351,10 @@
             for (NSIndexPath *indexPath in sortSelectedItems)
             {
                 ASMPhoto* photo = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
-                [self.fetchedResultsController.managedObjectContext deleteObject:photo];
-                [self.fetchedResultsController.managedObjectContext save:nil];
+                [self.model.context deleteObject:photo];
+                [self.model saveWithErrorBlock:^(NSError *error){
+                    NSLog( @"Error saving Context: %@", error );
+                }];
             }
             
             self.deleteButton.enabled = NO;
@@ -433,8 +449,9 @@
 - (void)infoClicked:(id)sender
 {
     NSArray *selectedItems = [self.photoTV indexPathsForSelectedRows];
-    ASMTableViewCell *myCell = (ASMTableViewCell*)[self.photoTV cellForRowAtIndexPath:[selectedItems objectAtIndex:0]];
-    ASMInfoViewController *infoVC = [[ASMInfoViewController alloc] initWithPhoto:myCell.myImageView.image];
+    NSIndexPath* selectedItem = [selectedItems objectAtIndex:0];
+    ASMPhoto* photo = [[self.fetchedResultsController fetchedObjects] objectAtIndex:selectedItem.row];
+    ASMInfoViewController *infoVC = [[ASMInfoViewController alloc] initWithPhoto:photo];
     [self.navigationController pushViewController:infoVC animated:YES];
 }
 
@@ -480,6 +497,13 @@
     [UIImageJPEGRepresentation(image, 1) writeToFile:fullFilePath atomically:YES];
     
     ASMPhoto *photo = [ASMPhoto photoWithName:fileName inContext:self.fetchedResultsController.managedObjectContext];
+    photo.altitude = [NSNumber numberWithFloat:appDelegate.lastLocation.altitude];
+    photo.longitude = [NSNumber numberWithDouble:appDelegate.lastLocation.coordinate.longitude];
+    photo.latitude = [NSNumber numberWithDouble:appDelegate.lastLocation.coordinate.latitude];
+    photo.address = appDelegate.reverseGeocoding;
+    photo.weight = [NSNumber numberWithFloat:UIImageJPEGRepresentation(image, 1).length / 1024.0f / 1024.0f];
+    photo.height = [NSNumber numberWithInt:image.size.height];
+    photo.width = [NSNumber numberWithInt:image.size.width];
     
     [userDefaults setObject:[NSNumber numberWithInt:value] forKey:FILE_NUM];
     [userDefaults synchronize];
