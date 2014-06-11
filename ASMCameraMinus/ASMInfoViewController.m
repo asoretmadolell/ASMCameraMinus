@@ -34,7 +34,7 @@
     // Do any additional setup after loading the view from its nib.
     
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, self.photo.name];
+    NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@.jpg", documentsDirectory, self.photo.name];
     photoImage = self.infoImage.image = [UIImage imageWithContentsOfFile:fullFilePath];
     
     self.imageLatitude.text = [NSString stringWithFormat:@"%@", self.photo.latitude];

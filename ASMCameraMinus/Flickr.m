@@ -77,6 +77,8 @@
                         UIImage *image = [UIImage imageWithData:imageData];
                         photo.thumbnail = image;
                         
+                        [[self class] loadImageForPhoto:photo thumbnail:NO completionBlock:nil];
+
                         [flickrPhotos addObject:photo];
                     }
                     
@@ -116,7 +118,7 @@
             {
                 flickrPhoto.largeImage = image;
             }
-            completionBlock(image,nil);
+            if( completionBlock ) completionBlock(image,nil);
         }
         
     });

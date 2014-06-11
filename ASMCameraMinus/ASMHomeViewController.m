@@ -210,7 +210,7 @@
 {
     UIImage *image = (UIImage*) [info valueForKey:UIImagePickerControllerOriginalImage];
     [picker dismissViewControllerAnimated:YES completion:nil];
-    [self saveImageToDiskAndCoreData:image];
+    [self saveImageToDiskAndCoreData:image thumbnail:[self thumbnailFromImage:image]];
     if ([self.fetchedResultsController fetchedObjects].count == 1) self.listButton.enabled = YES;
     [self.fetchedResultsController.managedObjectContext save:nil];
 }
@@ -261,7 +261,7 @@
     ASMPhoto* photo = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.item];
     
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, photo.name];
+    NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@.thb", documentsDirectory, photo.name];
     cell.image.image = [UIImage imageWithContentsOfFile:fullFilePath];
     
     // THE WAY OF THE GEORGE
@@ -450,7 +450,7 @@
             {
                 for( FlickrPhoto* photo in results )
                 {
-                    [self saveImageToDiskAndCoreData:photo.thumbnail];
+                    [self saveImageToDiskAndCoreData:photo.largeImage thumbnail:photo.thumbnail];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^
                                {
@@ -465,24 +465,26 @@
     }];
 }
 
--(void)saveImageToDiskAndCoreData:(UIImage*)image
+-(void)saveImageToDiskAndCoreData:(UIImage*)image thumbnail:(UIImage*)thumbnail
 {
-    if( !image ) return;
+    if( !image || !thumbnail ) return;
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     int value = [[userDefaults objectForKey:FILE_NUM] intValue] + 1;
-    NSString *fileName = [NSString stringWithFormat:@"ASMIMG%04d.jpg", value];
     
-    //    NSArray *directories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    //    NSString *documentsDirectory = [directories objectAtIndex:0];
-    
+    // Save image
+    NSString *photoName = [NSString stringWithFormat:@"ASMIMG%04d", value];
+    NSString *fileName = [NSString stringWithFormat:@"%@.jpg", photoName];
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    
     NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, fileName];
-    
     [UIImageJPEGRepresentation(image, 1) writeToFile:fullFilePath atomically:YES];
     
-    ASMPhoto *photo = [ASMPhoto photoWithName:fileName inContext:self.fetchedResultsController.managedObjectContext];
+    // Save thumbnail
+    fileName = [NSString stringWithFormat:@"%@.thb", photoName];
+    fullFilePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, fileName];
+    [UIImageJPEGRepresentation(thumbnail, 1) writeToFile:fullFilePath atomically:YES];
+    
+    ASMPhoto *photo = [ASMPhoto photoWithName:photoName inContext:self.fetchedResultsController.managedObjectContext];
     photo.altitude = [NSNumber numberWithFloat:appDelegate.lastLocation.altitude];
     photo.longitude = [NSNumber numberWithDouble:appDelegate.lastLocation.coordinate.longitude];
     photo.latitude = [NSNumber numberWithDouble:appDelegate.lastLocation.coordinate.latitude];
@@ -493,6 +495,21 @@
     
     [userDefaults setObject:[NSNumber numberWithInt:value] forKey:FILE_NUM];
     [userDefaults synchronize];
+}
+
+-(UIImage*)thumbnailFromImage:(UIImage*)image
+{
+    if( !image) return nil;
+   
+    UIImage* thumbnail = nil;
+    
+    CGSize destinationSize = CGSizeMake( image.size.width / 4, image.size.height / 4 );
+    UIGraphicsBeginImageContext( destinationSize );
+    [image drawInRect:CGRectMake( 0, 0, destinationSize.width, destinationSize.height ) ];
+    thumbnail = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return thumbnail;
 }
 
 @end

@@ -257,7 +257,7 @@
     myCell.myLabel.text = [NSString stringWithFormat:@"%ld - %@", (long)indexPath.row + 1, photo.name];
     
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, photo.name];
+    NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@.thb", documentsDirectory, photo.name];
     myCell.myImageView.image = [UIImage imageWithContentsOfFile:fullFilePath];
     
     myCell.mySizeLabel.text = [NSString stringWithFormat:@"Size: %.0f x %.0f", [photo.width floatValue], [photo.height floatValue]];
