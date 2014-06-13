@@ -55,6 +55,7 @@
     appDelegate = (ASMAppDelegate *)[[UIApplication sharedApplication] delegate];
     
     [self performFetch];
+    if ([self.fetchedResultsController fetchedObjects].count == 0) self.gridButton.enabled = NO;
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Info"
                                                                               style:UIBarButtonItemStylePlain
@@ -212,8 +213,8 @@
 {
     UIImage* image = (UIImage*) [info valueForKey:UIImagePickerControllerOriginalImage];
     [picker dismissViewControllerAnimated:YES completion:nil];
-    [self saveImageToDiskAndCoreData:image];
-    if ([self.fetchedResultsController fetchedObjects].count == 1) self.gridButton.enabled = YES;
+    [self saveImageToDiskAndCoreData:image thumbnail:[self thumbnailFromImage:image]];
+    self.gridButton.enabled = YES;
     [self.fetchedResultsController.managedObjectContext save:nil];
 }
 
@@ -456,7 +457,7 @@
 }
 
 -(void)reloadModel:(id) sender {
-    [flickr searchFlickrForTerm:@"Spain" completionBlock:^(NSString *searchTerm, NSArray *results, NSError *error) {
+    [flickr searchFlickrForTerm:@"Faces" completionBlock:^(NSString *searchTerm, NSArray *results, NSError *error) {
         if (error) {
             // debemos mostrar mensaje de error
         } else {
@@ -464,7 +465,7 @@
             {
                 for( FlickrPhoto* photo in results )
                 {
-                    [self saveImageToDiskAndCoreData:photo.thumbnail];
+                    [self saveImageToDiskAndCoreData:photo.largeImage thumbnail:photo.thumbnail];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^
                                {
@@ -472,31 +473,33 @@
                                    [self.photoTV reloadData];
                                    [spinner stopAnimating];
                                    spinner.hidden = YES;
+                                   self.gridButton.enabled = YES;
                                });
-                
             }
         }
     }];
 }
 
--(void)saveImageToDiskAndCoreData:(UIImage*)image
+-(void)saveImageToDiskAndCoreData:(UIImage*)image thumbnail:(UIImage*)thumbnail;
 {
-    if( !image ) return;
+    if( !image || !thumbnail ) return;
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     int value = [[userDefaults objectForKey:FILE_NUM] intValue] + 1;
-    NSString *fileName = [NSString stringWithFormat:@"ASMIMG%04d.jpg", value];
     
-    //    NSArray *directories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    //    NSString *documentsDirectory = [directories objectAtIndex:0];
-    
+    // Save image
+    NSString *photoName = [NSString stringWithFormat:@"ASMIMG%04d", value];
+    NSString *fileName = [NSString stringWithFormat:@"%@.jpg", photoName];
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    
     NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, fileName];
-    
     [UIImageJPEGRepresentation(image, 1) writeToFile:fullFilePath atomically:YES];
     
-    ASMPhoto *photo = [ASMPhoto photoWithName:fileName inContext:self.fetchedResultsController.managedObjectContext];
+    // Save thumbnail
+    fileName = [NSString stringWithFormat:@"%@.thb", photoName];
+    fullFilePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, fileName];
+    [UIImageJPEGRepresentation(thumbnail, 1) writeToFile:fullFilePath atomically:YES];
+    
+    ASMPhoto *photo = [ASMPhoto photoWithName:photoName inContext:self.fetchedResultsController.managedObjectContext];
     photo.altitude = [NSNumber numberWithFloat:appDelegate.lastLocation.altitude];
     photo.longitude = [NSNumber numberWithDouble:appDelegate.lastLocation.coordinate.longitude];
     photo.latitude = [NSNumber numberWithDouble:appDelegate.lastLocation.coordinate.latitude];
@@ -509,5 +512,19 @@
     [userDefaults synchronize];
 }
 
+-(UIImage*)thumbnailFromImage:(UIImage*)image
+{
+    if( !image) return nil;
+    
+    UIImage* thumbnail = nil;
+    
+    CGSize destinationSize = CGSizeMake( image.size.width / 4, image.size.height / 4 );
+    UIGraphicsBeginImageContext( destinationSize );
+    [image drawInRect:CGRectMake( 0, 0, destinationSize.width, destinationSize.height ) ];
+    thumbnail = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return thumbnail;
+}
 
 @end

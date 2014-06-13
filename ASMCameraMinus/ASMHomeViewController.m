@@ -211,7 +211,7 @@
     UIImage *image = (UIImage*) [info valueForKey:UIImagePickerControllerOriginalImage];
     [picker dismissViewControllerAnimated:YES completion:nil];
     [self saveImageToDiskAndCoreData:image thumbnail:[self thumbnailFromImage:image]];
-    if ([self.fetchedResultsController fetchedObjects].count == 1) self.listButton.enabled = YES;
+    self.listButton.enabled = YES;
     [self.fetchedResultsController.managedObjectContext save:nil];
 }
 
@@ -442,7 +442,7 @@
 }
 
 -(void)reloadModel:(id) sender {
-    [flickr searchFlickrForTerm:@"Spain" completionBlock:^(NSString *searchTerm, NSArray *results, NSError *error) {
+    [flickr searchFlickrForTerm:@"Faces" completionBlock:^(NSString *searchTerm, NSArray *results, NSError *error) {
         if (error) {
             // debemos mostrar mensaje de error
         } else {
@@ -458,8 +458,8 @@
                                    [self.photosCV reloadData];
                                    [spinner stopAnimating];
                                    spinner.hidden = YES;
+                                   self.listButton.enabled = YES;
                                });
-                
             }
         }
     }];
