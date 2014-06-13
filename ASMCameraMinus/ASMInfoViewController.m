@@ -105,6 +105,12 @@
     CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeFace
                                               context:nil options:[NSDictionary dictionaryWithObject:CIDetectorAccuracyHigh forKey:CIDetectorAccuracy]];
     
+
+    // For convert CoreImage coordinates to UIKit coordinates
+	CGAffineTransform transform = CGAffineTransformMakeScale( 1, -1 );
+	transform = CGAffineTransformTranslate( transform, 0, - self.infoImage.bounds.size.height );
+    
+    
     // create an array containing all the detected faces from the detector
     NSArray *features = [detector featuresInImage:image];
     
@@ -117,8 +123,11 @@
         // get the width of the face
         CGFloat faceWidth = faceFeature.bounds.size.width;
         
+
+        const CGRect faceRect = CGRectApplyAffineTransform( [self.infoImage convertRectFromImage:faceFeature.bounds], transform );
+        
         // create a UIView using the bounds of the face
-        UIView *faceView = [[UIView alloc] initWithFrame:faceFeature.bounds];
+        UIView *faceView = [[UIView alloc] initWithFrame:faceRect];
         
         // add a border around the newly created UIView
         faceView.layer.borderWidth = 1;
