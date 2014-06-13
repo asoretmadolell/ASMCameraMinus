@@ -388,28 +388,28 @@
 	 forChangeType:(NSFetchedResultsChangeType)type
 	  newIndexPath:(NSIndexPath *)newIndexPath
 {
-    if (!self.suspendAutomaticTrackingOfChangesInManagedObjectContext)
-    {
-        switch(type)
-        {
-            case NSFetchedResultsChangeInsert:
-                [self.photosCV insertItemsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]];
-                break;
-                
-            case NSFetchedResultsChangeDelete:
-                [self.photosCV deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
-                break;
-                
-            case NSFetchedResultsChangeUpdate:
-                [self.photosCV reloadItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
-                break;
-                
-            case NSFetchedResultsChangeMove:
-                [self.photosCV deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
-                [self.photosCV insertItemsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]];
-                break;
-        }
-    }
+//    if (!self.suspendAutomaticTrackingOfChangesInManagedObjectContext)
+//    {
+//        switch(type)
+//        {
+//            case NSFetchedResultsChangeInsert:
+//                [self.photosCV insertItemsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]];
+//                break;
+//                
+//            case NSFetchedResultsChangeDelete:
+//                [self.photosCV deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
+//                break;
+//                
+//            case NSFetchedResultsChangeUpdate:
+//                [self.photosCV reloadItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
+//                break;
+//                
+//            case NSFetchedResultsChangeMove:
+//                [self.photosCV deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
+//                [self.photosCV insertItemsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]];
+//                break;
+//        }
+//    }
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
