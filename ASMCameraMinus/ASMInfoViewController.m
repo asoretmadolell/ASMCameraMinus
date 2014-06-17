@@ -37,15 +37,18 @@
     NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@.jpg", documentsDirectory, self.photo.name];
     photoImage = self.infoImage.image = [UIImage imageWithContentsOfFile:fullFilePath];
     
-    self.imageLatitude.text = [NSString stringWithFormat:@"%@", self.photo.latitude];
-    self.imageLongitude.text = [NSString stringWithFormat:@"%@", self.photo.longitude];
-    self.reverseGeocoding.text = self.photo.address;
-    self.imageAltitude.text = [NSString stringWithFormat:@"%@", self.photo.altitude];
+//    self.imageLatitude.text = [NSString stringWithFormat:@"%@", self.photo.latitude];
+//    self.imageLongitude.text = [NSString stringWithFormat:@"%@", self.photo.longitude];
+//    self.reverseGeocoding.text = self.photo.address;
+//    self.imageAltitude.text = [NSString stringWithFormat:@"%@", self.photo.altitude];
+//    
+//    self.imageSize.text = [NSString stringWithFormat:@"Size: %.0f x %.0f", self.infoImage.image.size.width, self.infoImage.image.size.height];
+//    
+//    NSData* imgData = UIImageJPEGRepresentation(self.infoImage.image, 0);
+//    self.imageWeight.text = [NSString stringWithFormat:@"Weight: %.2f MB", (float)imgData.length / 1024.0f / 1024.0f ];
     
-    self.imageSize.text = [NSString stringWithFormat:@"Size: %.0f x %.0f", self.infoImage.image.size.width, self.infoImage.image.size.height];
-    
-    NSData* imgData = UIImageJPEGRepresentation(self.infoImage.image, 0);
-    self.imageWeight.text = [NSString stringWithFormat:@"Weight: %.2f MB", (float)imgData.length / 1024.0f / 1024.0f ];
+    self.infoTV.delegate = self;
+    self.infoTV.dataSource = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -247,6 +250,66 @@
         mouthView.layer.cornerRadius = faceWidth * 0.4f * 0.5f;
         [self.infoImage addSubview:mouthView];
     }
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 3;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) return @"Metadata";
+    else if (section == 1) return @"Geocoding";
+    else if (section == 2) return @"Faces";
+    else return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 40;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 0) return 3;
+    else if (section == 1) return 3;
+    else if (section == 2) return 4;
+    else return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"Sección %ld, fila %ld", (long)indexPath.section + 1, (long)indexPath.row + 1];
+    
+    if( indexPath.section == 0 )
+    {
+        if( indexPath.row == 0)
+        {
+            cell.textLabel.text = [NSString stringWithFormat:@"Width: %@px", self.photo.width];
+        }
+        if( indexPath.row == 1)
+        {
+            cell.textLabel.text = [NSString stringWithFormat:@"Height: %@px", self.photo.height];
+        }
+        if( indexPath.row == 2)
+        {
+            cell.textLabel.text = [NSString stringWithFormat:@"Weight: %@", self.photo.weight];
+        }
+    }
+    
+    return cell;
 }
 
 @end

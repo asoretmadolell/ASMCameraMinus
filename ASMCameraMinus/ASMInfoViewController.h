@@ -13,20 +13,11 @@
 
 @class ViewController;
 
-@interface ASMInfoViewController : UIViewController
+@interface ASMInfoViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) ASMPhoto *photo;
 @property (weak, nonatomic) IBOutlet UIImageView *infoImage;
-@property (weak, nonatomic) IBOutlet UILabel *imageSize;
-@property (weak, nonatomic) IBOutlet UILabel *imageWeight;
-@property (weak, nonatomic) IBOutlet UILabel *imageLongitude;
-@property (weak, nonatomic) IBOutlet UILabel *imageLatitude;
-@property (weak, nonatomic) IBOutlet UILabel *imageHeight;
-@property (weak, nonatomic) IBOutlet UILabel *imageMouth;
-@property (weak, nonatomic) IBOutlet UILabel *imageLeftEye;
-@property (weak, nonatomic) IBOutlet UILabel *imageRightEye;
-@property (weak, nonatomic) IBOutlet UILabel *imageAltitude;
-@property (weak, nonatomic) IBOutlet UILabel *reverseGeocoding;
+@property (weak, nonatomic) IBOutlet UITableView *infoTV;
 
 - (id)initWithPhoto:(ASMPhoto*)photo;
 - (IBAction)detectButton:(id)sender;
