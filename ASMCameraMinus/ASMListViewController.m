@@ -457,7 +457,7 @@
 }
 
 -(void)reloadModel:(id) sender {
-    [flickr searchFlickrForTerm:@"Faces" completionBlock:^(NSString *searchTerm, NSArray *results, NSError *error) {
+    [flickr searchFlickrForTerm:@"family" completionBlock:^(NSString *searchTerm, NSArray *results, NSError *error) {
         if (error) {
             // debemos mostrar mensaje de error
         } else {

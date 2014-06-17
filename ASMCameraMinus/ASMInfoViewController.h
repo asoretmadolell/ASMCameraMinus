@@ -25,8 +25,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *imageMouth;
 @property (weak, nonatomic) IBOutlet UILabel *imageLeftEye;
 @property (weak, nonatomic) IBOutlet UILabel *imageRightEye;
+@property (weak, nonatomic) IBOutlet UILabel *imageAltitude;
 @property (weak, nonatomic) IBOutlet UILabel *reverseGeocoding;
 
 - (id)initWithPhoto:(ASMPhoto*)photo;
+- (IBAction)detectButton:(id)sender;
+- (IBAction)saveButton:(id)sender;
+- (IBAction)deleteButton:(id)sender;
+- (IBAction)cancelButton:(id)sender;
 
 @end
