@@ -40,6 +40,8 @@
 		A4AADA7218F6A1B500136C43 /* ASMCameraMinusTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A4AADA7118F6A1B500136C43 /* ASMCameraMinusTests.m */; };
 		A4AADA7E18F6A4FA00136C43 /* ASMHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4AADA7C18F6A4FA00136C43 /* ASMHomeViewController.m */; };
 		A4AADA7F18F6A4FA00136C43 /* ASMHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4AADA7D18F6A4FA00136C43 /* ASMHomeViewController.xib */; };
+		A4D4E96519598B690095CA87 /* _ASMFace.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D4E96219598B690095CA87 /* _ASMFace.m */; };
+		A4D4E96619598B690095CA87 /* ASMFace.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D4E96419598B690095CA87 /* ASMFace.m */; };
 		D8A76308191BF8C700E7CE93 /* ASMEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8A76306191BF8C700E7CE93 /* ASMEditViewController.m */; };
 		D8A76309191BF8C700E7CE93 /* ASMEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8A76307191BF8C700E7CE93 /* ASMEditViewController.xib */; };
 		D8AD957F192133EE00699941 /* dump.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8AD9578192133EE00699941 /* dump.jpg */; };
@@ -117,6 +119,10 @@
 		A4AADA7B18F6A4FA00136C43 /* ASMHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMHomeViewController.h; sourceTree = "<group>"; };
 		A4AADA7C18F6A4FA00136C43 /* ASMHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMHomeViewController.m; sourceTree = "<group>"; };
 		A4AADA7D18F6A4FA00136C43 /* ASMHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMHomeViewController.xib; sourceTree = "<group>"; };
+		A4D4E96119598B690095CA87 /* _ASMFace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _ASMFace.h; sourceTree = "<group>"; };
+		A4D4E96219598B690095CA87 /* _ASMFace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _ASMFace.m; sourceTree = "<group>"; };
+		A4D4E96319598B690095CA87 /* ASMFace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMFace.h; sourceTree = "<group>"; };
+		A4D4E96419598B690095CA87 /* ASMFace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMFace.m; sourceTree = "<group>"; };
 		D8A76305191BF8C700E7CE93 /* ASMEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMEditViewController.h; sourceTree = "<group>"; };
 		D8A76306191BF8C700E7CE93 /* ASMEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMEditViewController.m; sourceTree = "<group>"; };
 		D8A76307191BF8C700E7CE93 /* ASMEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMEditViewController.xib; sourceTree = "<group>"; };
@@ -171,10 +177,14 @@
 			children = (
 				9052FED6192B64F900B6FCCF /* _ASMBaseEntity.h */,
 				9052FED7192B64F900B6FCCF /* _ASMBaseEntity.m */,
+				A4D4E96119598B690095CA87 /* _ASMFace.h */,
+				A4D4E96219598B690095CA87 /* _ASMFace.m */,
 				9052FED8192B64F900B6FCCF /* _ASMPhoto.h */,
 				9052FED9192B64F900B6FCCF /* _ASMPhoto.m */,
 				9052FEDA192B64F900B6FCCF /* ASMBaseEntity.h */,
 				9052FEDB192B64F900B6FCCF /* ASMBaseEntity.m */,
+				A4D4E96319598B690095CA87 /* ASMFace.h */,
+				A4D4E96419598B690095CA87 /* ASMFace.m */,
 				9052FEDC192B64F900B6FCCF /* ASMPhoto.h */,
 				9052FEDD192B64F900B6FCCF /* ASMPhoto.m */,
 				90D8DFCF19223AEE00A2975A /* ASMDataModel.xcdatamodeld */,
@@ -449,7 +459,9 @@
 				A40D243E190F9181006AE42C /* ASMListViewController.m in Sources */,
 				9052FEDF192B64F900B6FCCF /* _ASMPhoto.m in Sources */,
 				A4AADA7E18F6A4FA00136C43 /* ASMHomeViewController.m in Sources */,
+				A4D4E96619598B690095CA87 /* ASMFace.m in Sources */,
 				9052FEE6192B6C2500B6FCCF /* AGTCoreDataStack.m in Sources */,
+				A4D4E96519598B690095CA87 /* _ASMFace.m in Sources */,
 				90D8DFD119223AEE00A2975A /* ASMDataModel.xcdatamodeld in Sources */,
 				D8A76308191BF8C700E7CE93 /* ASMEditViewController.m in Sources */,
 				9052FEE1192B64F900B6FCCF /* ASMPhoto.m in Sources */,

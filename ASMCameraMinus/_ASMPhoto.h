@@ -15,11 +15,13 @@ extern const struct ASMPhotoAttributes {
 } ASMPhotoAttributes;
 
 extern const struct ASMPhotoRelationships {
+	__unsafe_unretained NSString *faces;
 } ASMPhotoRelationships;
 
 extern const struct ASMPhotoFetchedProperties {
 } ASMPhotoFetchedProperties;
 
+@class ASMFace;
 
 
 
@@ -136,6 +138,13 @@ extern const struct ASMPhotoFetchedProperties {
 
 
 
+@property (nonatomic, strong) ASMFace *faces;
+
+//- (BOOL)validateFaces:(id*)value_ error:(NSError**)error_;
+
+
+
+
 
 @end
 
@@ -204,6 +213,11 @@ extern const struct ASMPhotoFetchedProperties {
 - (void)setPrimitiveWidthValue:(int16_t)value_;
 
 
+
+
+
+- (ASMFace*)primitiveFaces;
+- (void)setPrimitiveFaces:(ASMFace*)value;
 
 
 @end

@@ -24,6 +24,14 @@
     if (self) {
         self.title = photo.name;
         self.photo = photo;
+        
+        NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName:[ASMFace entityName]];
+        request.predicate = [NSPredicate predicateWithFormat:@"photo == %@", self.photo];
+        request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:ASMFaceAttributes.faceRect ascending:YES]];
+        self.facesResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
+                                                                         managedObjectContext:photo.managedObjectContext
+                                                                           sectionNameKeyPath:nil
+                                                                                    cacheName:nil];
     }
     return self;
 }
@@ -39,6 +47,8 @@
     
     self.infoTV.delegate = self;
     self.infoTV.dataSource = self;
+    
+    [self.facesResultsController performFetch:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -71,14 +81,6 @@
 - (IBAction)detectButton:(id)sender
 {
     [self faceDetector];
-    
-//    if ([self.infoTV numberOfSections] == 2) {
-//        [self.infoTV beginUpdates];
-//        [self.infoTV insertSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationTop];
-//        [self.infoTV insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:2]] withRowAnimation:UITableViewRowAnimationTop];
-//        [self.infoTV endUpdates];
-//        [self.infoTV reloadData];
-//    }
 }
 
 - (IBAction)saveButton:(id)sender {
@@ -128,7 +130,20 @@
     // with the width for the entire face, and the coordinates of each eye
     // and the mouth if detected.  Also provided are BOOL's for the eye's and
     // mouth so we can check if they already exist.
-    for (CIFaceFeature *faceFeature in features) [self drawFace:faceFeature];
+    for (CIFaceFeature *faceFeature in features)
+    {
+        ASMFace* face = [ASMFace faceWithPhoto:self.photo inContext:self.photo.managedObjectContext];
+        face.faceRect = NSStringFromCGRect(faceFeature.bounds);
+        if (faceFeature.hasLeftEyePosition) face.leftEye = NSStringFromCGPoint(faceFeature.leftEyePosition);
+        if (faceFeature.hasRightEyePosition) face.rightEye = NSStringFromCGPoint(faceFeature.rightEyePosition);
+        if (faceFeature.hasMouthPosition) face.mouth = NSStringFromCGPoint(faceFeature.mouthPosition);
+        [self drawFace:faceFeature];
+    }
+    
+    [self.photo.managedObjectContext save:nil];
+    
+    // NSFETCHEDRESULTSCONTROLLER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//    [self.infoTV reloadData];
 }
 
 - (void)drawFace:(CIFaceFeature*)face
@@ -185,7 +200,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return (self.facesResultsController.fetchedObjects.count) ? 3 : 2;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -223,7 +238,7 @@
             return 4;
             break;
         case 2:
-            return 0;
+            return [self.facesResultsController fetchedObjects].count;
             break;
         default:
             return 0;
@@ -277,6 +292,13 @@
                 default:
                     break;
             }
+            break;
+            
+        case 2:
+        {
+            ASMFace* face = [[self.facesResultsController fetchedObjects] objectAtIndex:indexPath.row];
+            cell.textLabel.text = face.faceRect;
+        }
             break;
             
         default:

@@ -10,6 +10,7 @@
 @import CoreImage;
 @import QuartzCore;
 #import "ASMPhoto.h"
+#import "ASMFace.h"
 
 @class ViewController;
 
@@ -18,6 +19,7 @@
 @property (strong, nonatomic) ASMPhoto *photo;
 @property (weak, nonatomic) IBOutlet UIImageView *infoImage;
 @property (weak, nonatomic) IBOutlet UITableView *infoTV;
+@property (nonatomic, strong) NSFetchedResultsController* facesResultsController;
 
 - (id)initWithPhoto:(ASMPhoto*)photo;
 - (IBAction)detectButton:(id)sender;

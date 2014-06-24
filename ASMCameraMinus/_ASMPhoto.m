@@ -14,6 +14,7 @@ const struct ASMPhotoAttributes ASMPhotoAttributes = {
 };
 
 const struct ASMPhotoRelationships ASMPhotoRelationships = {
+	.faces = @"faces",
 };
 
 const struct ASMPhotoFetchedProperties ASMPhotoFetchedProperties = {
@@ -244,6 +245,10 @@ const struct ASMPhotoFetchedProperties ASMPhotoFetchedProperties = {
 
 
 
+
+@dynamic faces;
+
+	
 
 
 
