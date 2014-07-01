@@ -138,9 +138,9 @@ extern const struct ASMPhotoFetchedProperties {
 
 
 
-@property (nonatomic, strong) ASMFace *faces;
+@property (nonatomic, strong) NSSet *faces;
 
-//- (BOOL)validateFaces:(id*)value_ error:(NSError**)error_;
+- (NSMutableSet*)facesSet;
 
 
 
@@ -149,6 +149,11 @@ extern const struct ASMPhotoFetchedProperties {
 @end
 
 @interface _ASMPhoto (CoreDataGeneratedAccessors)
+
+- (void)addFaces:(NSSet*)value_;
+- (void)removeFaces:(NSSet*)value_;
+- (void)addFacesObject:(ASMFace*)value_;
+- (void)removeFacesObject:(ASMFace*)value_;
 
 @end
 
@@ -216,8 +221,8 @@ extern const struct ASMPhotoFetchedProperties {
 
 
 
-- (ASMFace*)primitiveFaces;
-- (void)setPrimitiveFaces:(ASMFace*)value;
+- (NSMutableSet*)primitiveFaces;
+- (void)setPrimitiveFaces:(NSMutableSet*)value;
 
 
 @end

@@ -20,11 +20,11 @@
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="weight" optional="YES" attributeType="Float" minValueString="0" defaultValueString="0" syncable="YES"/>
         <attribute name="width" optional="YES" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
-        <relationship name="faces" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Face" inverseName="photo" inverseEntity="Face" syncable="YES"/>
+        <relationship name="faces" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Face" inverseName="photo" inverseEntity="Face" syncable="YES"/>
     </entity>
     <elements>
         <element name="BaseEntity" positionX="-63" positionY="-18" width="128" height="88"/>
-        <element name="Photo" positionX="252" positionY="-180" width="128" height="163"/>
         <element name="Face" positionX="99" positionY="-81" width="128" height="118"/>
+        <element name="Photo" positionX="252" positionY="-180" width="128" height="165"/>
     </elements>
 </model>

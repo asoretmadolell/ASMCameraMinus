@@ -49,6 +49,15 @@
     self.infoTV.dataSource = self;
     
     [self.facesResultsController performFetch:nil];
+    
+    for (ASMFace* face in [self.facesResultsController fetchedObjects])
+    {
+        CGRect faceRect = CGRectFromString(face.faceRect);
+        CGPoint leftEyePoint = CGPointFromString(face.leftEye);
+        CGPoint rightEyePoint = CGPointFromString(face.rightEye);
+        CGPoint mouthPoint = CGPointFromString(face.mouth);
+        [self drawFace:faceRect andLeftEye:leftEyePoint andRightEye:rightEyePoint andMouth:mouthPoint];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -117,11 +126,6 @@
     // create a face detector - since speed is not an issue we'll use a high accuracy detector
     CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeFace
                                               context:nil options:[NSDictionary dictionaryWithObject:CIDetectorAccuracyHigh forKey:CIDetectorAccuracy]];
-
-    // For convert CoreImage coordinates to UIKit coordinates
-	CGAffineTransform transform = CGAffineTransformMakeScale( 1, -1 );
-	transform = CGAffineTransformTranslate( transform, 0, - self.infoImage.bounds.size.height );
-    
     
     // create an array containing all the detected faces from the detector
     NSArray *features = [detector featuresInImage:image];
@@ -137,23 +141,20 @@
         if (faceFeature.hasLeftEyePosition) face.leftEye = NSStringFromCGPoint(faceFeature.leftEyePosition);
         if (faceFeature.hasRightEyePosition) face.rightEye = NSStringFromCGPoint(faceFeature.rightEyePosition);
         if (faceFeature.hasMouthPosition) face.mouth = NSStringFromCGPoint(faceFeature.mouthPosition);
-        [self drawFace:faceFeature];
+        [self drawFace:faceFeature.bounds andLeftEye:faceFeature.leftEyePosition andRightEye:faceFeature.rightEyePosition andMouth:faceFeature.mouthPosition];
     }
     
     [self.photo.managedObjectContext save:nil];
-    
-    // NSFETCHEDRESULTSCONTROLLER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//    [self.infoTV reloadData];
 }
 
-- (void)drawFace:(CIFaceFeature*)face
+- (void)drawFace:(CGRect)bounds andLeftEye:(CGPoint)leftEye andRightEye:(CGPoint)rightEye andMouth:(CGPoint)mouth
 {
 	// For convert CoreImage coordinates to UIKit coordinates
 	CGAffineTransform transform = CGAffineTransformMakeScale( 1, -1 );
 	transform = CGAffineTransformTranslate( transform, 0, - self.infoImage.bounds.size.height );
     
     // Draw Face Rect
-    const CGRect faceRect = CGRectApplyAffineTransform( [self.infoImage convertRectFromImage:face.bounds], transform );
+    const CGRect faceRect = CGRectApplyAffineTransform( [self.infoImage convertRectFromImage:bounds], transform );
     UIView* faceView = [[UIView alloc] initWithFrame:faceRect];
     faceView.layer.borderWidth = 1.5f;
     faceView.layer.borderColor = [[UIColor greenColor] CGColor];
@@ -163,9 +164,9 @@
     NSLog(@"%@", NSStringFromCGRect(faceRect));
     
     //Draw Left Eye
-    if( face.hasLeftEyePosition )
+    if( leftEye.x && leftEye.y )
     {
-        const CGPoint leftEyePos = CGPointApplyAffineTransform( [self.infoImage convertPointFromImage:face.leftEyePosition], transform );
+        const CGPoint leftEyePos = CGPointApplyAffineTransform( [self.infoImage convertPointFromImage:leftEye], transform );
         UIView* leftEyeView = [[UIView alloc] initWithFrame:CGRectMake( leftEyePos.x - faceWidth * 0.3f * 0.5f, leftEyePos.y - faceWidth * 0.3f * 0.5f,
                                                                         faceWidth * 0.3f, faceWidth * 0.3f )];
         leftEyeView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.2f];
@@ -174,9 +175,9 @@
     }
     
     //Draw Right Eye
-    if( face.hasRightEyePosition )
+    if( rightEye.x && rightEye.y )
     {
-        const CGPoint rightEyePos = CGPointApplyAffineTransform( [self.infoImage convertPointFromImage:face.rightEyePosition], transform );
+        const CGPoint rightEyePos = CGPointApplyAffineTransform( [self.infoImage convertPointFromImage:rightEye], transform );
         UIView* rightEyeView = [[UIView alloc] initWithFrame:CGRectMake( rightEyePos.x - faceWidth * 0.3f * 0.5f, rightEyePos.y - faceWidth * 0.3f * 0.5f,
                                                                          faceWidth * 0.3f, faceWidth * 0.3f )];
         rightEyeView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.2];
@@ -185,9 +186,9 @@
     }
     
     //Draw Mouth
-    if( face.hasMouthPosition )
+    if( mouth.x && mouth.y )
     {
-        const CGPoint mouthPos = CGPointApplyAffineTransform( [self.infoImage convertPointFromImage:face.mouthPosition], transform );
+        const CGPoint mouthPos = CGPointApplyAffineTransform( [self.infoImage convertPointFromImage:mouth], transform );
         UIView* mouthView = [[UIView alloc] initWithFrame:CGRectMake( mouthPos.x - faceWidth * 0.4f * 0.5f, mouthPos.y - faceWidth * 0.4f * 0.5f,
                                                                       faceWidth * 0.4f, faceWidth * 0.4f)];
         mouthView.backgroundColor = [[UIColor cyanColor] colorWithAlphaComponent:0.3f];

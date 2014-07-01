@@ -249,6 +249,15 @@ const struct ASMPhotoFetchedProperties ASMPhotoFetchedProperties = {
 @dynamic faces;
 
 	
+- (NSMutableSet*)facesSet {
+	[self willAccessValueForKey:@"faces"];
+  
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"faces"];
+  
+	[self didAccessValueForKey:@"faces"];
+	return result;
+}
+	
 
 
 
