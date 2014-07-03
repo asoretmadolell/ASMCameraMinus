@@ -41,6 +41,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    // Initialize undoManager :D
+    [[self.photo.managedObjectContext undoManager] beginUndoGrouping];
+    
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@.jpg", documentsDirectory, self.photo.name];
     photoImage = self.infoImage.image = [UIImage imageWithContentsOfFile:fullFilePath];
@@ -58,28 +61,6 @@
         CGPoint mouthPoint = CGPointFromString(face.mouth);
         [self drawFace:faceRect andLeftEye:leftEyePoint andRightEye:rightEyePoint andMouth:mouthPoint];
     }
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self cancelButton:nil];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -100,7 +81,10 @@
 
 - (IBAction)saveButton:(id)sender
 {
+    [[self.photo.managedObjectContext undoManager] endUndoGrouping];
+    [[self.photo.managedObjectContext undoManager] setActionName:@"Face detect"];
     [self.photo.managedObjectContext save:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)deleteButton:(id)sender
@@ -121,19 +105,10 @@
 
 - (IBAction)cancelButton:(id)sender
 {
-    NSArray* subViewArray = [self.infoImage subviews];
-    for( UIView* view in subViewArray )
-    {
-        [view removeFromSuperview];
-    }
-    
-//    NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName:[ASMFace entityName]];
-//    NSArray* faces = [self.photo.managedObjectContext executeFetchRequest:request error:nil];
-    for (ASMFace* face in faces)
-    {
-        [self.photo.managedObjectContext deleteObject:face];
-    }
+    [[self.photo.managedObjectContext undoManager] endUndoGrouping];
+    [[self.photo.managedObjectContext undoManager] undo];
     [self.photo.managedObjectContext save:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - instance methods
