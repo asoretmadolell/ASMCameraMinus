@@ -261,6 +261,7 @@
     switch (indexPath.section)
     {
         case 0:
+            cell.textLabel.font = [UIFont fontWithName:nil size:14];
             switch (indexPath.row)
             {
                 case 0:
@@ -278,6 +279,7 @@
             break;
             
         case 1:
+            cell.textLabel.font = [UIFont fontWithName:nil size:14];
             switch (indexPath.row)
             {
                 case 0:
@@ -291,16 +293,18 @@
                     break;
                 case 3:
                     cell.textLabel.text = [NSString stringWithFormat:@"Dirección: %@", self.photo.address];
+                    cell.textLabel.font = [UIFont fontWithName:nil size:10];
                 default:
                     break;
             }
             break;
             
         case 2:
-        {
-            ASMFace* face = [[self.facesResultsController fetchedObjects] objectAtIndex:indexPath.row];
-            cell.textLabel.text = face.faceRect;
-        }
+            {
+                ASMFace* face = [[self.facesResultsController fetchedObjects] objectAtIndex:indexPath.row];
+                cell.textLabel.text = face.faceRect;
+                cell.textLabel.font = [UIFont fontWithName:nil size:10];
+            }
             break;
             
         default:

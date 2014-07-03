@@ -24,6 +24,11 @@
     return self;
 }
 
+- (IBAction)filter1Butonn:(id)sender
+{
+    [self applyFilter:[CIFilter filterWithName:@"CISepiaTone"]];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -35,6 +40,32 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - instance methods
+
+-(void)applyFilter:(CIFilter*)filter
+{
+    __block UIImage* filteredImage = nil;
+    
+    dispatch_queue_t filterQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+    dispatch_async(filterQueue, ^{
+        CIContext* context = [CIContext contextWithOptions:nil];
+        
+        CIImage* originalImage = [CIImage imageWithCGImage:self.myOriginalImage.image.CGImage];
+        [filter setDefaults];
+        [filter setValue:originalImage forKey:kCIInputImageKey];
+        CIImage* filteredCGIImage = [filter valueForKey:kCIOutputImageKey];
+        
+        CGImageRef cgImage = [context createCGImage:filteredCGIImage fromRect:[filteredCGIImage extent]];
+        filteredImage = [UIImage imageWithCGImage:cgImage];
+        CGImageRelease(cgImage);
+        
+        dispatch_queue_t mainQueue = dispatch_get_main_queue();
+        dispatch_async(mainQueue, ^{
+            self.myFilteredImage.image = filteredImage;
+        });
+    });
 }
 
 @end

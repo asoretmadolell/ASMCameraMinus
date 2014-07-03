@@ -16,4 +16,6 @@
 
 - (id)initWithPhoto:(UIImage *)photo;
 
+- (IBAction)filter1Butonn:(id)sender;
+
 @end
