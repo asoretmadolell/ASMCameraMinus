@@ -29,9 +29,9 @@
         request.predicate = [NSPredicate predicateWithFormat:@"photo == %@", self.photo];
         request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:ASMFaceAttributes.faceRect ascending:YES]];
         self.facesResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
-                                                                         managedObjectContext:photo.managedObjectContext
-                                                                           sectionNameKeyPath:nil
-                                                                                    cacheName:nil];
+                                                                          managedObjectContext:self.photo.managedObjectContext
+                                                                            sectionNameKeyPath:nil
+                                                                                     cacheName:nil];
     }
     return self;
 }
@@ -65,6 +65,12 @@
     [super viewWillAppear:animated];
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self cancelButton:nil];
+}
+
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
@@ -92,19 +98,42 @@
     [self faceDetector];
 }
 
-- (IBAction)saveButton:(id)sender {
+- (IBAction)saveButton:(id)sender
+{
+    [self.photo.managedObjectContext save:nil];
 }
 
 - (IBAction)deleteButton:(id)sender
+{
+    NSArray* subViewArray = [self.infoImage subviews];
+    
+    for( UIView* view in subViewArray )
+    {
+        [view removeFromSuperview];
+    }
+    
+    for (ASMFace* face in [self.facesResultsController fetchedObjects])
+    {
+        [self.photo.managedObjectContext deleteObject:face];
+    }
+    [self.photo.managedObjectContext save:nil];
+}
+
+- (IBAction)cancelButton:(id)sender
 {
     NSArray* subViewArray = [self.infoImage subviews];
     for( UIView* view in subViewArray )
     {
         [view removeFromSuperview];
     }
-}
-
-- (IBAction)cancelButton:(id)sender {
+    
+//    NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName:[ASMFace entityName]];
+//    NSArray* faces = [self.photo.managedObjectContext executeFetchRequest:request error:nil];
+    for (ASMFace* face in faces)
+    {
+        [self.photo.managedObjectContext deleteObject:face];
+    }
+    [self.photo.managedObjectContext save:nil];
 }
 
 #pragma mark - instance methods
@@ -143,13 +172,11 @@
         if (faceFeature.hasMouthPosition) face.mouth = NSStringFromCGPoint(faceFeature.mouthPosition);
         [self drawFace:faceFeature.bounds andLeftEye:faceFeature.leftEyePosition andRightEye:faceFeature.rightEyePosition andMouth:faceFeature.mouthPosition];
     }
-    
-    [self.photo.managedObjectContext save:nil];
 }
 
 - (void)drawFace:(CGRect)bounds andLeftEye:(CGPoint)leftEye andRightEye:(CGPoint)rightEye andMouth:(CGPoint)mouth
 {
-	// For convert CoreImage coordinates to UIKit coordinates
+	// For converting CoreImage coordinates to UIKit coordinates
 	CGAffineTransform transform = CGAffineTransformMakeScale( 1, -1 );
 	transform = CGAffineTransformTranslate( transform, 0, - self.infoImage.bounds.size.height );
     
