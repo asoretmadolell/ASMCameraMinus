@@ -100,7 +100,6 @@
     {
         [self.photo.managedObjectContext deleteObject:face];
     }
-    [self.photo.managedObjectContext save:nil];
 }
 
 - (IBAction)cancelButton:(id)sender

@@ -30,6 +30,7 @@
     [self manageLocation];
     
     self.model = [AGTCoreDataStack coreDataStackWithModelName:@"ASMDataModel"];
+    self.model.context.undoManager = [[NSUndoManager alloc] init];
     NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName:[ASMPhoto entityName]];
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:ASMBaseEntityAttributes.creationDate ascending:NO],
                                 [NSSortDescriptor sortDescriptorWithKey:ASMBaseEntityAttributes.name ascending:YES selector:@selector(caseInsensitiveCompare:)]];
