@@ -14,7 +14,7 @@
 
 @class ViewController;
 
-@interface ASMInfoViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface ASMInfoViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate>
 
 @property (strong, nonatomic) ASMPhoto *photo;
 @property (weak, nonatomic) IBOutlet UIImageView *infoImage;

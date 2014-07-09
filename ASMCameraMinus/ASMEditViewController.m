@@ -8,7 +8,9 @@
 
 #import "ASMEditViewController.h"
 
-@interface ASMEditViewController ()
+@interface ASMEditViewController () {
+    UIActivityIndicatorView *spinner;
+}
 
 @end
 
@@ -26,26 +28,36 @@
 
 - (IBAction)filter1button:(id)sender
 {
+    spinner.hidden = NO;
+    [spinner startAnimating];
     [self applyFilter:[CIFilter filterWithName:@"CISepiaTone"]];
 }
 
 - (IBAction)filter2button:(id)sender
 {
+    spinner.hidden = NO;
+    [spinner startAnimating];
     [self applyFilter:[CIFilter filterWithName:@"CIGaussianBlur"]];
 }
 
 - (IBAction)filter3button:(id)sender
 {
+    spinner.hidden = NO;
+    [spinner startAnimating];
     [self applyFilter:[CIFilter filterWithName:@"CIColorInvert"]];
 }
 
 - (IBAction)filter4button:(id)sender
 {
+    spinner.hidden = NO;
+    [spinner startAnimating];
     [self applyFilter:[CIFilter filterWithName:@"CIDotScreen"]];
 }
 
 - (IBAction)filter5button:(id)sender
 {
+    spinner.hidden = NO;
+    [spinner startAnimating];
     [self applyFilter:[CIFilter filterWithName:@"CIHoleDistortion"]];
 }
 
@@ -54,6 +66,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.myOriginalImage.image = self.photo;
+    
+    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
+    [spinner setCenter:CGPointMake(screenWidth/2.0, screenHeight/2.0)];
+    [self.view addSubview:spinner];
+    [spinner stopAnimating];
+    spinner.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,6 +105,8 @@
         dispatch_queue_t mainQueue = dispatch_get_main_queue();
         dispatch_async(mainQueue, ^{
             self.myFilteredImage.image = filteredImage;
+            [spinner stopAnimating];
+            spinner.hidden = YES;
         });
     });
 }

@@ -12,7 +12,8 @@
 
 @interface ASMInfoViewController () {
     UIImage* photoImage;
-    BOOL bFromSave;
+    BOOL bFromUndoGrouping;
+    UIActivityIndicatorView *spinner;
 }
 
 @end
@@ -42,11 +43,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-//    // WHI IS BACKBUTTON NIL ????????????? (>:O)
+//    // WHY IS BACKBUTTON NIL ????????????? (>:O)
 //    UIBarButtonItem* backButton = self.navigationItem.backBarButtonItem;
 //    backButton setAction:@selector(cancelButton:);
-    
-    bFromSave = NO;
     
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@.jpg", documentsDirectory, self.photo.name];
@@ -70,11 +69,20 @@
         CGPoint mouthPoint = CGPointFromString(face.mouth);
         [self drawFace:faceRect andLeftEye:leftEyePoint andRightEye:rightEyePoint andMouth:mouthPoint];
     }
+    
+    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
+    [spinner setCenter:CGPointMake(screenWidth/2.0, screenHeight/2.0)];
+    [self.view addSubview:spinner];
+    [spinner stopAnimating];
+    spinner.hidden = YES;
 }
 
 -(void)didMoveToParentViewController:(UIViewController *)parent
 {
-    if (bFromSave) {
+    if (!bFromUndoGrouping) {
         return;
     }
     
@@ -86,6 +94,7 @@
         [[self.photo.managedObjectContext undoManager] endUndoGrouping];
         [[self.photo.managedObjectContext undoManager] undo];
         [self.photo.managedObjectContext save:nil];
+        bFromUndoGrouping = NO;
         
         NSArray* subViewArray = [self.infoImage subviews];
         for( UIView* view in subViewArray )
@@ -110,8 +119,11 @@
 {
     // Initialize undoManager :D
     [[self.photo.managedObjectContext undoManager] beginUndoGrouping];
+    bFromUndoGrouping = YES;
     
     self.detectButton.enabled = NO;
+    spinner.hidden = NO;
+    [spinner startAnimating];
     [self faceDetector];
 }
 
@@ -120,29 +132,18 @@
     [[self.photo.managedObjectContext undoManager] endUndoGrouping];
     [[self.photo.managedObjectContext undoManager] setActionName:@"Face detect"];
     [self.photo.managedObjectContext save:nil];
-    bFromSave = YES;
+    bFromUndoGrouping = NO;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)deleteButton:(id)sender
 {
-    NSArray* subViewArray = [self.infoImage subviews];
-    
-    for( UIView* view in subViewArray )
-    {
-        [view removeFromSuperview];
-    }
-    
-    for (ASMFace* face in [self.facesResultsController fetchedObjects])
-    {
-        [self.photo.managedObjectContext deleteObject:face];
-    }
-    [self.photo.managedObjectContext save:nil];
-    [self.facesResultsController performFetch:nil];
-    [self.infoTV reloadData];
-    
-    self.detectButton.enabled = YES;
-    self.deleteButton.enabled = NO;
+    UIActionSheet *deleteFaces = [[UIActionSheet alloc] initWithTitle:@"Are you sure you want to delete the detected faces?"
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Yup"
+                                               destructiveButtonTitle:@"Nope"
+                                                    otherButtonTitles: nil];
+    [deleteFaces showFromBarButtonItem:sender animated:YES];
 }
 
 - (IBAction)cancelButton:(id)sender
@@ -150,6 +151,7 @@
     [[self.photo.managedObjectContext undoManager] endUndoGrouping];
     [[self.photo.managedObjectContext undoManager] undo];
     [self.photo.managedObjectContext save:nil];
+    bFromUndoGrouping = NO;
     
     NSArray* subViewArray = [self.infoImage subviews];
     for( UIView* view in subViewArray )
@@ -193,8 +195,16 @@
     }
     else
     {
+        UIAlertView *noFaces = [[UIAlertView alloc] initWithTitle:@"Face Detection"
+                                                          message:@"No faces were detected!"
+                                                         delegate:self
+                                                cancelButtonTitle:@"Okay... :'("
+                                                otherButtonTitles:nil, nil];
+        [noFaces show];
         self.detectButton.enabled = YES;
     }
+    [spinner stopAnimating];
+    spinner.hidden = YES;
     
     // we'll iterate through every detected face.  CIFaceFeature provides us
     // with the width for the entire face, and the coordinates of each eye
@@ -258,6 +268,32 @@
         mouthView.backgroundColor = [[UIColor cyanColor] colorWithAlphaComponent:0.3f];
         mouthView.layer.cornerRadius = faceWidth * 0.4f * 0.5f;
         [self.infoImage addSubview:mouthView];
+    }
+}
+
+#pragma mark - action sheet delegate methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1)
+    {
+        NSArray* subViewArray = [self.infoImage subviews];
+        
+        for( UIView* view in subViewArray )
+        {
+            [view removeFromSuperview];
+        }
+        
+        for (ASMFace* face in [self.facesResultsController fetchedObjects])
+        {
+            [self.photo.managedObjectContext deleteObject:face];
+        }
+        [self.photo.managedObjectContext save:nil];
+        [self.facesResultsController performFetch:nil];
+        [self.infoTV reloadData];
+        
+        self.detectButton.enabled = YES;
+        self.deleteButton.enabled = NO;
     }
 }
 
