@@ -16,6 +16,10 @@
 
 - (id)initWithPhoto:(UIImage *)photo;
 
-- (IBAction)filter1Butonn:(id)sender;
+- (IBAction)filter1button:(id)sender;
+- (IBAction)filter2button:(id)sender;
+- (IBAction)filter3button:(id)sender;
+- (IBAction)filter4button:(id)sender;
+- (IBAction)filter5button:(id)sender;
 
 @end

@@ -21,10 +21,15 @@
 @property (weak, nonatomic) IBOutlet UITableView *infoTV;
 @property (nonatomic, strong) NSFetchedResultsController* facesResultsController;
 
-- (id)initWithPhoto:(ASMPhoto*)photo;
 - (IBAction)detectButton:(id)sender;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *detectButton;
 - (IBAction)saveButton:(id)sender;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
 - (IBAction)deleteButton:(id)sender;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteButton;
 - (IBAction)cancelButton:(id)sender;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
+
+- (id)initWithPhoto:(ASMPhoto*)photo;
 
 @end

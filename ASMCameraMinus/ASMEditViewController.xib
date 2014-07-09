@@ -23,17 +23,33 @@
                     <items>
                         <barButtonItem title="Filter1" id="woT-Qv-VTr">
                             <connections>
-                                <action selector="filter1Butonn:" destination="-1" id="aCZ-wV-ddU"/>
+                                <action selector="filter1button:" destination="-1" id="nge-nG-iaB"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="Vb4-I4-ve3"/>
-                        <barButtonItem title="Filter2" id="vZm-t6-GG9"/>
+                        <barButtonItem title="Filter2" id="vZm-t6-GG9">
+                            <connections>
+                                <action selector="filter2button:" destination="-1" id="PXd-xO-gSG"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="Pdc-WQ-mgG"/>
-                        <barButtonItem title="Filter3" id="rLd-Zc-1ya"/>
+                        <barButtonItem title="Filter3" id="rLd-Zc-1ya">
+                            <connections>
+                                <action selector="filter3button:" destination="-1" id="UK0-L0-UvQ"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="GfN-wb-4dC"/>
-                        <barButtonItem title="Filter4" id="iUQ-Xm-teP"/>
+                        <barButtonItem title="Filter4" id="iUQ-Xm-teP">
+                            <connections>
+                                <action selector="filter4button:" destination="-1" id="CvN-Nx-p2J"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="3qF-Hm-7jd"/>
-                        <barButtonItem title="Filter5" id="PIq-1d-ppG"/>
+                        <barButtonItem title="Filter5" id="PIq-1d-ppG">
+                            <connections>
+                                <action selector="filter5button:" destination="-1" id="7Tm-yJ-0LA"/>
+                            </connections>
+                        </barButtonItem>
                     </items>
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </toolbar>

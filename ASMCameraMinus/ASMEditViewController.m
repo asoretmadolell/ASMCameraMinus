@@ -24,9 +24,29 @@
     return self;
 }
 
-- (IBAction)filter1Butonn:(id)sender
+- (IBAction)filter1button:(id)sender
 {
     [self applyFilter:[CIFilter filterWithName:@"CISepiaTone"]];
+}
+
+- (IBAction)filter2button:(id)sender
+{
+    [self applyFilter:[CIFilter filterWithName:@"CIGaussianBlur"]];
+}
+
+- (IBAction)filter3button:(id)sender
+{
+    [self applyFilter:[CIFilter filterWithName:@"CIColorInvert"]];
+}
+
+- (IBAction)filter4button:(id)sender
+{
+    [self applyFilter:[CIFilter filterWithName:@"CIDotScreen"]];
+}
+
+- (IBAction)filter5button:(id)sender
+{
+    [self applyFilter:[CIFilter filterWithName:@"CIHoleDistortion"]];
 }
 
 - (void)viewDidLoad

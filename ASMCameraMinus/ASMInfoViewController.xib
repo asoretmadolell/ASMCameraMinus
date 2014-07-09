@@ -6,8 +6,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ASMInfoViewController">
             <connections>
+                <outlet property="cancelButton" destination="b0J-4t-PM3" id="xn0-Rg-EtY"/>
+                <outlet property="deleteButton" destination="4ia-YK-5e7" id="2Ru-S5-yy2"/>
+                <outlet property="detectButton" destination="YYa-jF-EdZ" id="wK2-FG-SWq"/>
                 <outlet property="infoImage" destination="gXF-T4-EnN" id="OIf-pt-icQ"/>
                 <outlet property="infoTV" destination="ID0-2h-01h" id="2De-CD-3SH"/>
+                <outlet property="saveButton" destination="uTg-9s-7ks" id="Kib-vg-6gA"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -30,19 +34,19 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <items>
-                        <barButtonItem title="Cancel" id="b0J-4t-PM3">
-                            <connections>
-                                <action selector="cancelButton:" destination="-1" id="5CI-MB-8yj"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="L38-2K-zpo"/>
-                        <barButtonItem title="Delete" id="4ia-YK-5e7">
+                        <barButtonItem enabled="NO" title="Delete" id="4ia-YK-5e7">
                             <connections>
                                 <action selector="deleteButton:" destination="-1" id="0Nr-jC-b4W"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="L38-2K-zpo"/>
+                        <barButtonItem enabled="NO" title="Cancel" id="b0J-4t-PM3">
+                            <connections>
+                                <action selector="cancelButton:" destination="-1" id="5CI-MB-8yj"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="jZ3-5E-9Yb"/>
-                        <barButtonItem title="Save" id="uTg-9s-7ks">
+                        <barButtonItem enabled="NO" title="Save" id="uTg-9s-7ks">
                             <connections>
                                 <action selector="saveButton:" destination="-1" id="pDe-E3-YyF"/>
                             </connections>

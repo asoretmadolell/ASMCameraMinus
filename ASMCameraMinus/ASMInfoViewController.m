@@ -41,9 +41,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    // Initialize undoManager :D
-    [[self.photo.managedObjectContext undoManager] beginUndoGrouping];
-    
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@.jpg", documentsDirectory, self.photo.name];
     photoImage = self.infoImage.image = [UIImage imageWithContentsOfFile:fullFilePath];
@@ -53,6 +50,11 @@
     
     [self.facesResultsController performFetch:nil];
     
+    if ( [self.facesResultsController fetchedObjects].count !=0 ) {
+        self.detectButton.enabled = NO;
+        self.deleteButton.enabled = YES;
+    }
+    
     for (ASMFace* face in [self.facesResultsController fetchedObjects])
     {
         CGRect faceRect = CGRectFromString(face.faceRect);
@@ -60,6 +62,24 @@
         CGPoint rightEyePoint = CGPointFromString(face.rightEye);
         CGPoint mouthPoint = CGPointFromString(face.mouth);
         [self drawFace:faceRect andLeftEye:leftEyePoint andRightEye:rightEyePoint andMouth:mouthPoint];
+    }
+}
+
+-(void)didMoveToParentViewController:(UIViewController *)parent
+{
+    if ( !(parent = self.parentViewController) && ([self.infoImage subviews].count != 0) )
+    {
+        NSLog(@"Back pressed");
+        
+        [[self.photo.managedObjectContext undoManager] endUndoGrouping];
+        [[self.photo.managedObjectContext undoManager] undo];
+        [self.photo.managedObjectContext save:nil];
+        
+        NSArray* subViewArray = [self.infoImage subviews];
+        for( UIView* view in subViewArray )
+        {
+            [view removeFromSuperview];
+        }
     }
 }
 
@@ -76,6 +96,10 @@
 
 - (IBAction)detectButton:(id)sender
 {
+    // Initialize undoManager :D
+    [[self.photo.managedObjectContext undoManager] beginUndoGrouping];
+    
+    self.detectButton.enabled = NO;
     [self faceDetector];
 }
 
@@ -100,6 +124,11 @@
     {
         [self.photo.managedObjectContext deleteObject:face];
     }
+    [self.photo.managedObjectContext save:nil];
+    [self.infoTV reloadData];
+    
+    self.detectButton.enabled = YES;
+    self.deleteButton.enabled = NO;
 }
 
 - (IBAction)cancelButton:(id)sender
@@ -107,7 +136,18 @@
     [[self.photo.managedObjectContext undoManager] endUndoGrouping];
     [[self.photo.managedObjectContext undoManager] undo];
     [self.photo.managedObjectContext save:nil];
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    NSArray* subViewArray = [self.infoImage subviews];
+    for( UIView* view in subViewArray )
+    {
+        [view removeFromSuperview];
+    }
+    [self.infoTV reloadData];
+    
+    self.detectButton.enabled = YES;
+    self.saveButton.enabled = NO;
+    self.cancelButton.enabled = NO;
+    self.deleteButton.enabled = NO;
 }
 
 #pragma mark - instance methods
@@ -132,6 +172,15 @@
     
     // create an array containing all the detected faces from the detector
     NSArray *features = [detector featuresInImage:image];
+    
+    if (features.count != 0) {
+        self.saveButton.enabled = YES;
+        self.cancelButton.enabled = YES;
+    }
+    else
+    {
+        self.detectButton.enabled = YES;
+    }
     
     // we'll iterate through every detected face.  CIFaceFeature provides us
     // with the width for the entire face, and the coordinates of each eye
