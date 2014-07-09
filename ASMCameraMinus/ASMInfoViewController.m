@@ -12,6 +12,7 @@
 
 @interface ASMInfoViewController () {
     UIImage* photoImage;
+    BOOL bFromSave;
 }
 
 @end
@@ -41,6 +42,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+//    // WHI IS BACKBUTTON NIL ????????????? (>:O)
+//    UIBarButtonItem* backButton = self.navigationItem.backBarButtonItem;
+//    backButton setAction:@selector(cancelButton:);
+    
+    bFromSave = NO;
+    
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@.jpg", documentsDirectory, self.photo.name];
     photoImage = self.infoImage.image = [UIImage imageWithContentsOfFile:fullFilePath];
@@ -67,10 +74,15 @@
 
 -(void)didMoveToParentViewController:(UIViewController *)parent
 {
-    if ( !(parent = self.parentViewController) && ([self.infoImage subviews].count != 0) )
+    if (bFromSave) {
+        return;
+    }
+    
+    [self.facesResultsController performFetch:nil];
+    
+    // SOLUTION TO BACKBUTTON = NIL >:(
+    if ( !(parent = self.parentViewController) && ([self.facesResultsController fetchedObjects].count != 0) )
     {
-        NSLog(@"Back pressed");
-        
         [[self.photo.managedObjectContext undoManager] endUndoGrouping];
         [[self.photo.managedObjectContext undoManager] undo];
         [self.photo.managedObjectContext save:nil];
@@ -108,6 +120,7 @@
     [[self.photo.managedObjectContext undoManager] endUndoGrouping];
     [[self.photo.managedObjectContext undoManager] setActionName:@"Face detect"];
     [self.photo.managedObjectContext save:nil];
+    bFromSave = YES;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -125,6 +138,7 @@
         [self.photo.managedObjectContext deleteObject:face];
     }
     [self.photo.managedObjectContext save:nil];
+    [self.facesResultsController performFetch:nil];
     [self.infoTV reloadData];
     
     self.detectButton.enabled = YES;
