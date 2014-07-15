@@ -26,8 +26,6 @@
 		90D8DFD119223AEE00A2975A /* ASMDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 90D8DFCF19223AEE00A2975A /* ASMDataModel.xcdatamodeld */; };
 		90E8437619111D2A0007AA21 /* ASMListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90E8437519111D2A0007AA21 /* ASMListViewController.xib */; };
 		A40D243E190F9181006AE42C /* ASMListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A40D243D190F9181006AE42C /* ASMListViewController.m */; };
-		A4495068196DB1310055BFE4 /* _ASMFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A4495065196DB1310055BFE4 /* _ASMFilter.m */; };
-		A4495069196DB1310055BFE4 /* ASMFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A4495067196DB1310055BFE4 /* ASMFilter.m */; };
 		A4AADA4D18F6A1B400136C43 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4AADA4C18F6A1B400136C43 /* Foundation.framework */; };
 		A4AADA4F18F6A1B400136C43 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4AADA4E18F6A1B400136C43 /* CoreGraphics.framework */; };
 		A4AADA5118F6A1B400136C43 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4AADA5018F6A1B400136C43 /* UIKit.framework */; };
@@ -106,10 +104,6 @@
 		90E8437519111D2A0007AA21 /* ASMListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMListViewController.xib; sourceTree = "<group>"; };
 		A40D243C190F9181006AE42C /* ASMListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMListViewController.h; sourceTree = "<group>"; };
 		A40D243D190F9181006AE42C /* ASMListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMListViewController.m; sourceTree = "<group>"; };
-		A4495064196DB1310055BFE4 /* _ASMFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _ASMFilter.h; sourceTree = "<group>"; };
-		A4495065196DB1310055BFE4 /* _ASMFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _ASMFilter.m; sourceTree = "<group>"; };
-		A4495066196DB1310055BFE4 /* ASMFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMFilter.h; sourceTree = "<group>"; };
-		A4495067196DB1310055BFE4 /* ASMFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMFilter.m; sourceTree = "<group>"; };
 		A4AADA4918F6A1B400136C43 /* ASMCameraMinus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ASMCameraMinus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4AADA4C18F6A1B400136C43 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A4AADA4E18F6A1B400136C43 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -197,16 +191,12 @@
 				9052FED7192B64F900B6FCCF /* _ASMBaseEntity.m */,
 				A4D4E96119598B690095CA87 /* _ASMFace.h */,
 				A4D4E96219598B690095CA87 /* _ASMFace.m */,
-				A4495064196DB1310055BFE4 /* _ASMFilter.h */,
-				A4495065196DB1310055BFE4 /* _ASMFilter.m */,
 				9052FED8192B64F900B6FCCF /* _ASMPhoto.h */,
 				9052FED9192B64F900B6FCCF /* _ASMPhoto.m */,
 				9052FEDA192B64F900B6FCCF /* ASMBaseEntity.h */,
 				9052FEDB192B64F900B6FCCF /* ASMBaseEntity.m */,
 				A4D4E96319598B690095CA87 /* ASMFace.h */,
 				A4D4E96419598B690095CA87 /* ASMFace.m */,
-				A4495066196DB1310055BFE4 /* ASMFilter.h */,
-				A4495067196DB1310055BFE4 /* ASMFilter.m */,
 				9052FEDC192B64F900B6FCCF /* ASMPhoto.h */,
 				9052FEDD192B64F900B6FCCF /* ASMPhoto.m */,
 				90D8DFCF19223AEE00A2975A /* ASMDataModel.xcdatamodeld */,
@@ -498,12 +488,10 @@
 				A40D243E190F9181006AE42C /* ASMListViewController.m in Sources */,
 				9052FEDF192B64F900B6FCCF /* _ASMPhoto.m in Sources */,
 				A4AADA7E18F6A4FA00136C43 /* ASMHomeViewController.m in Sources */,
-				A4495068196DB1310055BFE4 /* _ASMFilter.m in Sources */,
 				A4D4E96619598B690095CA87 /* ASMFace.m in Sources */,
 				A4E729BA196EB0C70089EF24 /* WLVerticalSegmentedControl.m in Sources */,
 				9052FEE6192B6C2500B6FCCF /* AGTCoreDataStack.m in Sources */,
 				A4E729B8196EB0C70089EF24 /* WLSegmentedControl.m in Sources */,
-				A4495069196DB1310055BFE4 /* ASMFilter.m in Sources */,
 				A4D4E96519598B690095CA87 /* _ASMFace.m in Sources */,
 				A4E729B7196EB0C70089EF24 /* WLSegment.m in Sources */,
 				90D8DFD119223AEE00A2975A /* ASMDataModel.xcdatamodeld in Sources */,

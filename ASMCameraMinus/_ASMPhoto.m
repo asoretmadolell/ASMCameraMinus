@@ -6,6 +6,11 @@
 const struct ASMPhotoAttributes ASMPhotoAttributes = {
 	.address = @"address",
 	.altitude = @"altitude",
+	.filter1 = @"filter1",
+	.filter2 = @"filter2",
+	.filter3 = @"filter3",
+	.filter4 = @"filter4",
+	.filter5 = @"filter5",
 	.height = @"height",
 	.latitude = @"latitude",
 	.longitude = @"longitude",
@@ -15,7 +20,6 @@ const struct ASMPhotoAttributes ASMPhotoAttributes = {
 
 const struct ASMPhotoRelationships ASMPhotoRelationships = {
 	.faces = @"faces",
-	.filters = @"filters",
 };
 
 const struct ASMPhotoFetchedProperties ASMPhotoFetchedProperties = {
@@ -49,6 +53,31 @@ const struct ASMPhotoFetchedProperties ASMPhotoFetchedProperties = {
 	
 	if ([key isEqualToString:@"altitudeValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"altitude"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"filter1Value"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"filter1"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"filter2Value"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"filter2"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"filter3Value"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"filter3"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"filter4Value"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"filter4"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"filter5Value"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"filter5"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
@@ -111,6 +140,136 @@ const struct ASMPhotoFetchedProperties ASMPhotoFetchedProperties = {
 
 - (void)setPrimitiveAltitudeValue:(float)value_ {
 	[self setPrimitiveAltitude:[NSNumber numberWithFloat:value_]];
+}
+
+
+
+
+
+@dynamic filter1;
+
+
+
+- (BOOL)filter1Value {
+	NSNumber *result = [self filter1];
+	return [result boolValue];
+}
+
+- (void)setFilter1Value:(BOOL)value_ {
+	[self setFilter1:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveFilter1Value {
+	NSNumber *result = [self primitiveFilter1];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveFilter1Value:(BOOL)value_ {
+	[self setPrimitiveFilter1:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
+@dynamic filter2;
+
+
+
+- (BOOL)filter2Value {
+	NSNumber *result = [self filter2];
+	return [result boolValue];
+}
+
+- (void)setFilter2Value:(BOOL)value_ {
+	[self setFilter2:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveFilter2Value {
+	NSNumber *result = [self primitiveFilter2];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveFilter2Value:(BOOL)value_ {
+	[self setPrimitiveFilter2:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
+@dynamic filter3;
+
+
+
+- (BOOL)filter3Value {
+	NSNumber *result = [self filter3];
+	return [result boolValue];
+}
+
+- (void)setFilter3Value:(BOOL)value_ {
+	[self setFilter3:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveFilter3Value {
+	NSNumber *result = [self primitiveFilter3];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveFilter3Value:(BOOL)value_ {
+	[self setPrimitiveFilter3:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
+@dynamic filter4;
+
+
+
+- (BOOL)filter4Value {
+	NSNumber *result = [self filter4];
+	return [result boolValue];
+}
+
+- (void)setFilter4Value:(BOOL)value_ {
+	[self setFilter4:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveFilter4Value {
+	NSNumber *result = [self primitiveFilter4];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveFilter4Value:(BOOL)value_ {
+	[self setPrimitiveFilter4:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
+@dynamic filter5;
+
+
+
+- (BOOL)filter5Value {
+	NSNumber *result = [self filter5];
+	return [result boolValue];
+}
+
+- (void)setFilter5Value:(BOOL)value_ {
+	[self setFilter5:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveFilter5Value {
+	NSNumber *result = [self primitiveFilter5];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveFilter5Value:(BOOL)value_ {
+	[self setPrimitiveFilter5:[NSNumber numberWithBool:value_]];
 }
 
 
@@ -256,19 +415,6 @@ const struct ASMPhotoFetchedProperties ASMPhotoFetchedProperties = {
 	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"faces"];
   
 	[self didAccessValueForKey:@"faces"];
-	return result;
-}
-	
-
-@dynamic filters;
-
-	
-- (NSMutableSet*)filtersSet {
-	[self willAccessValueForKey:@"filters"];
-  
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"filters"];
-  
-	[self didAccessValueForKey:@"filters"];
 	return result;
 }
 	

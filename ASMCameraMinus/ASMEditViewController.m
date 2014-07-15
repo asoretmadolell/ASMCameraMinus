@@ -12,12 +12,7 @@
 @interface ASMEditViewController () {
     UIActivityIndicatorView *spinner;
     WLHorizontalSegmentedControl* filtersControl;
-    
-    BOOL bFilter1;
-    BOOL bFilter2;
-    BOOL bFilter3;
-    BOOL bFilter4;
-    BOOL bFilter5;
+    BOOL bFromUndoGrouping;
 }
 
 @end
@@ -30,14 +25,6 @@
     if (self) {
         self.title = @"Edit Image";
         self.photo = photo;
-        
-        NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName:[ASMFilter entityName]];
-        request.predicate = [NSPredicate predicateWithFormat:@"photo == %@", self.photo];
-        request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:ASMFilterAttributes.filterName ascending:YES]];
-        self.filtersResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
-                                                                          managedObjectContext:photo.managedObjectContext
-                                                                            sectionNameKeyPath:nil
-                                                                                       cacheName:nil];
     }
     return self;
 }
@@ -47,11 +34,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    [[self.photo.managedObjectContext undoManager] beginUndoGrouping];
+    bFromUndoGrouping = YES;
+    
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@.jpg", documentsDirectory, self.photo.name];
     self.myOriginalImage.image = [UIImage imageWithContentsOfFile:fullFilePath];
-    
-    [self.filtersResultsController performFetch:nil];
     
     spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     CGRect screenRect = [[UIScreen mainScreen] bounds];
@@ -75,12 +63,68 @@
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
                                                                              action:@selector( saveClicked: )];
+    
+    NSMutableArray* selectedFilters = [[NSMutableArray alloc] init];
+    
+    if ( self.photo.filter1 )
+    {
+        [selectedFilters addObject:@"CISepiaTone"];
+        [filtersControl setSelectedSegmentIndex:0];
+    }
+    
+    if ( self.photo.filter2 )
+    {
+        [selectedFilters addObject:@"CIGaussianBlur"];
+        [filtersControl setSelectedSegmentIndex:1];
+    }
+    
+    if ( self.photo.filter3 )
+    {
+        [selectedFilters addObject:@"CIColorInvert"];
+        [filtersControl setSelectedSegmentIndex:2];
+    }
+    
+    if ( self.photo.filter4 )
+    {
+        [selectedFilters addObject:@"CIDotScreen"];
+        [filtersControl setSelectedSegmentIndex:3];
+    }
+    
+    if ( self.photo.filter5 )
+    {
+        [selectedFilters addObject:@"CIHoleDistortion"];
+        [filtersControl setSelectedSegmentIndex:4];
+    }
+    
+    if (selectedFilters.count > 0)
+    {
+        filtersControl.enabled = NO;
+        spinner.hidden = NO;
+        [spinner startAnimating];
+        [self applyFilters:selectedFilters];
+    }
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)didMoveToParentViewController:(UIViewController *)parent
+{
+    if (!bFromUndoGrouping) {
+        return;
+    }
+    
+    // SOLUTION TO BACKBUTTON = NIL >:(
+    if ( !(parent = self.parentViewController) )
+    {
+        [[self.photo.managedObjectContext undoManager] endUndoGrouping];
+        [[self.photo.managedObjectContext undoManager] undo];
+        [self.photo.managedObjectContext save:nil];
+        bFromUndoGrouping = NO;
+    }
 }
 
 #pragma mark - instance methods
@@ -122,17 +166,17 @@
 
 -(void)filterClicked:(id)sender
 {
-    bFilter1 = bFilter2 = bFilter3 = bFilter4 = bFilter5 = NO;
+    self.photo.filter1 = self.photo.filter2 = self.photo.filter3 = self.photo.filter4 = self.photo.filter5 = NO;
     self.myFilteredImage.image = nil;
     NSIndexSet* selectedItems = filtersControl.selectedSegmentIndice;
     
     [selectedItems enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop)
      {
-         if ( idx == 0 ) bFilter1 = YES;
-         if ( idx == 1 ) bFilter2 = YES;
-         if ( idx == 2 ) bFilter3 = YES;
-         if ( idx == 3 ) bFilter4 = YES;
-         if ( idx == 4 ) bFilter5 = YES;
+         if ( idx == 0 ) self.photo.filter1 = @YES; // [NSNumber numberWithBool:YES];
+         if ( idx == 1 ) self.photo.filter2 = @YES; // [NSNumber numberWithBool:YES];
+         if ( idx == 2 ) self.photo.filter3 = @YES; // [NSNumber numberWithBool:YES];
+         if ( idx == 3 ) self.photo.filter4 = @YES; // [NSNumber numberWithBool:YES];
+         if ( idx == 4 ) self.photo.filter5 = @YES; // [NSNumber numberWithBool:YES];
          
          if ( idx == selectedItems.lastIndex )
          {
@@ -142,11 +186,11 @@
              
              NSMutableArray* selectedFilters = [[NSMutableArray alloc] init];
              
-             if ( bFilter1 ) [selectedFilters addObject:@"CISepiaTone"];
-             if ( bFilter2 ) [selectedFilters addObject:@"CIGaussianBlur"];
-             if ( bFilter3 ) [selectedFilters addObject:@"CIColorInvert"];
-             if ( bFilter4 ) [selectedFilters addObject:@"CIDotScreen"];
-             if ( bFilter5 ) [selectedFilters addObject:@"CIHoleDistortion"];
+             if ( self.photo.filter1 ) [selectedFilters addObject:@"CISepiaTone"];
+             if ( self.photo.filter2 ) [selectedFilters addObject:@"CIGaussianBlur"];
+             if ( self.photo.filter3 ) [selectedFilters addObject:@"CIColorInvert"];
+             if ( self.photo.filter4 ) [selectedFilters addObject:@"CIDotScreen"];
+             if ( self.photo.filter5 ) [selectedFilters addObject:@"CIHoleDistortion"];
              
              [self applyFilters:selectedFilters];
          }
@@ -155,6 +199,9 @@
 
 -(void)saveClicked:(id)sender
 {
+    [[self.photo.managedObjectContext undoManager] endUndoGrouping];
+    bFromUndoGrouping = NO;
+    [[self.photo.managedObjectContext undoManager] setActionName:@"Filters applied"];
     [self.photo.managedObjectContext save:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }

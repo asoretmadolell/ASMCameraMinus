@@ -7,6 +7,11 @@
 extern const struct ASMPhotoAttributes {
 	__unsafe_unretained NSString *address;
 	__unsafe_unretained NSString *altitude;
+	__unsafe_unretained NSString *filter1;
+	__unsafe_unretained NSString *filter2;
+	__unsafe_unretained NSString *filter3;
+	__unsafe_unretained NSString *filter4;
+	__unsafe_unretained NSString *filter5;
 	__unsafe_unretained NSString *height;
 	__unsafe_unretained NSString *latitude;
 	__unsafe_unretained NSString *longitude;
@@ -16,14 +21,17 @@ extern const struct ASMPhotoAttributes {
 
 extern const struct ASMPhotoRelationships {
 	__unsafe_unretained NSString *faces;
-	__unsafe_unretained NSString *filters;
 } ASMPhotoRelationships;
 
 extern const struct ASMPhotoFetchedProperties {
 } ASMPhotoFetchedProperties;
 
 @class ASMFace;
-@class ASMFilter;
+
+
+
+
+
 
 
 
@@ -65,6 +73,76 @@ extern const struct ASMPhotoFetchedProperties {
 - (void)setAltitudeValue:(float)value_;
 
 //- (BOOL)validateAltitude:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* filter1;
+
+
+
+@property BOOL filter1Value;
+- (BOOL)filter1Value;
+- (void)setFilter1Value:(BOOL)value_;
+
+//- (BOOL)validateFilter1:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* filter2;
+
+
+
+@property BOOL filter2Value;
+- (BOOL)filter2Value;
+- (void)setFilter2Value:(BOOL)value_;
+
+//- (BOOL)validateFilter2:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* filter3;
+
+
+
+@property BOOL filter3Value;
+- (BOOL)filter3Value;
+- (void)setFilter3Value:(BOOL)value_;
+
+//- (BOOL)validateFilter3:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* filter4;
+
+
+
+@property BOOL filter4Value;
+- (BOOL)filter4Value;
+- (void)setFilter4Value:(BOOL)value_;
+
+//- (BOOL)validateFilter4:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* filter5;
+
+
+
+@property BOOL filter5Value;
+- (BOOL)filter5Value;
+- (void)setFilter5Value:(BOOL)value_;
+
+//- (BOOL)validateFilter5:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -147,13 +225,6 @@ extern const struct ASMPhotoFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSSet *filters;
-
-- (NSMutableSet*)filtersSet;
-
-
-
-
 
 @end
 
@@ -163,11 +234,6 @@ extern const struct ASMPhotoFetchedProperties {
 - (void)removeFaces:(NSSet*)value_;
 - (void)addFacesObject:(ASMFace*)value_;
 - (void)removeFacesObject:(ASMFace*)value_;
-
-- (void)addFilters:(NSSet*)value_;
-- (void)removeFilters:(NSSet*)value_;
-- (void)addFiltersObject:(ASMFilter*)value_;
-- (void)removeFiltersObject:(ASMFilter*)value_;
 
 @end
 
@@ -185,6 +251,51 @@ extern const struct ASMPhotoFetchedProperties {
 
 - (float)primitiveAltitudeValue;
 - (void)setPrimitiveAltitudeValue:(float)value_;
+
+
+
+
+- (NSNumber*)primitiveFilter1;
+- (void)setPrimitiveFilter1:(NSNumber*)value;
+
+- (BOOL)primitiveFilter1Value;
+- (void)setPrimitiveFilter1Value:(BOOL)value_;
+
+
+
+
+- (NSNumber*)primitiveFilter2;
+- (void)setPrimitiveFilter2:(NSNumber*)value;
+
+- (BOOL)primitiveFilter2Value;
+- (void)setPrimitiveFilter2Value:(BOOL)value_;
+
+
+
+
+- (NSNumber*)primitiveFilter3;
+- (void)setPrimitiveFilter3:(NSNumber*)value;
+
+- (BOOL)primitiveFilter3Value;
+- (void)setPrimitiveFilter3Value:(BOOL)value_;
+
+
+
+
+- (NSNumber*)primitiveFilter4;
+- (void)setPrimitiveFilter4:(NSNumber*)value;
+
+- (BOOL)primitiveFilter4Value;
+- (void)setPrimitiveFilter4Value:(BOOL)value_;
+
+
+
+
+- (NSNumber*)primitiveFilter5;
+- (void)setPrimitiveFilter5:(NSNumber*)value;
+
+- (BOOL)primitiveFilter5Value;
+- (void)setPrimitiveFilter5Value:(BOOL)value_;
 
 
 
@@ -237,11 +348,6 @@ extern const struct ASMPhotoFetchedProperties {
 
 - (NSMutableSet*)primitiveFaces;
 - (void)setPrimitiveFaces:(NSMutableSet*)value;
-
-
-
-- (NSMutableSet*)primitiveFilters;
-- (void)setPrimitiveFilters:(NSMutableSet*)value;
 
 
 @end

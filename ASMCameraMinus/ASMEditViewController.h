@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "ASMPhoto.h"
-#import "ASMFilter.h"
 
 @interface ASMEditViewController : UIViewController
 
@@ -17,7 +16,5 @@
 @property (weak, nonatomic) IBOutlet UIImageView *myFilteredImage;
 
 - (id)initWithPhoto:(ASMPhoto *)photo;
-
-@property (nonatomic, strong) NSFetchedResultsController* filtersResultsController;
 
 @end
