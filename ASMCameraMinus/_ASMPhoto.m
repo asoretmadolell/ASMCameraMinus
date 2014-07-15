@@ -15,6 +15,7 @@ const struct ASMPhotoAttributes ASMPhotoAttributes = {
 
 const struct ASMPhotoRelationships ASMPhotoRelationships = {
 	.faces = @"faces",
+	.filters = @"filters",
 };
 
 const struct ASMPhotoFetchedProperties ASMPhotoFetchedProperties = {
@@ -255,6 +256,19 @@ const struct ASMPhotoFetchedProperties ASMPhotoFetchedProperties = {
 	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"faces"];
   
 	[self didAccessValueForKey:@"faces"];
+	return result;
+}
+	
+
+@dynamic filters;
+
+	
+- (NSMutableSet*)filtersSet {
+	[self willAccessValueForKey:@"filters"];
+  
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"filters"];
+  
+	[self didAccessValueForKey:@"filters"];
 	return result;
 }
 	

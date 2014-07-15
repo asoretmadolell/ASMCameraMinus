@@ -155,8 +155,9 @@
 - (IBAction)edit:(id)sender
 {
     NSArray *selectedItems = [self.photosCV indexPathsForSelectedItems];
-    ASMPhotoCell *cell = (ASMPhotoCell*)[self.photosCV cellForItemAtIndexPath:[selectedItems objectAtIndex:0]];
-    ASMEditViewController *editVC = [[ASMEditViewController alloc] initWithPhoto:cell.image.image];
+    NSIndexPath* selectedItem = [selectedItems objectAtIndex:0];
+    ASMPhoto* photo = [[self.fetchedResultsController fetchedObjects] objectAtIndex:selectedItem.item];
+    ASMEditViewController *editVC = [[ASMEditViewController alloc] initWithPhoto:photo];
     [self.navigationController pushViewController:editVC animated:YES];
 }
 

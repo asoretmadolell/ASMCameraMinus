@@ -16,12 +16,14 @@ extern const struct ASMPhotoAttributes {
 
 extern const struct ASMPhotoRelationships {
 	__unsafe_unretained NSString *faces;
+	__unsafe_unretained NSString *filters;
 } ASMPhotoRelationships;
 
 extern const struct ASMPhotoFetchedProperties {
 } ASMPhotoFetchedProperties;
 
 @class ASMFace;
+@class ASMFilter;
 
 
 
@@ -145,6 +147,13 @@ extern const struct ASMPhotoFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSSet *filters;
+
+- (NSMutableSet*)filtersSet;
+
+
+
+
 
 @end
 
@@ -154,6 +163,11 @@ extern const struct ASMPhotoFetchedProperties {
 - (void)removeFaces:(NSSet*)value_;
 - (void)addFacesObject:(ASMFace*)value_;
 - (void)removeFacesObject:(ASMFace*)value_;
+
+- (void)addFilters:(NSSet*)value_;
+- (void)removeFilters:(NSSet*)value_;
+- (void)addFiltersObject:(ASMFilter*)value_;
+- (void)removeFiltersObject:(ASMFilter*)value_;
 
 @end
 
@@ -223,6 +237,11 @@ extern const struct ASMPhotoFetchedProperties {
 
 - (NSMutableSet*)primitiveFaces;
 - (void)setPrimitiveFaces:(NSMutableSet*)value;
+
+
+
+- (NSMutableSet*)primitiveFilters;
+- (void)setPrimitiveFilters:(NSMutableSet*)value;
 
 
 @end

@@ -7,19 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ASMPhoto.h"
+#import "ASMFilter.h"
 
 @interface ASMEditViewController : UIViewController
 
-@property (strong, nonatomic) UIImage *photo;
+@property (strong, nonatomic) ASMPhoto *photo;
 @property (weak, nonatomic) IBOutlet UIImageView *myOriginalImage;
 @property (weak, nonatomic) IBOutlet UIImageView *myFilteredImage;
 
-- (id)initWithPhoto:(UIImage *)photo;
+- (id)initWithPhoto:(ASMPhoto *)photo;
 
-- (IBAction)filter1button:(id)sender;
-- (IBAction)filter2button:(id)sender;
-- (IBAction)filter3button:(id)sender;
-- (IBAction)filter4button:(id)sender;
-- (IBAction)filter5button:(id)sender;
+@property (nonatomic, strong) NSFetchedResultsController* filtersResultsController;
 
 @end

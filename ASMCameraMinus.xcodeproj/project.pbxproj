@@ -26,6 +26,8 @@
 		90D8DFD119223AEE00A2975A /* ASMDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 90D8DFCF19223AEE00A2975A /* ASMDataModel.xcdatamodeld */; };
 		90E8437619111D2A0007AA21 /* ASMListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90E8437519111D2A0007AA21 /* ASMListViewController.xib */; };
 		A40D243E190F9181006AE42C /* ASMListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A40D243D190F9181006AE42C /* ASMListViewController.m */; };
+		A4495068196DB1310055BFE4 /* _ASMFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A4495065196DB1310055BFE4 /* _ASMFilter.m */; };
+		A4495069196DB1310055BFE4 /* ASMFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A4495067196DB1310055BFE4 /* ASMFilter.m */; };
 		A4AADA4D18F6A1B400136C43 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4AADA4C18F6A1B400136C43 /* Foundation.framework */; };
 		A4AADA4F18F6A1B400136C43 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4AADA4E18F6A1B400136C43 /* CoreGraphics.framework */; };
 		A4AADA5118F6A1B400136C43 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4AADA5018F6A1B400136C43 /* UIKit.framework */; };
@@ -42,6 +44,10 @@
 		A4AADA7F18F6A4FA00136C43 /* ASMHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4AADA7D18F6A4FA00136C43 /* ASMHomeViewController.xib */; };
 		A4D4E96519598B690095CA87 /* _ASMFace.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D4E96219598B690095CA87 /* _ASMFace.m */; };
 		A4D4E96619598B690095CA87 /* ASMFace.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D4E96419598B690095CA87 /* ASMFace.m */; };
+		A4E729B6196EB0C70089EF24 /* WLHorizontalSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E729AD196EB0C70089EF24 /* WLHorizontalSegmentedControl.m */; };
+		A4E729B7196EB0C70089EF24 /* WLSegment.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E729AF196EB0C70089EF24 /* WLSegment.m */; };
+		A4E729B8196EB0C70089EF24 /* WLSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E729B1196EB0C70089EF24 /* WLSegmentedControl.m */; };
+		A4E729BA196EB0C70089EF24 /* WLVerticalSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E729B5196EB0C70089EF24 /* WLVerticalSegmentedControl.m */; };
 		D8A76308191BF8C700E7CE93 /* ASMEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8A76306191BF8C700E7CE93 /* ASMEditViewController.m */; };
 		D8A76309191BF8C700E7CE93 /* ASMEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8A76307191BF8C700E7CE93 /* ASMEditViewController.xib */; };
 		D8AD957F192133EE00699941 /* dump.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8AD9578192133EE00699941 /* dump.jpg */; };
@@ -100,6 +106,10 @@
 		90E8437519111D2A0007AA21 /* ASMListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMListViewController.xib; sourceTree = "<group>"; };
 		A40D243C190F9181006AE42C /* ASMListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMListViewController.h; sourceTree = "<group>"; };
 		A40D243D190F9181006AE42C /* ASMListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMListViewController.m; sourceTree = "<group>"; };
+		A4495064196DB1310055BFE4 /* _ASMFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _ASMFilter.h; sourceTree = "<group>"; };
+		A4495065196DB1310055BFE4 /* _ASMFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _ASMFilter.m; sourceTree = "<group>"; };
+		A4495066196DB1310055BFE4 /* ASMFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMFilter.h; sourceTree = "<group>"; };
+		A4495067196DB1310055BFE4 /* ASMFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMFilter.m; sourceTree = "<group>"; };
 		A4AADA4918F6A1B400136C43 /* ASMCameraMinus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ASMCameraMinus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4AADA4C18F6A1B400136C43 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A4AADA4E18F6A1B400136C43 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -123,6 +133,14 @@
 		A4D4E96219598B690095CA87 /* _ASMFace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _ASMFace.m; sourceTree = "<group>"; };
 		A4D4E96319598B690095CA87 /* ASMFace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMFace.h; sourceTree = "<group>"; };
 		A4D4E96419598B690095CA87 /* ASMFace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMFace.m; sourceTree = "<group>"; };
+		A4E729AC196EB0C70089EF24 /* WLHorizontalSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLHorizontalSegmentedControl.h; sourceTree = "<group>"; };
+		A4E729AD196EB0C70089EF24 /* WLHorizontalSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLHorizontalSegmentedControl.m; sourceTree = "<group>"; };
+		A4E729AE196EB0C70089EF24 /* WLSegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLSegment.h; sourceTree = "<group>"; };
+		A4E729AF196EB0C70089EF24 /* WLSegment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLSegment.m; sourceTree = "<group>"; };
+		A4E729B0196EB0C70089EF24 /* WLSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLSegmentedControl.h; sourceTree = "<group>"; };
+		A4E729B1196EB0C70089EF24 /* WLSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLSegmentedControl.m; sourceTree = "<group>"; };
+		A4E729B4196EB0C70089EF24 /* WLVerticalSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLVerticalSegmentedControl.h; sourceTree = "<group>"; };
+		A4E729B5196EB0C70089EF24 /* WLVerticalSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLVerticalSegmentedControl.m; sourceTree = "<group>"; };
 		D8A76305191BF8C700E7CE93 /* ASMEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMEditViewController.h; sourceTree = "<group>"; };
 		D8A76306191BF8C700E7CE93 /* ASMEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMEditViewController.m; sourceTree = "<group>"; };
 		D8A76307191BF8C700E7CE93 /* ASMEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASMEditViewController.xib; sourceTree = "<group>"; };
@@ -179,12 +197,16 @@
 				9052FED7192B64F900B6FCCF /* _ASMBaseEntity.m */,
 				A4D4E96119598B690095CA87 /* _ASMFace.h */,
 				A4D4E96219598B690095CA87 /* _ASMFace.m */,
+				A4495064196DB1310055BFE4 /* _ASMFilter.h */,
+				A4495065196DB1310055BFE4 /* _ASMFilter.m */,
 				9052FED8192B64F900B6FCCF /* _ASMPhoto.h */,
 				9052FED9192B64F900B6FCCF /* _ASMPhoto.m */,
 				9052FEDA192B64F900B6FCCF /* ASMBaseEntity.h */,
 				9052FEDB192B64F900B6FCCF /* ASMBaseEntity.m */,
 				A4D4E96319598B690095CA87 /* ASMFace.h */,
 				A4D4E96419598B690095CA87 /* ASMFace.m */,
+				A4495066196DB1310055BFE4 /* ASMFilter.h */,
+				A4495067196DB1310055BFE4 /* ASMFilter.m */,
 				9052FEDC192B64F900B6FCCF /* ASMPhoto.h */,
 				9052FEDD192B64F900B6FCCF /* ASMPhoto.m */,
 				90D8DFCF19223AEE00A2975A /* ASMDataModel.xcdatamodeld */,
@@ -262,6 +284,7 @@
 		A4AADA5218F6A1B400136C43 /* ASMCameraMinus */ = {
 			isa = PBXGroup;
 			children = (
+				A4E729AB196EB08E0089EF24 /* WLSegmentedControls */,
 				902872E81941C78C007F4D94 /* Categories */,
 				90D2D00B19388BB10002A354 /* Flickr */,
 				9052FEE8192B6C2900B6FCCF /* CoreDataStack */,
@@ -333,6 +356,21 @@
 				9052FEED192B700600B6FCCF /* ASMCDStackTableViewController.m */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		A4E729AB196EB08E0089EF24 /* WLSegmentedControls */ = {
+			isa = PBXGroup;
+			children = (
+				A4E729AC196EB0C70089EF24 /* WLHorizontalSegmentedControl.h */,
+				A4E729AD196EB0C70089EF24 /* WLHorizontalSegmentedControl.m */,
+				A4E729AE196EB0C70089EF24 /* WLSegment.h */,
+				A4E729AF196EB0C70089EF24 /* WLSegment.m */,
+				A4E729B0196EB0C70089EF24 /* WLSegmentedControl.h */,
+				A4E729B1196EB0C70089EF24 /* WLSegmentedControl.m */,
+				A4E729B4196EB0C70089EF24 /* WLVerticalSegmentedControl.h */,
+				A4E729B5196EB0C70089EF24 /* WLVerticalSegmentedControl.m */,
+			);
+			name = WLSegmentedControls;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -450,6 +488,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9048A4A71918F9240046C2C7 /* ASMInfoViewController.m in Sources */,
+				A4E729B6196EB0C70089EF24 /* WLHorizontalSegmentedControl.m in Sources */,
 				90646967191AE857000485EB /* ASMTableViewCell.m in Sources */,
 				9052FEE7192B6C2500B6FCCF /* AGTCoreDataTableViewController.m in Sources */,
 				D8DA237F18F841F800348E88 /* ASMPhotoCell.m in Sources */,
@@ -459,9 +498,14 @@
 				A40D243E190F9181006AE42C /* ASMListViewController.m in Sources */,
 				9052FEDF192B64F900B6FCCF /* _ASMPhoto.m in Sources */,
 				A4AADA7E18F6A4FA00136C43 /* ASMHomeViewController.m in Sources */,
+				A4495068196DB1310055BFE4 /* _ASMFilter.m in Sources */,
 				A4D4E96619598B690095CA87 /* ASMFace.m in Sources */,
+				A4E729BA196EB0C70089EF24 /* WLVerticalSegmentedControl.m in Sources */,
 				9052FEE6192B6C2500B6FCCF /* AGTCoreDataStack.m in Sources */,
+				A4E729B8196EB0C70089EF24 /* WLSegmentedControl.m in Sources */,
+				A4495069196DB1310055BFE4 /* ASMFilter.m in Sources */,
 				A4D4E96519598B690095CA87 /* _ASMFace.m in Sources */,
+				A4E729B7196EB0C70089EF24 /* WLSegment.m in Sources */,
 				90D8DFD119223AEE00A2975A /* ASMDataModel.xcdatamodeld in Sources */,
 				D8A76308191BF8C700E7CE93 /* ASMEditViewController.m in Sources */,
 				9052FEE1192B64F900B6FCCF /* ASMPhoto.m in Sources */,
