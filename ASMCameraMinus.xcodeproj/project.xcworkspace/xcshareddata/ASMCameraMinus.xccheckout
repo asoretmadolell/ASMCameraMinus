@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>F87BE750-5E37-46A8-BC82-4A07BAA872DF</string>
+	<string>77F8476F-DFCA-40A4-B0AE-0F4DF21E7CD0</string>
 	<key>IDESourceControlProjectName</key>
 	<string>ASMCameraMinus</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>D33627FF-3BDE-46A2-885B-7DCA6D441683</key>
-		<string>https://bitbucket.org/SoReT/asmcameraminus</string>
+		<key>6CF21C67-BAAB-4940-9A5B-B244A2FEE233</key>
+		<string>https://github.com/asoretmadolell/ASMCameraMinus.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>ASMCameraMinus.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>D33627FF-3BDE-46A2-885B-7DCA6D441683</key>
+		<key>6CF21C67-BAAB-4940-9A5B-B244A2FEE233</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://bitbucket.org/SoReT/asmcameraminus</string>
+	<string>https://github.com/asoretmadolell/ASMCameraMinus.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>D33627FF-3BDE-46A2-885B-7DCA6D441683</string>
+	<string>6CF21C67-BAAB-4940-9A5B-B244A2FEE233</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>D33627FF-3BDE-46A2-885B-7DCA6D441683</string>
+			<string>6CF21C67-BAAB-4940-9A5B-B244A2FEE233</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ASMCameraMinus</string>
 		</dict>

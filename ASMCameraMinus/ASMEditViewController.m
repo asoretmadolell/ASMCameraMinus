@@ -64,44 +64,14 @@
                                                                              target:self
                                                                              action:@selector( saveClicked: )];
     
-    NSMutableArray* selectedFilters = [[NSMutableArray alloc] init];
+    [filtersControl setSelectedSegmentIndice:[self getSelectedFiltersIndexSet]];
     
-    if ( self.photo.filter1 )
-    {
-        [selectedFilters addObject:@"CISepiaTone"];
-        [filtersControl setSelectedSegmentIndex:0];
-    }
-    
-    if ( self.photo.filter2 )
-    {
-        [selectedFilters addObject:@"CIGaussianBlur"];
-        [filtersControl setSelectedSegmentIndex:1];
-    }
-    
-    if ( self.photo.filter3 )
-    {
-        [selectedFilters addObject:@"CIColorInvert"];
-        [filtersControl setSelectedSegmentIndex:2];
-    }
-    
-    if ( self.photo.filter4 )
-    {
-        [selectedFilters addObject:@"CIDotScreen"];
-        [filtersControl setSelectedSegmentIndex:3];
-    }
-    
-    if ( self.photo.filter5 )
-    {
-        [selectedFilters addObject:@"CIHoleDistortion"];
-        [filtersControl setSelectedSegmentIndex:4];
-    }
-    
-    if (selectedFilters.count > 0)
+    if ([self getSelectedFiltersNames].count > 0)
     {
         filtersControl.enabled = NO;
         spinner.hidden = NO;
         [spinner startAnimating];
-        [self applyFilters:selectedFilters];
+        [self applyFilters:[self getSelectedFiltersNames]];
     }
 }
 
@@ -129,7 +99,7 @@
 
 #pragma mark - instance methods
 
--(void)applyFilters:(NSMutableArray*)selectedFilters
+-(void)applyFilters:(NSArray*)selectedFilters
 {
     dispatch_queue_t filterQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
     dispatch_async(filterQueue, ^{
@@ -184,15 +154,7 @@
              spinner.hidden = NO;
              [spinner startAnimating];
              
-             NSMutableArray* selectedFilters = [[NSMutableArray alloc] init];
-             
-             if ( self.photo.filter1 ) [selectedFilters addObject:@"CISepiaTone"];
-             if ( self.photo.filter2 ) [selectedFilters addObject:@"CIGaussianBlur"];
-             if ( self.photo.filter3 ) [selectedFilters addObject:@"CIColorInvert"];
-             if ( self.photo.filter4 ) [selectedFilters addObject:@"CIDotScreen"];
-             if ( self.photo.filter5 ) [selectedFilters addObject:@"CIHoleDistortion"];
-             
-             [self applyFilters:selectedFilters];
+             [self applyFilters:[self getSelectedFiltersNames]];
          }
     }];
 }
@@ -204,6 +166,32 @@
     [[self.photo.managedObjectContext undoManager] setActionName:@"Filters applied"];
     [self.photo.managedObjectContext save:nil];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(NSArray*)getSelectedFiltersNames
+{
+    NSMutableArray* selectedFilters = [[NSMutableArray alloc] init];
+    
+    if ( self.photo.filter1 ) [selectedFilters addObject:@"CISepiaTone"];
+    if ( self.photo.filter2 ) [selectedFilters addObject:@"CIGaussianBlur"];
+    if ( self.photo.filter3 ) [selectedFilters addObject:@"CIColorInvert"];
+    if ( self.photo.filter4 ) [selectedFilters addObject:@"CIDotScreen"];
+    if ( self.photo.filter5 ) [selectedFilters addObject:@"CIHoleDistortion"];
+    
+    return selectedFilters;
+}
+
+-(NSIndexSet*)getSelectedFiltersIndexSet
+{
+    NSMutableIndexSet* selectedItems = [[NSMutableIndexSet alloc] init];
+    
+    if ( self.photo.filter1 ) [selectedItems addIndex:0];
+    if ( self.photo.filter2 ) [selectedItems addIndex:1];
+    if ( self.photo.filter3 ) [selectedItems addIndex:2];
+    if ( self.photo.filter4 ) [selectedItems addIndex:3];
+    if ( self.photo.filter5 ) [selectedItems addIndex:4];
+    
+    return selectedItems;
 }
 
 @end
