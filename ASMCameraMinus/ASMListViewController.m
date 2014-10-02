@@ -15,6 +15,7 @@
 #import "Flickr.h"
 #import "FlickrPhoto.h"
 #import "ASMAppDelegate.h"
+#import "Social/Social.h"
 
 @interface ASMListViewController () {
     UIActionSheet *socialActionSheet;
@@ -328,11 +329,11 @@
         }
         else if (buttonIndex == 1)
         {
-            NSLog(@"Second button clicked");
+            [self shareOnSLServiceType:SLServiceTypeFacebook];
         }
         else if (buttonIndex == 2)
         {
-            NSLog(@"Third button clicked");
+            [self shareOnSLServiceType:SLServiceTypeTwitter];
         }
         else
         {
@@ -526,6 +527,64 @@
     UIGraphicsEndImageContext();
     
     return thumbnail;
+}
+
+-(void)showAlertWithTitle:(NSString*)title andMessage:(NSString*)message andCancelButtonTitle:(NSString*)cancel
+{
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancel otherButtonTitles:nil, nil];
+    [alert show];
+}
+
+-(void)shareOnSLServiceType:(NSString*)serviceType
+{
+    NSArray* selectedItems = [self.photoTV indexPathsForSelectedRows];
+    
+    if (selectedItems.count == 1) {
+        NSIndexPath* selectedItem = [selectedItems objectAtIndex:0];
+        ASMPhoto* photo = [[self.fetchedResultsController fetchedObjects] objectAtIndex:selectedItem.row];
+        
+        NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@.thb", documentsDirectory, photo.name];
+        UIImage* image = [UIImage imageWithContentsOfFile:fullFilePath];
+        
+        if ([SLComposeViewController isAvailableForServiceType:serviceType])
+        {
+            SLComposeViewController* composeController = [SLComposeViewController composeViewControllerForServiceType:serviceType];
+            
+            [composeController setInitialText:@"Look at this cool image!"];
+            [composeController addImage:image];
+            
+            [self presentViewController:composeController animated:YES completion:nil];
+            
+            [composeController setCompletionHandler:^(SLComposeViewControllerResult result)
+             {
+                 switch (result)
+                 {
+                     case SLComposeViewControllerResultCancelled:
+                         [self showAlertWithTitle:@"OMG!" andMessage:@"Something went wrong while posting!" andCancelButtonTitle:@"Okay..."];
+                         break;
+                     case SLComposeViewControllerResultDone:
+                         [self showAlertWithTitle:@"Congratulations!" andMessage:@"You have succesfully posted this image!" andCancelButtonTitle:@"Yay!"];
+                         break;
+                         
+                     default:
+                         break;
+                 }
+             }];
+        }
+        else
+        {
+            [self showAlertWithTitle:@"Warning!" andMessage:@"You need a Facebook account signed in on the device. Check your device's settings." andCancelButtonTitle:@"Fine!"];
+        }
+    }
+    else if (selectedItems.count == 0)
+    {
+        [self showAlertWithTitle:@"Warning!" andMessage:@"Select an image first, dummy!" andCancelButtonTitle:@"Oops!"];
+    }
+    else
+    {
+        [self showAlertWithTitle:@"Warning!" andMessage:@"You can only share one image at a time!" andCancelButtonTitle:@"Oops!"];
+    }
 }
 
 @end
